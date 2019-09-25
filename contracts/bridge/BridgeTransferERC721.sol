@@ -25,7 +25,7 @@ import "../sc_erc721/IERC721BridgeReceiver.sol";
 import "./BridgeTransferCommon.sol";
 
 
-contract BridgeTransferERC721 is IERC721BridgeReceiver, BridgeTransfer {
+contract BridgeTransferERC721 is BridgeTokens, IERC721BridgeReceiver, BridgeTransfer {
     // handleERC721Transfer sends the ERC721 by the request.
     function handleERC721Transfer(
         bytes32 _requestTxHash,

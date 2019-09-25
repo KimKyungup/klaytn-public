@@ -23,7 +23,7 @@ import "./BridgeFee.sol";
 import "./BridgeOperator.sol";
 import "./BridgeTokens.sol";
 
-contract BridgeTransfer is BridgeHandledRequests, BridgeFee, BridgeTokens, BridgeOperator {
+contract BridgeTransfer is BridgeHandledRequests, BridgeFee, BridgeOperator {
     bool public modeMintBurn = false;
     bool public isRunning;
 
@@ -52,38 +52,6 @@ contract BridgeTransfer is BridgeHandledRequests, BridgeFee, BridgeTokens, Bridg
         onlyOwner
     {
         isRunning = _status;
-    }
-
-    // registerToken can update the allowed token with the counterpart token.
-    function registerToken(address _token, address _cToken)
-        external
-        onlyOwner
-    {
-        _registerToken(_token, _cToken);
-    }
-
-    // deregisterToken can remove the token in allowedToken list.
-    function deregisterToken(address _token)
-        external
-        onlyOwner
-    {
-        _deregisterToken(_token);
-    }
-
-    // lockToken can lock the token to prevent request token transferring.
-    function lockToken(address _token)
-        external
-        onlyOwner
-    {
-        _lockToken(_token);
-    }
-
-    // unlockToken can unlock the token to request token transferring.
-    function unlockToken(address _token)
-        external
-        onlyOwner
-    {
-        _unlockToken(_token);
     }
 
     /**

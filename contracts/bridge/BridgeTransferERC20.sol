@@ -24,7 +24,7 @@ import "../sc_erc20/IERC20BridgeReceiver.sol";
 import "./BridgeTransferCommon.sol";
 
 
-contract BridgeTransferERC20 is IERC20BridgeReceiver, BridgeTransfer {
+contract BridgeTransferERC20 is BridgeTokens, IERC20BridgeReceiver, BridgeTransfer {
     // handleERC20Transfer sends the token by the request.
     function handleERC20Transfer(
         bytes32 _requestTxHash,

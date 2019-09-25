@@ -180,13 +180,13 @@ func (_Address *AddressTransactorRaw) Transact(opts *bind.TransactOpts, method s
 }
 
 // BridgeABI is the input ABI used to generate the binding from.
-const BridgeABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"lockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"handleNoncesToBlockNums\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"operators\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_fee\",\"type\":\"uint256\"},{\"name\":\"_requestNonce\",\"type\":\"uint64\"}],\"name\":\"setKLAYFee\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isRunning\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestERC721Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_feeLimit\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestERC20Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_fee\",\"type\":\"uint256\"},{\"name\":\"_requestNonce\",\"type\":\"uint64\"}],\"name\":\"setERC20Fee\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"registerOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"counterpartBridge\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleERC20Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_cToken\",\"type\":\"address\"}],\"name\":\"registerToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"feeOfERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"lowerHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"upperHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"operatorThresholds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"modeMintBurn\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestKLAYTransfer\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"requestNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_bridge\",\"type\":\"address\"}],\"name\":\"setCounterPartBridge\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"handledRequestTx\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"closedValueTransferVotes\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"recoveryBlockNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"unlockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleKLAYTransfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"configurationNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_tokenURI\",\"type\":\"string\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleERC721Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOperatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"deregisterToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeOfKLAY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"start\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"operatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"deregisterOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"chargeWithoutEvent\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteType\",\"type\":\"uint8\"},{\"name\":\"_threshold\",\"type\":\"uint8\"}],\"name\":\"setOperatorThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_feeLimit\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"onERC20Received\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"VERSION\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_modeMintBurn\",\"type\":\"bool\"}],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requestNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"fee\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"RequestValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"requestTxHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"handleNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"HandleValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenLocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenUnlocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"KLAYFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"ERC20FeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"feeReceiver\",\"type\":\"address\"}],\"name\":\"FeeReceiverChanged\",\"type\":\"event\"}]"
+const BridgeABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"lockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"handleNoncesToBlockNums\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"operators\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_fee\",\"type\":\"uint256\"},{\"name\":\"_requestNonce\",\"type\":\"uint64\"}],\"name\":\"setKLAYFee\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isRunning\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestERC721Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_feeLimit\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestERC20Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_fee\",\"type\":\"uint256\"},{\"name\":\"_requestNonce\",\"type\":\"uint64\"}],\"name\":\"setERC20Fee\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"registerOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"counterpartBridge\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleERC20Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_cToken\",\"type\":\"address\"}],\"name\":\"registerToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"feeOfERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"lowerHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"upperHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"operatorThresholds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"modeMintBurn\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestKLAYTransfer\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"requestNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_bridge\",\"type\":\"address\"}],\"name\":\"setCounterPartBridge\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"handledRequestTx\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"closedValueTransferVotes\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"recoveryBlockNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"unlockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleKLAYTransfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"configurationNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_tokenURI\",\"type\":\"string\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleERC721Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOperatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"deregisterToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeOfKLAY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"start\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"operatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"deregisterOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"chargeWithoutEvent\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteType\",\"type\":\"uint8\"},{\"name\":\"_threshold\",\"type\":\"uint8\"}],\"name\":\"setOperatorThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_feeLimit\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"onERC20Received\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"VERSION\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_modeMintBurn\",\"type\":\"bool\"}],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requestNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"fee\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"RequestValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"requestTxHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"handleNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"HandleValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenLocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenUnlocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"KLAYFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"ERC20FeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"feeReceiver\",\"type\":\"address\"}],\"name\":\"FeeReceiverChanged\",\"type\":\"event\"}]"
 
 // BridgeBinRuntime is the compiled bytecode used for adding genesis block without deploying code.
-const BridgeBinRuntime = `0x6080604052600436106102935760003560e01c80638f32d59b1161015a578063c263b5d6116100c1578063e744092e1161007a578063e744092e14610edd578063ee2aec6514610f10578063efdcd97414610f45578063f1656e5314610f78578063f2fde38b1461104e578063ffa1ad741461108157610293565b8063c263b5d614610d67578063c877cf3714610d7c578063cb38f40714610da8578063cf0da29014610dd2578063d8cf98ca14610ea2578063dd9222d614610ed557610293565b8063afb6022311610113578063afb6022314610afd578063b2c0103014610c7b578063b3f0067414610ce0578063b476364114610cf5578063ba479d3314610d1f578063bab2af1d14610d3457610293565b80638f32d59b146109695780639832c1d71461097e578063989ba0d3146109b15780639ef2017b146109c6578063a066a7ed146109f9578063ac6fff0b14610ae857610293565b8063488af871116101fe578063715018a6116101b7578063715018a61461084a57806375ebdc091461085f5780637c1a0302146108e257806387b04c55146108f75780638a75eee21461092a5780638da5cb5b1461095457610293565b8063488af871146107505780634b40b8261461079557806354edad72146107aa5780635526f76b146107bf5780635eb7413a146108025780636e176ec21461083557610293565b806326c23b541161025057806326c23b541461049a5780632f88396c146105705780633682a450146105b85780633a348533146105eb578063407e6bae1461061c5780634739f7e51461071557610293565b806310693fcd146102b257806313a6738a146102e557806313e7c9d8146103345780631a2ae53e1461037b5780632014e5d1146103b457806322604742146103c9575b6002546040805160008152602081019091526102b0913391611096565b005b3480156102be57600080fd5b506102b0600480360360208110156102d557600080fd5b50356001600160a01b03166112e5565b3480156102f157600080fd5b506103186004803603602081101561030857600080fd5b50356001600160401b031661133b565b604080516001600160401b039092168252519081900360200190f35b34801561034057600080fd5b506103676004803603602081101561035757600080fd5b50356001600160a01b0316611356565b604080519115158252519081900360200190f35b34801561038757600080fd5b506102b06004803603604081101561039e57600080fd5b50803590602001356001600160401b031661136b565b3480156103c057600080fd5b506103676113df565b3480156103d557600080fd5b506102b0600480360360808110156103ec57600080fd5b6001600160a01b03823581169260208101359091169160408201359190810190608081016060820135600160201b81111561042657600080fd5b82018360208201111561043857600080fd5b803590602001918460018302840111600160201b8311171561045957600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295506113ef945050505050565b3480156104a657600080fd5b506102b0600480360360a08110156104bd57600080fd5b6001600160a01b03823581169260208101359091169160408201359160608101359181019060a081016080820135600160201b8111156104fc57600080fd5b82018360208201111561050e57600080fd5b803590602001918460018302840111600160201b8311171561052f57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611471945050505050565b34801561057c57600080fd5b506102b06004803603606081101561059357600080fd5b5080356001600160a01b031690602081013590604001356001600160401b0316611525565b3480156105c457600080fd5b506102b0600480360360208110156105db57600080fd5b50356001600160a01b031661159b565b3480156105f757600080fd5b50610600611671565b604080516001600160a01b039092168252519081900360200190f35b34801561062857600080fd5b506102b0600480360361010081101561064057600080fd5b8135916001600160a01b03602082013581169260408301358216926060810135909216916080810135916001600160401b0360a083013581169260c081013590911691810190610100810160e0820135600160201b8111156106a157600080fd5b8201836020820111156106b357600080fd5b803590602001918460018302840111600160201b831117156106d457600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611680945050505050565b34801561072157600080fd5b506102b06004803603604081101561073857600080fd5b506001600160a01b0381358116916020013516611966565b34801561075c57600080fd5b506107836004803603602081101561077357600080fd5b50356001600160a01b03166119ba565b60408051918252519081900360200190f35b3480156107a157600080fd5b506103186119cc565b3480156107b657600080fd5b506103186119e2565b3480156107cb57600080fd5b506107ec600480360360208110156107e257600080fd5b503560ff166119f1565b6040805160ff9092168252519081900360200190f35b34801561080e57600080fd5b506103676004803603602081101561082557600080fd5b50356001600160a01b0316611a06565b34801561084157600080fd5b50610367611a1b565b34801561085657600080fd5b506102b0611a2b565b6102b06004803603606081101561087557600080fd5b6001600160a01b0382351691602081013591810190606081016040820135600160201b8111156108a457600080fd5b8201836020820111156108b657600080fd5b803590602001918460018302840111600160201b831117156108d757600080fd5b509092509050611abf565b3480156108ee57600080fd5b50610318611b14565b34801561090357600080fd5b506102b06004803603602081101561091a57600080fd5b50356001600160a01b0316611b2a565b34801561093657600080fd5b506103676004803603602081101561094d57600080fd5b5035611b96565b34801561096057600080fd5b50610600611bab565b34801561097557600080fd5b50610367611bbb565b34801561098a57600080fd5b50610367600480360360208110156109a157600080fd5b50356001600160401b0316611bcc565b3480156109bd57600080fd5b50610318611be1565b3480156109d257600080fd5b506102b0600480360360208110156109e957600080fd5b50356001600160a01b0316611bf7565b348015610a0557600080fd5b506102b0600480360360e0811015610a1c57600080fd5b8135916001600160a01b0360208201358116926040830135909116916060810135916001600160401b03608083013581169260a08101359091169181019060e0810160c0820135600160201b811115610a7457600080fd5b820183602082011115610a8657600080fd5b803590602001918460018302840111600160201b83111715610aa757600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611c4a945050505050565b348015610af457600080fd5b50610318611e35565b348015610b0957600080fd5b506102b06004803603610120811015610b2157600080fd5b8135916001600160a01b03602082013581169260408301358216926060810135909216916080810135916001600160401b0360a083013581169260c081013590911691810190610100810160e0820135600160201b811115610b8257600080fd5b820183602082011115610b9457600080fd5b803590602001918460018302840111600160201b83111715610bb557600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295949360208101935035915050600160201b811115610c0757600080fd5b820183602082011115610c1957600080fd5b803590602001918460018302840111600160201b83111715610c3a57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611e44945050505050565b348015610c8757600080fd5b50610c9061217c565b60408051602080825283518183015283519192839290830191858101910280838360005b83811015610ccc578181015183820152602001610cb4565b505050509050019250505060405180910390f35b348015610cec57600080fd5b506106006121de565b348015610d0157600080fd5b5061060060048036036020811015610d1857600080fd5b50356121ed565b348015610d2b57600080fd5b50610c90612214565b348015610d4057600080fd5b506102b060048036036020811015610d5757600080fd5b50356001600160a01b0316612274565b348015610d7357600080fd5b506107836122c7565b348015610d8857600080fd5b506102b060048036036020811015610d9f57600080fd5b503515156122cd565b348015610db457600080fd5b5061060060048036036020811015610dcb57600080fd5b503561233b565b348015610dde57600080fd5b506102b060048036036080811015610df557600080fd5b6001600160a01b038235811692602081013592604082013590921691810190608081016060820135600160201b811115610e2e57600080fd5b820183602082011115610e4057600080fd5b803590602001918460018302840111600160201b83111715610e6157600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550612348945050505050565b348015610eae57600080fd5b506102b060048036036020811015610ec557600080fd5b50356001600160a01b0316612355565b6102b06124a3565b348015610ee957600080fd5b5061060060048036036020811015610f0057600080fd5b50356001600160a01b03166124a5565b348015610f1c57600080fd5b506102b060048036036040811015610f3357600080fd5b5060ff813581169160200135166124c0565b348015610f5157600080fd5b506102b060048036036020811015610f6857600080fd5b50356001600160a01b0316612544565b348015610f8457600080fd5b506102b0600480360360a0811015610f9b57600080fd5b6001600160a01b03823581169260208101359091169160408201359160608101359181019060a081016080820135600160201b811115610fda57600080fd5b820183602082011115610fec57600080fd5b803590602001918460018302840111600160201b8311171561100d57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550612597945050505050565b34801561105a57600080fd5b506102b06004803603602081101561107157600080fd5b50356001600160a01b03166125a5565b34801561108d57600080fd5b506103186125f8565b600e54600160481b900460ff166110eb5760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b8134116111425760408051600160e51b62461bcd02815260206004820152601360248201527f696e73756666696369656e7420616d6f756e7400000000000000000000000000604482015290519081900360640190fd5b600061114d836125fd565b90507f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c1856000338682611185348963ffffffff61273316565b600e600a9054906101000a90046001600160401b03168789604051808960028111156111ad57fe5b60ff168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001858152602001846001600160401b03166001600160401b031681526020018060200184815260200180602001838103835260008152602001602001838103825284818151815260200191508051906020019080838360005b8381101561126d578181015183820152602001611255565b50505050905090810190601f16801561129a5780820380516001836020036101000a031916815260200191505b509a505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b03199091161790555050565b6112ed611bbb565b61132f5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b61133881612793565b50565b6010602052600090815260409020546001600160401b031681565b600b6020526000908152604090205460ff1681565b336000908152600b602052604090205460ff166113c05760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d57833981519152604482015290519081900360640190fd5b6113c981612829565b6113d2576113db565b6113db826128fb565b5050565b600e54600160481b900460ff1681565b60408051600160e01b6323b872dd0281523360048201523060248201526044810184905290516001600160a01b038616916323b872dd91606480830192600092919082900301818387803b15801561144657600080fd5b505af115801561145a573d6000803e3d6000fd5b5050505061146b843385858561292e565b50505050565b6001600160a01b0385166323b872dd3330611492878763ffffffff612d6616565b6040805163ffffffff861660e01b81526001600160a01b0394851660048201529290931660248301526044820152905160648083019260209291908290030181600087803b1580156114e357600080fd5b505af11580156114f7573d6000803e3d6000fd5b505050506040513d602081101561150d57600080fd5b5061151e9050853386868686612dca565b5050505050565b336000908152600b602052604090205460ff1661157a5760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d57833981519152604482015290519081900360640190fd5b61158381612829565b61158c57611596565b6115968383613147565b505050565b6115a3611bbb565b6115e55760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b6001600160a01b0381166000908152600b602052604090205460ff161561160b57600080fd5b6001600160a01b03166000818152600b60205260408120805460ff19166001908117909155600c805491820181559091527fdf6966c971051c3d54ec59162606531493a51404a002842f56009d7e5cf4a8c70180546001600160a01b0319169091179055565b6008546001600160a01b031681565b336000908152600b602052604090205460ff166116d55760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d57833981519152604482015290519081900360640190fd5b6116de8361319c565b6116e783613209565b6116f05761195c565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe18860018989898989886040518089815260200188600281111561173057fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b838110156117d75781810151838201526020016117bf565b50505050905090810190601f1680156118045780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a1611821886132cc565b61182b83836132e7565b600e54600160401b900460ff16156118cf57846001600160a01b03166340c10f1987866040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b15801561189d57600080fd5b505af11580156118b1573d6000803e3d6000fd5b505050506040513d60208110156118c757600080fd5b5061195c9050565b846001600160a01b031663a9059cbb87866040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b15801561192f57600080fd5b505af1158015611943573d6000803e3d6000fd5b505050506040513d602081101561195957600080fd5b50505b5050505050505050565b61196e611bbb565b6119b05760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b6113db8282613434565b60036020526000908152604090205481565b600e54600160901b90046001600160401b031681565b600f546001600160401b031681565b600d6020526000908152604090205460ff1681565b60066020526000908152604090205460ff1681565b600e54600160401b900460ff1681565b611a33611bbb565b611a755760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b6007546040516000916001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600780546001600160a01b0319169055565b6000611ad1348563ffffffff61273316565b905061151e858285858080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525061109692505050565b600e54600160501b90046001600160401b031681565b611b32611bbb565b611b745760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b600880546001600160a01b0319166001600160a01b0392909216919091179055565b60006020819052908152604090205460ff1681565b6007546001600160a01b03165b90565b6007546001600160a01b0316331490565b600a6020526000908152604090205460ff1681565b600f54600160401b90046001600160401b031681565b611bff611bbb565b611c415760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b611338816134eb565b336000908152600b602052604090205460ff16611c9f5760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d57833981519152604482015290519081900360640190fd5b611ca88361319c565b611cb183613209565b611cba57611e2c565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe18760008888600089898860405180898152602001886002811115611cfb57fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b83811015611da2578181015183820152602001611d8a565b50505050905090810190601f168015611dcf5780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a1611dec876132cc565b611df683836132e7565b6040516001600160a01b0386169085156108fc029086906000818181858888f1935050505015801561195c573d6000803e3d6000fd5b50505050505050565b600e546001600160401b031681565b336000908152600b602052604090205460ff16611e995760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d57833981519152604482015290519081900360640190fd5b611ea28461319c565b611eab84613209565b611eb457612171565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe18960028a8a8a8a8a8860405180898152602001886002811115611ef457fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b83811015611f9b578181015183820152602001611f83565b50505050905090810190601f168015611fc85780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a1611fe5896132cc565b611fef84846132e7565b600e54600160401b900460ff16156120fd57856001600160a01b03166350bb4e7f8887856040518463ffffffff1660e01b815260040180846001600160a01b03166001600160a01b0316815260200183815260200180602001828103825283818151815260200191508051906020019080838360005b8381101561207d578181015183820152602001612065565b50505050905090810190601f1680156120aa5780820380516001836020036101000a031916815260200191505b50945050505050602060405180830381600087803b1580156120cb57600080fd5b505af11580156120df573d6000803e3d6000fd5b505050506040513d60208110156120f557600080fd5b506121719050565b60408051600160e11b63214217070281523060048201526001600160a01b038981166024830152604482018890529151918816916342842e0e9160648082019260009290919082900301818387803b15801561215857600080fd5b505af115801561216c573d6000803e3d6000fd5b505050505b505050505050505050565b6060600c8054806020026020016040519081016040528092919081815260200182805480156121d457602002820191906000526020600020905b81546001600160a01b031681526001909101906020018083116121b6575b5050505050905090565b6001546001600160a01b031681565b600581815481106121fa57fe5b6000918252602090912001546001600160a01b0316905081565b606060058054806020026020016040519081016040528092919081815260200182805480156121d4576020028201919060005260206000209081546001600160a01b031681526001909101906020018083116121b6575050505050905090565b61227c611bbb565b6122be5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b61133881613582565b60025481565b6122d5611bbb565b6123175760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b600e8054911515600160481b0269ff00000000000000000019909216919091179055565b600c81815481106121fa57fe5b61146b338584868561292e565b61235d611bbb565b61239f5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b6001600160a01b0381166000908152600b602052604090205460ff166123c457600080fd5b6001600160a01b0381166000908152600b60205260408120805460ff191690555b600c548110156113db57816001600160a01b0316600c828154811061240657fe5b6000918252602090912001546001600160a01b0316141561249b57600c8054600019810190811061243357fe5b600091825260209091200154600c80546001600160a01b03909216918390811061245957fe5b600091825260209091200180546001600160a01b0319166001600160a01b0392909216919091179055600c805490612495906000198301613cb4565b506113db565b6001016123e5565b565b6004602052600090815260409020546001600160a01b031681565b6124c8611bbb565b61250a5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b80600d600084600281111561251b57fe5b60ff90811682526020820192909252604001600020805460ff1916929091169190911790555050565b61254c611bbb565b61258e5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b611338816136d5565b61151e338686868686612dca565b6125ad611bbb565b6125ef5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b6113388161371f565b600181565b600254600154600091906001600160a01b03161580159061261e5750600081115b156126fa578083101561267b5760408051600160e51b62461bcd02815260206004820152601560248201527f696e73756666696369656e74206665654c696d69740000000000000000000000604482015290519081900360640190fd5b6001546040516001600160a01b039091169082156108fc029083906000818181858888f193505050501580156126b5573d6000803e3d6000fd5b50336108fc6126ca858463ffffffff61273316565b6040518115909202916000818181858888f193505050501580156126f2573d6000803e3d6000fd5b50905061272e565b604051339084156108fc029085906000818181858888f19350505050158015612727573d6000803e3d6000fd5b5060009150505b919050565b60008282111561278d5760408051600160e51b62461bcd02815260206004820152601e60248201527f536166654d6174683a207375627472616374696f6e206f766572666c6f770000604482015290519081900360640190fd5b50900390565b6001600160a01b03818116600090815260046020526040902054166127b757600080fd5b6001600160a01b03811660009081526006602052604090205460ff16156127dd57600080fd5b6001600160a01b038116600081815260066020526040808220805460ff19166001179055517fca1b0a14e18ada4c44846768dd186e35630cdc5cfeaca83c404ae4acaafbecd79190a250565b600e546000906001600160401b038381169116146128915760408051600160e51b62461bcd02815260206004820152600e60248201527f6e6f6e6365206d69736d61746368000000000000000000000000000000000000604482015290519081900360640190fd5b60008036604051808383808284378083019250505092505050604051809103902090506128c0600184836137c3565b156128f2575050600e805467ffffffffffffffff19811660016001600160401b0392831681019092161790915561272e565b50600092915050565b600281905560405181907fa7a33d0996347e1aa55ca2206015b61b9534bdd881d59d59aa680e25eefac36590600090a250565b600e54600160481b900460ff166129835760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b6001600160a01b03851660009081526006602052604090205460ff16156129e65760408051600160e51b62461bcd02815260206004820152600c6024820152600160a11b6b3637b1b5b2b2103a37b5b2b702604482015290519081900360640190fd5b6001600160a01b0385811660009081526004602052604090205416612a485760408051600160e51b62461bcd02815260206004820152600d6024820152600160991b6c34b73b30b634b2103a37b5b2b702604482015290519081900360640190fd5b6060856001600160a01b031663c87b56dd846040518263ffffffff1660e01b81526004018082815260200191505060006040518083038186803b158015612a8e57600080fd5b505afa158015612aa2573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526020811015612acb57600080fd5b810190808051600160201b811115612ae257600080fd5b82016020810184811115612af557600080fd5b8151600160201b811182820187101715612b0e57600080fd5b5050600e54909450600160401b900460ff16159250612b8991505057856001600160a01b03166342966c68846040518263ffffffff1660e01b815260040180828152602001915050600060405180830381600087803b158015612b7057600080fd5b505af1158015612b84573d6000803e3d6000fd5b505050505b7f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c185600286868987600e600a9054906101000a90046001600160401b03168760008a604051808a6002811115612bda57fe5b60ff168152602001896001600160a01b03166001600160a01b03168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001868152602001856001600160401b03166001600160401b031681526020018060200184815260200180602001838103835286818151815260200191508051906020019080838360005b83811015612c8b578181015183820152602001612c73565b50505050905090810190601f168015612cb85780820380516001836020036101000a031916815260200191505b50838103825284518152845160209182019186019080838360005b83811015612ceb578181015183820152602001612cd3565b50505050905090810190601f168015612d185780820380516001836020036101000a031916815260200191505b509b50505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b031990911617905550505050565b600082820183811015612dc35760408051600160e51b62461bcd02815260206004820152601b60248201527f536166654d6174683a206164646974696f6e206f766572666c6f770000000000604482015290519081900360640190fd5b9392505050565b600e54600160481b900460ff16612e1f5760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b6001600160a01b03861660009081526006602052604090205460ff1615612e825760408051600160e51b62461bcd02815260206004820152600c6024820152600160a11b6b3637b1b5b2b2103a37b5b2b702604482015290519081900360640190fd5b60008311612eda5760408051600160e51b62461bcd02815260206004820152600e60248201527f7a65726f206d73672e76616c7565000000000000000000000000000000000000604482015290519081900360640190fd5b6001600160a01b0386811660009081526004602052604090205416612f3c5760408051600160e51b62461bcd02815260206004820152600d6024820152600160991b6c34b73b30b634b2103a37b5b2b702604482015290519081900360640190fd5b6000612f4986888561392f565b600e54909150600160401b900460ff1615612fbd57866001600160a01b03166342966c68856040518263ffffffff1660e01b815260040180828152602001915050600060405180830381600087803b158015612fa457600080fd5b505af1158015612fb8573d6000803e3d6000fd5b505050505b7f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c185600187878a88600e600a9054906101000a90046001600160401b031687896040518089600281111561300c57fe5b60ff168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001858152602001846001600160401b03166001600160401b031681526020018060200184815260200180602001838103835260008152602001602001838103825284818151815260200191508051906020019080838360005b838110156130cc5781810151838201526020016130b4565b50505050905090810190601f1680156130f95780820380516001836020036101000a031916815260200191505b509a505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b03199091161790555050505050565b6001600160a01b0382166000818152600360209081526040918290208490558151928352905183927fdb5ad2e76ae20cfa4e7adbc7305d7538442164d85ead9937c98620a1aa4c255b92908290030190a25050565b600e546001600160401b03808316600160901b9092041611156113385760408051600160e51b62461bcd02815260206004820152600c60248201527f72656d6f76656420766f74650000000000000000000000000000000000000000604482015290519081900360640190fd5b6001600160401b0381166000908152600a602052604081205460ff161561326b5760408051600160e51b62461bcd02815260206004820152600b6024820152600160a81b6a636c6f73656420766f746502604482015290519081900360640190fd5b600080366040518083838082843780830192505050925050506040518091039020905061329a600084836137c3565b156128f25750506001600160401b0381166000908152600a60205260409020805460ff1916600190811790915561272e565b6000908152602081905260409020805460ff19166001179055565b6001600160401b038281166000818152601060205260408120805467ffffffffffffffff1916858516179055600f54909216101561333c57600f805467ffffffffffffffff19166001600160401b0385161790555b50600e54600160901b90046001600160401b03165b600f546001600160401b039081169082161180159061338957506001600160401b038082166000908152601060205260409020541615155b156133f6576001600160401b0381811660009081526010602090815260408083208054600f80546fffffffffffffffff0000000000000000191691909616600160401b0217909455835467ffffffffffffffff1916909355600a905220805460ff19169055600101613351565b600e80546001600160401b03909216600160901b0279ffffffffffffffff000000000000000000000000000000000000199092169190911790555050565b6001600160a01b03828116600090815260046020526040902054161561345957600080fd5b6001600160a01b0380831660008181526004602052604080822080549486166001600160a01b0319958616179055600580546001810182559083527f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db00180549094168317909355915190917f158412daecdc1456d01568828bcdb18464cc7f1ce0215ddbc3f3cfede9d1e63d91a25050565b6001600160a01b038181166000908152600460205260409020541661350f57600080fd5b6001600160a01b03811660009081526006602052604090205460ff16151560011461353957600080fd5b6001600160a01b038116600081815260066020526040808220805460ff19169055517f81ec08d3372506e176c49e626d8beb7e091712ef92908a130f4ccc6524fe2eec9190a250565b6001600160a01b03818116600090815260046020526040902054166135a657600080fd5b6001600160a01b038116600090815260046020908152604080832080546001600160a01b031916905560069091528120805460ff191690555b60055481101561369d57816001600160a01b03166005828154811061360057fe5b6000918252602090912001546001600160a01b031614156136955760058054600019810190811061362d57fe5b600091825260209091200154600580546001600160a01b03909216918390811061365357fe5b600091825260209091200180546001600160a01b0319166001600160a01b0392909216919091179055600580549061368f906000198301613cb4565b5061369d565b6001016135df565b506040516001600160a01b038216907f1d735ca20b63676dde668b718be78606b061d6bd7534ff815a90a121a6c084b690600090a250565b600180546001600160a01b0319166001600160a01b0383169081179091556040517f647672599d3468abcfa241a13c9e3d34383caadb5cc80fb67c3cdfcd5f78605990600090a250565b6001600160a01b03811661376757604051600160e51b62461bcd028152600401808060200182810382526026815260200180613d116026913960400191505060405180910390fd5b6007546040516001600160a01b038084169216907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3600780546001600160a01b0319166001600160a01b0392909216919091179055565b600080600960008660028111156137d657fe5b60ff168152602080820192909252604090810160009081206001600160401b038816825283528181203382526001810190935220549091508061383a5781546001810183556000838152602090200180546001600160a01b03191633179055613861565b60008181526003830160205260409020805460ff19811660ff918216600019019091161790555b33600090815260018301602090815260408083208790558683526003850190915290205460ff166138a75760028201805460018101825560009182526020909120018490555b60008481526003830160205260408120805460ff8082166001011660ff19909116179055600d908760028111156138da57fe5b60ff90811682526020808301939093526040918201600090812054888252600387019094529190912054918116911610613923576139188686613b7c565b600192505050612dc3565b50600095945050505050565b6001600160a01b0380831660009081526003602052604081205460015491929091161580159061395f5750600081115b15613ae557808310156139bc5760408051600160e51b62461bcd02815260206004820152601560248201527f696e73756666696369656e74206665654c696d69740000000000000000000000604482015290519081900360640190fd5b60015460408051600160e01b63a9059cbb0281526001600160a01b0392831660048201526024810184905290519186169163a9059cbb916044808201926020929091908290030181600087803b158015613a1557600080fd5b505af1158015613a29573d6000803e3d6000fd5b505050506040513d6020811015613a3f57600080fd5b50506001600160a01b03841663a9059cbb86613a61868563ffffffff61273316565b6040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b158015613ab057600080fd5b505af1158015613ac4573d6000803e3d6000fd5b505050506040513d6020811015613ada57600080fd5b50909150612dc39050565b836001600160a01b031663a9059cbb86856040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b158015613b4557600080fd5b505af1158015613b59573d6000803e3d6000fd5b505050506040513d6020811015613b6f57600080fd5b5060009695505050505050565b600060096000846002811115613b8e57fe5b60ff168152602080820192909252604090810160009081206001600160401b0386168252909252812091505b815460ff82161015613c0b57816001016000836000018360ff1681548110613bde57fe5b60009182526020808320909101546001600160a01b03168352820192909252604001812055600101613bba565b5060005b600282015460ff82161015613c6157816003016000836002018360ff1681548110613c3657fe5b600091825260208083209091015483528201929092526040019020805460ff19169055600101613c0f565b5060096000846002811115613c7257fe5b60ff168152602080820192909252604090810160009081206001600160401b0386168252909252812090613ca68282613cd8565b61151e600283016000613cd8565b81548183558181111561159657600083815260209020611596918101908301613cf2565b508054600082559060005260206000209081019061133891905b611bb891905b80821115613d0c5760008155600101613cf8565b509056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573734f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726d73672e73656e646572206973206e6f7420616e206f70657261746f72000000a165627a7a72305820f32a386ce8c65c5dfce85954647308f30d11469b2c1330830331445d9f484a020029`
+const BridgeBinRuntime = `0x6080604052600436106102935760003560e01c80638f32d59b1161015a578063c263b5d6116100c1578063e744092e1161007a578063e744092e14610edd578063ee2aec6514610f10578063efdcd97414610f45578063f1656e5314610f78578063f2fde38b1461104e578063ffa1ad741461108157610293565b8063c263b5d614610d67578063c877cf3714610d7c578063cb38f40714610da8578063cf0da29014610dd2578063d8cf98ca14610ea2578063dd9222d614610ed557610293565b8063afb6022311610113578063afb6022314610afd578063b2c0103014610c7b578063b3f0067414610ce0578063b476364114610cf5578063ba479d3314610d1f578063bab2af1d14610d3457610293565b80638f32d59b146109695780639832c1d71461097e578063989ba0d3146109b15780639ef2017b146109c6578063a066a7ed146109f9578063ac6fff0b14610ae857610293565b8063488af871116101fe578063715018a6116101b7578063715018a61461084a57806375ebdc091461085f5780637c1a0302146108e257806387b04c55146108f75780638a75eee21461092a5780638da5cb5b1461095457610293565b8063488af871146107505780634b40b8261461079557806354edad72146107aa5780635526f76b146107bf5780635eb7413a146108025780636e176ec21461083557610293565b806326c23b541161025057806326c23b541461049a5780632f88396c146105705780633682a450146105b85780633a348533146105eb578063407e6bae1461061c5780634739f7e51461071557610293565b806310693fcd146102b257806313a6738a146102e557806313e7c9d8146103345780631a2ae53e1461037b5780632014e5d1146103b457806322604742146103c9575b6002546040805160008152602081019091526102b0913391611096565b005b3480156102be57600080fd5b506102b0600480360360208110156102d557600080fd5b50356001600160a01b03166112e5565b3480156102f157600080fd5b506103186004803603602081101561030857600080fd5b50356001600160401b03166113c5565b604080516001600160401b039092168252519081900360200190f35b34801561034057600080fd5b506103676004803603602081101561035757600080fd5b50356001600160a01b03166113e0565b604080519115158252519081900360200190f35b34801561038757600080fd5b506102b06004803603604081101561039e57600080fd5b50803590602001356001600160401b03166113f5565b3480156103c057600080fd5b50610367611469565b3480156103d557600080fd5b506102b0600480360360808110156103ec57600080fd5b6001600160a01b03823581169260208101359091169160408201359190810190608081016060820135600160201b81111561042657600080fd5b82018360208201111561043857600080fd5b803590602001918460018302840111600160201b8311171561045957600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611479945050505050565b3480156104a657600080fd5b506102b0600480360360a08110156104bd57600080fd5b6001600160a01b03823581169260208101359091169160408201359160608101359181019060a081016080820135600160201b8111156104fc57600080fd5b82018360208201111561050e57600080fd5b803590602001918460018302840111600160201b8311171561052f57600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295506114fb945050505050565b34801561057c57600080fd5b506102b06004803603606081101561059357600080fd5b5080356001600160a01b031690602081013590604001356001600160401b03166115af565b3480156105c457600080fd5b506102b0600480360360208110156105db57600080fd5b50356001600160a01b0316611625565b3480156105f757600080fd5b506106006116fb565b604080516001600160a01b039092168252519081900360200190f35b34801561062857600080fd5b506102b0600480360361010081101561064057600080fd5b8135916001600160a01b03602082013581169260408301358216926060810135909216916080810135916001600160401b0360a083013581169260c081013590911691810190610100810160e0820135600160201b8111156106a157600080fd5b8201836020820111156106b357600080fd5b803590602001918460018302840111600160201b831117156106d457600080fd5b91908080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525092955061170a945050505050565b34801561072157600080fd5b506102b06004803603604081101561073857600080fd5b506001600160a01b03813581169160200135166119f0565b34801561075c57600080fd5b506107836004803603602081101561077357600080fd5b50356001600160a01b0316611af1565b60408051918252519081900360200190f35b3480156107a157600080fd5b50610318611b03565b3480156107b657600080fd5b50610318611b19565b3480156107cb57600080fd5b506107ec600480360360208110156107e257600080fd5b503560ff16611b28565b6040805160ff9092168252519081900360200190f35b34801561080e57600080fd5b506103676004803603602081101561082557600080fd5b50356001600160a01b0316611b3d565b34801561084157600080fd5b50610367611b52565b34801561085657600080fd5b506102b0611b62565b6102b06004803603606081101561087557600080fd5b6001600160a01b0382351691602081013591810190606081016040820135600160201b8111156108a457600080fd5b8201836020820111156108b657600080fd5b803590602001918460018302840111600160201b831117156108d757600080fd5b509092509050611bf6565b3480156108ee57600080fd5b50610318611c4b565b34801561090357600080fd5b506102b06004803603602081101561091a57600080fd5b50356001600160a01b0316611c61565b34801561093657600080fd5b506103676004803603602081101561094d57600080fd5b5035611ccd565b34801561096057600080fd5b50610600611ce2565b34801561097557600080fd5b50610367611cf2565b34801561098a57600080fd5b50610367600480360360208110156109a157600080fd5b50356001600160401b0316611d03565b3480156109bd57600080fd5b50610318611d18565b3480156109d257600080fd5b506102b0600480360360208110156109e957600080fd5b50356001600160a01b0316611d2e565b348015610a0557600080fd5b506102b0600480360360e0811015610a1c57600080fd5b8135916001600160a01b0360208201358116926040830135909116916060810135916001600160401b03608083013581169260a08101359091169181019060e0810160c0820135600160201b811115610a7457600080fd5b820183602082011115610a8657600080fd5b803590602001918460018302840111600160201b83111715610aa757600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611e0f945050505050565b348015610af457600080fd5b50610318611ffa565b348015610b0957600080fd5b506102b06004803603610120811015610b2157600080fd5b8135916001600160a01b03602082013581169260408301358216926060810135909216916080810135916001600160401b0360a083013581169260c081013590911691810190610100810160e0820135600160201b811115610b8257600080fd5b820183602082011115610b9457600080fd5b803590602001918460018302840111600160201b83111715610bb557600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295949360208101935035915050600160201b811115610c0757600080fd5b820183602082011115610c1957600080fd5b803590602001918460018302840111600160201b83111715610c3a57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550612009945050505050565b348015610c8757600080fd5b50610c90612341565b60408051602080825283518183015283519192839290830191858101910280838360005b83811015610ccc578181015183820152602001610cb4565b505050509050019250505060405180910390f35b348015610cec57600080fd5b506106006123a3565b348015610d0157600080fd5b5061060060048036036020811015610d1857600080fd5b50356123b2565b348015610d2b57600080fd5b50610c906123d9565b348015610d4057600080fd5b506102b060048036036020811015610d5757600080fd5b50356001600160a01b0316612439565b348015610d7357600080fd5b506107836125d6565b348015610d8857600080fd5b506102b060048036036020811015610d9f57600080fd5b503515156125dc565b348015610db457600080fd5b5061060060048036036020811015610dcb57600080fd5b503561264a565b348015610dde57600080fd5b506102b060048036036080811015610df557600080fd5b6001600160a01b038235811692602081013592604082013590921691810190608081016060820135600160201b811115610e2e57600080fd5b820183602082011115610e4057600080fd5b803590602001918460018302840111600160201b83111715610e6157600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550612657945050505050565b348015610eae57600080fd5b506102b060048036036020811015610ec557600080fd5b50356001600160a01b0316612664565b6102b06127b2565b348015610ee957600080fd5b5061060060048036036020811015610f0057600080fd5b50356001600160a01b03166127b4565b348015610f1c57600080fd5b506102b060048036036040811015610f3357600080fd5b5060ff813581169160200135166127cf565b348015610f5157600080fd5b506102b060048036036020811015610f6857600080fd5b50356001600160a01b0316612853565b348015610f8457600080fd5b506102b0600480360360a0811015610f9b57600080fd5b6001600160a01b03823581169260208101359091169160408201359160608101359181019060a081016080820135600160201b811115610fda57600080fd5b820183602082011115610fec57600080fd5b803590602001918460018302840111600160201b8311171561100d57600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295506128a9945050505050565b34801561105a57600080fd5b506102b06004803603602081101561107157600080fd5b50356001600160a01b03166128b7565b34801561108d57600080fd5b5061031861290a565b600e54600160481b900460ff166110eb5760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b8134116111425760408051600160e51b62461bcd02815260206004820152601360248201527f696e73756666696369656e7420616d6f756e7400000000000000000000000000604482015290519081900360640190fd5b600061114d8361290f565b90507f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c1856000338682611185348963ffffffff612a4516565b600e600a9054906101000a90046001600160401b03168789604051808960028111156111ad57fe5b60ff168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001858152602001846001600160401b03166001600160401b031681526020018060200184815260200180602001838103835260008152602001602001838103825284818151815260200191508051906020019080838360005b8381101561126d578181015183820152602001611255565b50505050905090810190601f16801561129a5780820380516001836020036101000a031916815260200191505b509a505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b03199091161790555050565b6112ed611cf2565b61132f5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b038181166000908152600660205260409020541661135357600080fd5b6001600160a01b03811660009081526008602052604090205460ff161561137957600080fd5b6001600160a01b038116600081815260086020526040808220805460ff19166001179055517fca1b0a14e18ada4c44846768dd186e35630cdc5cfeaca83c404ae4acaafbecd79190a250565b6010602052600090815260409020546001600160401b031681565b600b6020526000908152604090205460ff1681565b336000908152600b602052604090205460ff1661144a5760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d32833981519152604482015290519081900360640190fd5b61145381612aa5565b61145c57611465565b61146582612b77565b5050565b600e54600160481b900460ff1681565b60408051600160e01b6323b872dd0281523360048201523060248201526044810184905290516001600160a01b038616916323b872dd91606480830192600092919082900301818387803b1580156114d057600080fd5b505af11580156114e4573d6000803e3d6000fd5b505050506114f58433858585612baa565b50505050565b6001600160a01b0385166323b872dd333061151c878763ffffffff612fe216565b6040805163ffffffff861660e01b81526001600160a01b0394851660048201529290931660248301526044820152905160648083019260209291908290030181600087803b15801561156d57600080fd5b505af1158015611581573d6000803e3d6000fd5b505050506040513d602081101561159757600080fd5b506115a89050853386868686613046565b5050505050565b336000908152600b602052604090205460ff166116045760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d32833981519152604482015290519081900360640190fd5b61160d81612aa5565b61161657611620565b61162083836133c3565b505050565b61162d611cf2565b61166f5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b0381166000908152600b602052604090205460ff161561169557600080fd5b6001600160a01b03166000818152600b60205260408120805460ff19166001908117909155600c805491820181559091527fdf6966c971051c3d54ec59162606531493a51404a002842f56009d7e5cf4a8c70180546001600160a01b0319169091179055565b6005546001600160a01b031681565b336000908152600b602052604090205460ff1661175f5760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d32833981519152604482015290519081900360640190fd5b61176883613418565b61177183613485565b61177a576119e6565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe1886001898989898988604051808981526020018860028111156117ba57fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b83811015611861578181015183820152602001611849565b50505050905090810190601f16801561188e5780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a16118ab88613548565b6118b58383613563565b600e54600160401b900460ff161561195957846001600160a01b03166340c10f1987866040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b15801561192757600080fd5b505af115801561193b573d6000803e3d6000fd5b505050506040513d602081101561195157600080fd5b506119e69050565b846001600160a01b031663a9059cbb87866040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b1580156119b957600080fd5b505af11580156119cd573d6000803e3d6000fd5b505050506040513d60208110156119e357600080fd5b50505b5050505050505050565b6119f8611cf2565b611a3a5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b038281166000908152600660205260409020541615611a5f57600080fd5b6001600160a01b0380831660008181526006602052604080822080549486166001600160a01b0319958616179055600780546001810182559083527fa66cc928b5edb82af9bd49922954155ab7b0942694bea4ce44661d9a8736c6880180549094168317909355915190917f158412daecdc1456d01568828bcdb18464cc7f1ce0215ddbc3f3cfede9d1e63d91a25050565b60036020526000908152604090205481565b600e54600160901b90046001600160401b031681565b600f546001600160401b031681565b600d6020526000908152604090205460ff1681565b60086020526000908152604090205460ff1681565b600e54600160401b900460ff1681565b611b6a611cf2565b611bac5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6004546040516000916001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600480546001600160a01b0319169055565b6000611c08348563ffffffff612a4516565b90506115a8858285858080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525061109692505050565b600e54600160501b90046001600160401b031681565b611c69611cf2565b611cab5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b600580546001600160a01b0319166001600160a01b0392909216919091179055565b60006020819052908152604090205460ff1681565b6004546001600160a01b03165b90565b6004546001600160a01b0316331490565b600a6020526000908152604090205460ff1681565b600f54600160401b90046001600160401b031681565b611d36611cf2565b611d785760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b0381811660009081526006602052604090205416611d9c57600080fd5b6001600160a01b03811660009081526008602052604090205460ff161515600114611dc657600080fd5b6001600160a01b038116600081815260086020526040808220805460ff19169055517f81ec08d3372506e176c49e626d8beb7e091712ef92908a130f4ccc6524fe2eec9190a250565b336000908152600b602052604090205460ff16611e645760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d32833981519152604482015290519081900360640190fd5b611e6d83613418565b611e7683613485565b611e7f57611ff1565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe18760008888600089898860405180898152602001886002811115611ec057fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b83811015611f67578181015183820152602001611f4f565b50505050905090810190601f168015611f945780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a1611fb187613548565b611fbb8383613563565b6040516001600160a01b0386169085156108fc029086906000818181858888f193505050501580156119e6573d6000803e3d6000fd5b50505050505050565b600e546001600160401b031681565b336000908152600b602052604090205460ff1661205e5760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d32833981519152604482015290519081900360640190fd5b61206784613418565b61207084613485565b61207957612336565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe18960028a8a8a8a8a88604051808981526020018860028111156120b957fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b83811015612160578181015183820152602001612148565b50505050905090810190601f16801561218d5780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a16121aa89613548565b6121b48484613563565b600e54600160401b900460ff16156122c257856001600160a01b03166350bb4e7f8887856040518463ffffffff1660e01b815260040180846001600160a01b03166001600160a01b0316815260200183815260200180602001828103825283818151815260200191508051906020019080838360005b8381101561224257818101518382015260200161222a565b50505050905090810190601f16801561226f5780820380516001836020036101000a031916815260200191505b50945050505050602060405180830381600087803b15801561229057600080fd5b505af11580156122a4573d6000803e3d6000fd5b505050506040513d60208110156122ba57600080fd5b506123369050565b60408051600160e11b63214217070281523060048201526001600160a01b038981166024830152604482018890529151918816916342842e0e9160648082019260009290919082900301818387803b15801561231d57600080fd5b505af1158015612331573d6000803e3d6000fd5b505050505b505050505050505050565b6060600c80548060200260200160405190810160405280929190818152602001828054801561239957602002820191906000526020600020905b81546001600160a01b0316815260019091019060200180831161237b575b5050505050905090565b6001546001600160a01b031681565b600781815481106123bf57fe5b6000918252602090912001546001600160a01b0316905081565b60606007805480602002602001604051908101604052809291908181526020018280548015612399576020028201919060005260206000209081546001600160a01b0316815260019091019060200180831161237b575050505050905090565b612441611cf2565b6124835760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b03818116600090815260066020526040902054166124a757600080fd5b6001600160a01b038116600090815260066020908152604080832080546001600160a01b031916905560089091528120805460ff191690555b60075481101561259e57816001600160a01b03166007828154811061250157fe5b6000918252602090912001546001600160a01b031614156125965760078054600019810190811061252e57fe5b600091825260209091200154600780546001600160a01b03909216918390811061255457fe5b600091825260209091200180546001600160a01b0319166001600160a01b03929092169190911790556007805490612590906000198301613c8f565b5061259e565b6001016124e0565b506040516001600160a01b038216907f1d735ca20b63676dde668b718be78606b061d6bd7534ff815a90a121a6c084b690600090a250565b60025481565b6125e4611cf2565b6126265760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b600e8054911515600160481b0269ff00000000000000000019909216919091179055565b600c81815481106123bf57fe5b6114f53385848685612baa565b61266c611cf2565b6126ae5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b0381166000908152600b602052604090205460ff166126d357600080fd5b6001600160a01b0381166000908152600b60205260408120805460ff191690555b600c5481101561146557816001600160a01b0316600c828154811061271557fe5b6000918252602090912001546001600160a01b031614156127aa57600c8054600019810190811061274257fe5b600091825260209091200154600c80546001600160a01b03909216918390811061276857fe5b600091825260209091200180546001600160a01b0319166001600160a01b0392909216919091179055600c8054906127a4906000198301613c8f565b50611465565b6001016126f4565b565b6006602052600090815260409020546001600160a01b031681565b6127d7611cf2565b6128195760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b80600d600084600281111561282a57fe5b60ff90811682526020820192909252604001600020805460ff1916929091169190911790555050565b61285b611cf2565b61289d5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6128a6816136b0565b50565b6115a8338686868686613046565b6128bf611cf2565b6129015760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6128a6816136fa565b600181565b600254600154600091906001600160a01b0316158015906129305750600081115b15612a0c578083101561298d5760408051600160e51b62461bcd02815260206004820152601560248201527f696e73756666696369656e74206665654c696d69740000000000000000000000604482015290519081900360640190fd5b6001546040516001600160a01b039091169082156108fc029083906000818181858888f193505050501580156129c7573d6000803e3d6000fd5b50336108fc6129dc858463ffffffff612a4516565b6040518115909202916000818181858888f19350505050158015612a04573d6000803e3d6000fd5b509050612a40565b604051339084156108fc029085906000818181858888f19350505050158015612a39573d6000803e3d6000fd5b5060009150505b919050565b600082821115612a9f5760408051600160e51b62461bcd02815260206004820152601e60248201527f536166654d6174683a207375627472616374696f6e206f766572666c6f770000604482015290519081900360640190fd5b50900390565b600e546000906001600160401b03838116911614612b0d5760408051600160e51b62461bcd02815260206004820152600e60248201527f6e6f6e6365206d69736d61746368000000000000000000000000000000000000604482015290519081900360640190fd5b6000803660405180838380828437808301925050509250505060405180910390209050612b3c6001848361379e565b15612b6e575050600e805467ffffffffffffffff19811660016001600160401b03928316810190921617909155612a40565b50600092915050565b600281905560405181907fa7a33d0996347e1aa55ca2206015b61b9534bdd881d59d59aa680e25eefac36590600090a250565b600e54600160481b900460ff16612bff5760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b6001600160a01b03851660009081526008602052604090205460ff1615612c625760408051600160e51b62461bcd02815260206004820152600c6024820152600160a11b6b3637b1b5b2b2103a37b5b2b702604482015290519081900360640190fd5b6001600160a01b0385811660009081526006602052604090205416612cc45760408051600160e51b62461bcd02815260206004820152600d6024820152600160991b6c34b73b30b634b2103a37b5b2b702604482015290519081900360640190fd5b6060856001600160a01b031663c87b56dd846040518263ffffffff1660e01b81526004018082815260200191505060006040518083038186803b158015612d0a57600080fd5b505afa158015612d1e573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526020811015612d4757600080fd5b810190808051600160201b811115612d5e57600080fd5b82016020810184811115612d7157600080fd5b8151600160201b811182820187101715612d8a57600080fd5b5050600e54909450600160401b900460ff16159250612e0591505057856001600160a01b03166342966c68846040518263ffffffff1660e01b815260040180828152602001915050600060405180830381600087803b158015612dec57600080fd5b505af1158015612e00573d6000803e3d6000fd5b505050505b7f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c185600286868987600e600a9054906101000a90046001600160401b03168760008a604051808a6002811115612e5657fe5b60ff168152602001896001600160a01b03166001600160a01b03168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001868152602001856001600160401b03166001600160401b031681526020018060200184815260200180602001838103835286818151815260200191508051906020019080838360005b83811015612f07578181015183820152602001612eef565b50505050905090810190601f168015612f345780820380516001836020036101000a031916815260200191505b50838103825284518152845160209182019186019080838360005b83811015612f67578181015183820152602001612f4f565b50505050905090810190601f168015612f945780820380516001836020036101000a031916815260200191505b509b50505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b031990911617905550505050565b60008282018381101561303f5760408051600160e51b62461bcd02815260206004820152601b60248201527f536166654d6174683a206164646974696f6e206f766572666c6f770000000000604482015290519081900360640190fd5b9392505050565b600e54600160481b900460ff1661309b5760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b6001600160a01b03861660009081526008602052604090205460ff16156130fe5760408051600160e51b62461bcd02815260206004820152600c6024820152600160a11b6b3637b1b5b2b2103a37b5b2b702604482015290519081900360640190fd5b600083116131565760408051600160e51b62461bcd02815260206004820152600e60248201527f7a65726f206d73672e76616c7565000000000000000000000000000000000000604482015290519081900360640190fd5b6001600160a01b03868116600090815260066020526040902054166131b85760408051600160e51b62461bcd02815260206004820152600d6024820152600160991b6c34b73b30b634b2103a37b5b2b702604482015290519081900360640190fd5b60006131c586888561390a565b600e54909150600160401b900460ff161561323957866001600160a01b03166342966c68856040518263ffffffff1660e01b815260040180828152602001915050600060405180830381600087803b15801561322057600080fd5b505af1158015613234573d6000803e3d6000fd5b505050505b7f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c185600187878a88600e600a9054906101000a90046001600160401b031687896040518089600281111561328857fe5b60ff168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001858152602001846001600160401b03166001600160401b031681526020018060200184815260200180602001838103835260008152602001602001838103825284818151815260200191508051906020019080838360005b83811015613348578181015183820152602001613330565b50505050905090810190601f1680156133755780820380516001836020036101000a031916815260200191505b509a505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b03199091161790555050505050565b6001600160a01b0382166000818152600360209081526040918290208490558151928352905183927fdb5ad2e76ae20cfa4e7adbc7305d7538442164d85ead9937c98620a1aa4c255b92908290030190a25050565b600e546001600160401b03808316600160901b9092041611156128a65760408051600160e51b62461bcd02815260206004820152600c60248201527f72656d6f76656420766f74650000000000000000000000000000000000000000604482015290519081900360640190fd5b6001600160401b0381166000908152600a602052604081205460ff16156134e75760408051600160e51b62461bcd02815260206004820152600b6024820152600160a81b6a636c6f73656420766f746502604482015290519081900360640190fd5b60008036604051808383808284378083019250505092505050604051809103902090506135166000848361379e565b15612b6e5750506001600160401b0381166000908152600a60205260409020805460ff19166001908117909155612a40565b6000908152602081905260409020805460ff19166001179055565b6001600160401b038281166000818152601060205260408120805467ffffffffffffffff1916858516179055600f5490921610156135b857600f805467ffffffffffffffff19166001600160401b0385161790555b50600e54600160901b90046001600160401b03165b600f546001600160401b039081169082161180159061360557506001600160401b038082166000908152601060205260409020541615155b15613672576001600160401b0381811660009081526010602090815260408083208054600f80546fffffffffffffffff0000000000000000191691909616600160401b0217909455835467ffffffffffffffff1916909355600a905220805460ff191690556001016135cd565b600e80546001600160401b03909216600160901b0279ffffffffffffffff000000000000000000000000000000000000199092169190911790555050565b600180546001600160a01b0319166001600160a01b0383169081179091556040517f647672599d3468abcfa241a13c9e3d34383caadb5cc80fb67c3cdfcd5f78605990600090a250565b6001600160a01b03811661374257604051600160e51b62461bcd028152600401808060200182810382526026815260200180613cec6026913960400191505060405180910390fd5b6004546040516001600160a01b038084169216907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3600480546001600160a01b0319166001600160a01b0392909216919091179055565b600080600960008660028111156137b157fe5b60ff168152602080820192909252604090810160009081206001600160401b03881682528352818120338252600181019093522054909150806138155781546001810183556000838152602090200180546001600160a01b0319163317905561383c565b60008181526003830160205260409020805460ff19811660ff918216600019019091161790555b33600090815260018301602090815260408083208790558683526003850190915290205460ff166138825760028201805460018101825560009182526020909120018490555b60008481526003830160205260408120805460ff8082166001011660ff19909116179055600d908760028111156138b557fe5b60ff908116825260208083019390935260409182016000908120548882526003870190945291909120549181169116106138fe576138f38686613b57565b60019250505061303f565b50600095945050505050565b6001600160a01b0380831660009081526003602052604081205460015491929091161580159061393a5750600081115b15613ac057808310156139975760408051600160e51b62461bcd02815260206004820152601560248201527f696e73756666696369656e74206665654c696d69740000000000000000000000604482015290519081900360640190fd5b60015460408051600160e01b63a9059cbb0281526001600160a01b0392831660048201526024810184905290519186169163a9059cbb916044808201926020929091908290030181600087803b1580156139f057600080fd5b505af1158015613a04573d6000803e3d6000fd5b505050506040513d6020811015613a1a57600080fd5b50506001600160a01b03841663a9059cbb86613a3c868563ffffffff612a4516565b6040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b158015613a8b57600080fd5b505af1158015613a9f573d6000803e3d6000fd5b505050506040513d6020811015613ab557600080fd5b5090915061303f9050565b836001600160a01b031663a9059cbb86856040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b158015613b2057600080fd5b505af1158015613b34573d6000803e3d6000fd5b505050506040513d6020811015613b4a57600080fd5b5060009695505050505050565b600060096000846002811115613b6957fe5b60ff168152602080820192909252604090810160009081206001600160401b0386168252909252812091505b815460ff82161015613be657816001016000836000018360ff1681548110613bb957fe5b60009182526020808320909101546001600160a01b03168352820192909252604001812055600101613b95565b5060005b600282015460ff82161015613c3c57816003016000836002018360ff1681548110613c1157fe5b600091825260208083209091015483528201929092526040019020805460ff19169055600101613bea565b5060096000846002811115613c4d57fe5b60ff168152602080820192909252604090810160009081206001600160401b0386168252909252812090613c818282613cb3565b6115a8600283016000613cb3565b81548183558181111561162057600083815260209020611620918101908301613ccd565b50805460008255906000526020600020908101906128a691905b611cef91905b80821115613ce75760008155600101613cd3565b509056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573734f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726d73672e73656e646572206973206e6f7420616e206f70657261746f72000000a165627a7a7230582030b1021914159cfd4f18cbd044016b8f95f61851aefd887d2c2c7849bde47b750029`
 
 // BridgeBin is the compiled bytecode used for deploying new contracts.
-const BridgeBin = `0x60806040819052600180546001600160a01b03191690556000600255600e8054600160401b60ff0219169055600f8054600160401b600160801b0319166801000000000000000017905560208062003f3e8339810180604052602081101561006657600080fd5b5051600180546001600160a01b03199081169091556007805490911633179081905560405182916001600160a01b0316906000907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a360005b600260ff821610156100f45760ff81166000908152600d60205260409020805460ff19166001908117909155016100c2565b50336000818152600b60205260408120805460ff19166001908117909155600c805491820181559091527fdf6966c971051c3d54ec59162606531493a51404a002842f56009d7e5cf4a8c70180546001600160a01b0319169091179055600e8054600160481b60ff02199215156801000000000000000002600160401b60ff02199091161791909116690100000000000000000017905550613da2806200019c6000396000f3fe6080604052600436106102935760003560e01c80638f32d59b1161015a578063c263b5d6116100c1578063e744092e1161007a578063e744092e14610edd578063ee2aec6514610f10578063efdcd97414610f45578063f1656e5314610f78578063f2fde38b1461104e578063ffa1ad741461108157610293565b8063c263b5d614610d67578063c877cf3714610d7c578063cb38f40714610da8578063cf0da29014610dd2578063d8cf98ca14610ea2578063dd9222d614610ed557610293565b8063afb6022311610113578063afb6022314610afd578063b2c0103014610c7b578063b3f0067414610ce0578063b476364114610cf5578063ba479d3314610d1f578063bab2af1d14610d3457610293565b80638f32d59b146109695780639832c1d71461097e578063989ba0d3146109b15780639ef2017b146109c6578063a066a7ed146109f9578063ac6fff0b14610ae857610293565b8063488af871116101fe578063715018a6116101b7578063715018a61461084a57806375ebdc091461085f5780637c1a0302146108e257806387b04c55146108f75780638a75eee21461092a5780638da5cb5b1461095457610293565b8063488af871146107505780634b40b8261461079557806354edad72146107aa5780635526f76b146107bf5780635eb7413a146108025780636e176ec21461083557610293565b806326c23b541161025057806326c23b541461049a5780632f88396c146105705780633682a450146105b85780633a348533146105eb578063407e6bae1461061c5780634739f7e51461071557610293565b806310693fcd146102b257806313a6738a146102e557806313e7c9d8146103345780631a2ae53e1461037b5780632014e5d1146103b457806322604742146103c9575b6002546040805160008152602081019091526102b0913391611096565b005b3480156102be57600080fd5b506102b0600480360360208110156102d557600080fd5b50356001600160a01b03166112e5565b3480156102f157600080fd5b506103186004803603602081101561030857600080fd5b50356001600160401b031661133b565b604080516001600160401b039092168252519081900360200190f35b34801561034057600080fd5b506103676004803603602081101561035757600080fd5b50356001600160a01b0316611356565b604080519115158252519081900360200190f35b34801561038757600080fd5b506102b06004803603604081101561039e57600080fd5b50803590602001356001600160401b031661136b565b3480156103c057600080fd5b506103676113df565b3480156103d557600080fd5b506102b0600480360360808110156103ec57600080fd5b6001600160a01b03823581169260208101359091169160408201359190810190608081016060820135600160201b81111561042657600080fd5b82018360208201111561043857600080fd5b803590602001918460018302840111600160201b8311171561045957600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295506113ef945050505050565b3480156104a657600080fd5b506102b0600480360360a08110156104bd57600080fd5b6001600160a01b03823581169260208101359091169160408201359160608101359181019060a081016080820135600160201b8111156104fc57600080fd5b82018360208201111561050e57600080fd5b803590602001918460018302840111600160201b8311171561052f57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611471945050505050565b34801561057c57600080fd5b506102b06004803603606081101561059357600080fd5b5080356001600160a01b031690602081013590604001356001600160401b0316611525565b3480156105c457600080fd5b506102b0600480360360208110156105db57600080fd5b50356001600160a01b031661159b565b3480156105f757600080fd5b50610600611671565b604080516001600160a01b039092168252519081900360200190f35b34801561062857600080fd5b506102b0600480360361010081101561064057600080fd5b8135916001600160a01b03602082013581169260408301358216926060810135909216916080810135916001600160401b0360a083013581169260c081013590911691810190610100810160e0820135600160201b8111156106a157600080fd5b8201836020820111156106b357600080fd5b803590602001918460018302840111600160201b831117156106d457600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611680945050505050565b34801561072157600080fd5b506102b06004803603604081101561073857600080fd5b506001600160a01b0381358116916020013516611966565b34801561075c57600080fd5b506107836004803603602081101561077357600080fd5b50356001600160a01b03166119ba565b60408051918252519081900360200190f35b3480156107a157600080fd5b506103186119cc565b3480156107b657600080fd5b506103186119e2565b3480156107cb57600080fd5b506107ec600480360360208110156107e257600080fd5b503560ff166119f1565b6040805160ff9092168252519081900360200190f35b34801561080e57600080fd5b506103676004803603602081101561082557600080fd5b50356001600160a01b0316611a06565b34801561084157600080fd5b50610367611a1b565b34801561085657600080fd5b506102b0611a2b565b6102b06004803603606081101561087557600080fd5b6001600160a01b0382351691602081013591810190606081016040820135600160201b8111156108a457600080fd5b8201836020820111156108b657600080fd5b803590602001918460018302840111600160201b831117156108d757600080fd5b509092509050611abf565b3480156108ee57600080fd5b50610318611b14565b34801561090357600080fd5b506102b06004803603602081101561091a57600080fd5b50356001600160a01b0316611b2a565b34801561093657600080fd5b506103676004803603602081101561094d57600080fd5b5035611b96565b34801561096057600080fd5b50610600611bab565b34801561097557600080fd5b50610367611bbb565b34801561098a57600080fd5b50610367600480360360208110156109a157600080fd5b50356001600160401b0316611bcc565b3480156109bd57600080fd5b50610318611be1565b3480156109d257600080fd5b506102b0600480360360208110156109e957600080fd5b50356001600160a01b0316611bf7565b348015610a0557600080fd5b506102b0600480360360e0811015610a1c57600080fd5b8135916001600160a01b0360208201358116926040830135909116916060810135916001600160401b03608083013581169260a08101359091169181019060e0810160c0820135600160201b811115610a7457600080fd5b820183602082011115610a8657600080fd5b803590602001918460018302840111600160201b83111715610aa757600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611c4a945050505050565b348015610af457600080fd5b50610318611e35565b348015610b0957600080fd5b506102b06004803603610120811015610b2157600080fd5b8135916001600160a01b03602082013581169260408301358216926060810135909216916080810135916001600160401b0360a083013581169260c081013590911691810190610100810160e0820135600160201b811115610b8257600080fd5b820183602082011115610b9457600080fd5b803590602001918460018302840111600160201b83111715610bb557600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295949360208101935035915050600160201b811115610c0757600080fd5b820183602082011115610c1957600080fd5b803590602001918460018302840111600160201b83111715610c3a57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611e44945050505050565b348015610c8757600080fd5b50610c9061217c565b60408051602080825283518183015283519192839290830191858101910280838360005b83811015610ccc578181015183820152602001610cb4565b505050509050019250505060405180910390f35b348015610cec57600080fd5b506106006121de565b348015610d0157600080fd5b5061060060048036036020811015610d1857600080fd5b50356121ed565b348015610d2b57600080fd5b50610c90612214565b348015610d4057600080fd5b506102b060048036036020811015610d5757600080fd5b50356001600160a01b0316612274565b348015610d7357600080fd5b506107836122c7565b348015610d8857600080fd5b506102b060048036036020811015610d9f57600080fd5b503515156122cd565b348015610db457600080fd5b5061060060048036036020811015610dcb57600080fd5b503561233b565b348015610dde57600080fd5b506102b060048036036080811015610df557600080fd5b6001600160a01b038235811692602081013592604082013590921691810190608081016060820135600160201b811115610e2e57600080fd5b820183602082011115610e4057600080fd5b803590602001918460018302840111600160201b83111715610e6157600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550612348945050505050565b348015610eae57600080fd5b506102b060048036036020811015610ec557600080fd5b50356001600160a01b0316612355565b6102b06124a3565b348015610ee957600080fd5b5061060060048036036020811015610f0057600080fd5b50356001600160a01b03166124a5565b348015610f1c57600080fd5b506102b060048036036040811015610f3357600080fd5b5060ff813581169160200135166124c0565b348015610f5157600080fd5b506102b060048036036020811015610f6857600080fd5b50356001600160a01b0316612544565b348015610f8457600080fd5b506102b0600480360360a0811015610f9b57600080fd5b6001600160a01b03823581169260208101359091169160408201359160608101359181019060a081016080820135600160201b811115610fda57600080fd5b820183602082011115610fec57600080fd5b803590602001918460018302840111600160201b8311171561100d57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550612597945050505050565b34801561105a57600080fd5b506102b06004803603602081101561107157600080fd5b50356001600160a01b03166125a5565b34801561108d57600080fd5b506103186125f8565b600e54600160481b900460ff166110eb5760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b8134116111425760408051600160e51b62461bcd02815260206004820152601360248201527f696e73756666696369656e7420616d6f756e7400000000000000000000000000604482015290519081900360640190fd5b600061114d836125fd565b90507f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c1856000338682611185348963ffffffff61273316565b600e600a9054906101000a90046001600160401b03168789604051808960028111156111ad57fe5b60ff168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001858152602001846001600160401b03166001600160401b031681526020018060200184815260200180602001838103835260008152602001602001838103825284818151815260200191508051906020019080838360005b8381101561126d578181015183820152602001611255565b50505050905090810190601f16801561129a5780820380516001836020036101000a031916815260200191505b509a505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b03199091161790555050565b6112ed611bbb565b61132f5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b61133881612793565b50565b6010602052600090815260409020546001600160401b031681565b600b6020526000908152604090205460ff1681565b336000908152600b602052604090205460ff166113c05760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d57833981519152604482015290519081900360640190fd5b6113c981612829565b6113d2576113db565b6113db826128fb565b5050565b600e54600160481b900460ff1681565b60408051600160e01b6323b872dd0281523360048201523060248201526044810184905290516001600160a01b038616916323b872dd91606480830192600092919082900301818387803b15801561144657600080fd5b505af115801561145a573d6000803e3d6000fd5b5050505061146b843385858561292e565b50505050565b6001600160a01b0385166323b872dd3330611492878763ffffffff612d6616565b6040805163ffffffff861660e01b81526001600160a01b0394851660048201529290931660248301526044820152905160648083019260209291908290030181600087803b1580156114e357600080fd5b505af11580156114f7573d6000803e3d6000fd5b505050506040513d602081101561150d57600080fd5b5061151e9050853386868686612dca565b5050505050565b336000908152600b602052604090205460ff1661157a5760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d57833981519152604482015290519081900360640190fd5b61158381612829565b61158c57611596565b6115968383613147565b505050565b6115a3611bbb565b6115e55760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b6001600160a01b0381166000908152600b602052604090205460ff161561160b57600080fd5b6001600160a01b03166000818152600b60205260408120805460ff19166001908117909155600c805491820181559091527fdf6966c971051c3d54ec59162606531493a51404a002842f56009d7e5cf4a8c70180546001600160a01b0319169091179055565b6008546001600160a01b031681565b336000908152600b602052604090205460ff166116d55760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d57833981519152604482015290519081900360640190fd5b6116de8361319c565b6116e783613209565b6116f05761195c565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe18860018989898989886040518089815260200188600281111561173057fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b838110156117d75781810151838201526020016117bf565b50505050905090810190601f1680156118045780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a1611821886132cc565b61182b83836132e7565b600e54600160401b900460ff16156118cf57846001600160a01b03166340c10f1987866040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b15801561189d57600080fd5b505af11580156118b1573d6000803e3d6000fd5b505050506040513d60208110156118c757600080fd5b5061195c9050565b846001600160a01b031663a9059cbb87866040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b15801561192f57600080fd5b505af1158015611943573d6000803e3d6000fd5b505050506040513d602081101561195957600080fd5b50505b5050505050505050565b61196e611bbb565b6119b05760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b6113db8282613434565b60036020526000908152604090205481565b600e54600160901b90046001600160401b031681565b600f546001600160401b031681565b600d6020526000908152604090205460ff1681565b60066020526000908152604090205460ff1681565b600e54600160401b900460ff1681565b611a33611bbb565b611a755760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b6007546040516000916001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600780546001600160a01b0319169055565b6000611ad1348563ffffffff61273316565b905061151e858285858080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525061109692505050565b600e54600160501b90046001600160401b031681565b611b32611bbb565b611b745760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b600880546001600160a01b0319166001600160a01b0392909216919091179055565b60006020819052908152604090205460ff1681565b6007546001600160a01b03165b90565b6007546001600160a01b0316331490565b600a6020526000908152604090205460ff1681565b600f54600160401b90046001600160401b031681565b611bff611bbb565b611c415760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b611338816134eb565b336000908152600b602052604090205460ff16611c9f5760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d57833981519152604482015290519081900360640190fd5b611ca88361319c565b611cb183613209565b611cba57611e2c565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe18760008888600089898860405180898152602001886002811115611cfb57fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b83811015611da2578181015183820152602001611d8a565b50505050905090810190601f168015611dcf5780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a1611dec876132cc565b611df683836132e7565b6040516001600160a01b0386169085156108fc029086906000818181858888f1935050505015801561195c573d6000803e3d6000fd5b50505050505050565b600e546001600160401b031681565b336000908152600b602052604090205460ff16611e995760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d57833981519152604482015290519081900360640190fd5b611ea28461319c565b611eab84613209565b611eb457612171565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe18960028a8a8a8a8a8860405180898152602001886002811115611ef457fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b83811015611f9b578181015183820152602001611f83565b50505050905090810190601f168015611fc85780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a1611fe5896132cc565b611fef84846132e7565b600e54600160401b900460ff16156120fd57856001600160a01b03166350bb4e7f8887856040518463ffffffff1660e01b815260040180846001600160a01b03166001600160a01b0316815260200183815260200180602001828103825283818151815260200191508051906020019080838360005b8381101561207d578181015183820152602001612065565b50505050905090810190601f1680156120aa5780820380516001836020036101000a031916815260200191505b50945050505050602060405180830381600087803b1580156120cb57600080fd5b505af11580156120df573d6000803e3d6000fd5b505050506040513d60208110156120f557600080fd5b506121719050565b60408051600160e11b63214217070281523060048201526001600160a01b038981166024830152604482018890529151918816916342842e0e9160648082019260009290919082900301818387803b15801561215857600080fd5b505af115801561216c573d6000803e3d6000fd5b505050505b505050505050505050565b6060600c8054806020026020016040519081016040528092919081815260200182805480156121d457602002820191906000526020600020905b81546001600160a01b031681526001909101906020018083116121b6575b5050505050905090565b6001546001600160a01b031681565b600581815481106121fa57fe5b6000918252602090912001546001600160a01b0316905081565b606060058054806020026020016040519081016040528092919081815260200182805480156121d4576020028201919060005260206000209081546001600160a01b031681526001909101906020018083116121b6575050505050905090565b61227c611bbb565b6122be5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b61133881613582565b60025481565b6122d5611bbb565b6123175760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b600e8054911515600160481b0269ff00000000000000000019909216919091179055565b600c81815481106121fa57fe5b61146b338584868561292e565b61235d611bbb565b61239f5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b6001600160a01b0381166000908152600b602052604090205460ff166123c457600080fd5b6001600160a01b0381166000908152600b60205260408120805460ff191690555b600c548110156113db57816001600160a01b0316600c828154811061240657fe5b6000918252602090912001546001600160a01b0316141561249b57600c8054600019810190811061243357fe5b600091825260209091200154600c80546001600160a01b03909216918390811061245957fe5b600091825260209091200180546001600160a01b0319166001600160a01b0392909216919091179055600c805490612495906000198301613cb4565b506113db565b6001016123e5565b565b6004602052600090815260409020546001600160a01b031681565b6124c8611bbb565b61250a5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b80600d600084600281111561251b57fe5b60ff90811682526020820192909252604001600020805460ff1916929091169190911790555050565b61254c611bbb565b61258e5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b611338816136d5565b61151e338686868686612dca565b6125ad611bbb565b6125ef5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d37833981519152604482015290519081900360640190fd5b6113388161371f565b600181565b600254600154600091906001600160a01b03161580159061261e5750600081115b156126fa578083101561267b5760408051600160e51b62461bcd02815260206004820152601560248201527f696e73756666696369656e74206665654c696d69740000000000000000000000604482015290519081900360640190fd5b6001546040516001600160a01b039091169082156108fc029083906000818181858888f193505050501580156126b5573d6000803e3d6000fd5b50336108fc6126ca858463ffffffff61273316565b6040518115909202916000818181858888f193505050501580156126f2573d6000803e3d6000fd5b50905061272e565b604051339084156108fc029085906000818181858888f19350505050158015612727573d6000803e3d6000fd5b5060009150505b919050565b60008282111561278d5760408051600160e51b62461bcd02815260206004820152601e60248201527f536166654d6174683a207375627472616374696f6e206f766572666c6f770000604482015290519081900360640190fd5b50900390565b6001600160a01b03818116600090815260046020526040902054166127b757600080fd5b6001600160a01b03811660009081526006602052604090205460ff16156127dd57600080fd5b6001600160a01b038116600081815260066020526040808220805460ff19166001179055517fca1b0a14e18ada4c44846768dd186e35630cdc5cfeaca83c404ae4acaafbecd79190a250565b600e546000906001600160401b038381169116146128915760408051600160e51b62461bcd02815260206004820152600e60248201527f6e6f6e6365206d69736d61746368000000000000000000000000000000000000604482015290519081900360640190fd5b60008036604051808383808284378083019250505092505050604051809103902090506128c0600184836137c3565b156128f2575050600e805467ffffffffffffffff19811660016001600160401b0392831681019092161790915561272e565b50600092915050565b600281905560405181907fa7a33d0996347e1aa55ca2206015b61b9534bdd881d59d59aa680e25eefac36590600090a250565b600e54600160481b900460ff166129835760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b6001600160a01b03851660009081526006602052604090205460ff16156129e65760408051600160e51b62461bcd02815260206004820152600c6024820152600160a11b6b3637b1b5b2b2103a37b5b2b702604482015290519081900360640190fd5b6001600160a01b0385811660009081526004602052604090205416612a485760408051600160e51b62461bcd02815260206004820152600d6024820152600160991b6c34b73b30b634b2103a37b5b2b702604482015290519081900360640190fd5b6060856001600160a01b031663c87b56dd846040518263ffffffff1660e01b81526004018082815260200191505060006040518083038186803b158015612a8e57600080fd5b505afa158015612aa2573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526020811015612acb57600080fd5b810190808051600160201b811115612ae257600080fd5b82016020810184811115612af557600080fd5b8151600160201b811182820187101715612b0e57600080fd5b5050600e54909450600160401b900460ff16159250612b8991505057856001600160a01b03166342966c68846040518263ffffffff1660e01b815260040180828152602001915050600060405180830381600087803b158015612b7057600080fd5b505af1158015612b84573d6000803e3d6000fd5b505050505b7f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c185600286868987600e600a9054906101000a90046001600160401b03168760008a604051808a6002811115612bda57fe5b60ff168152602001896001600160a01b03166001600160a01b03168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001868152602001856001600160401b03166001600160401b031681526020018060200184815260200180602001838103835286818151815260200191508051906020019080838360005b83811015612c8b578181015183820152602001612c73565b50505050905090810190601f168015612cb85780820380516001836020036101000a031916815260200191505b50838103825284518152845160209182019186019080838360005b83811015612ceb578181015183820152602001612cd3565b50505050905090810190601f168015612d185780820380516001836020036101000a031916815260200191505b509b50505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b031990911617905550505050565b600082820183811015612dc35760408051600160e51b62461bcd02815260206004820152601b60248201527f536166654d6174683a206164646974696f6e206f766572666c6f770000000000604482015290519081900360640190fd5b9392505050565b600e54600160481b900460ff16612e1f5760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b6001600160a01b03861660009081526006602052604090205460ff1615612e825760408051600160e51b62461bcd02815260206004820152600c6024820152600160a11b6b3637b1b5b2b2103a37b5b2b702604482015290519081900360640190fd5b60008311612eda5760408051600160e51b62461bcd02815260206004820152600e60248201527f7a65726f206d73672e76616c7565000000000000000000000000000000000000604482015290519081900360640190fd5b6001600160a01b0386811660009081526004602052604090205416612f3c5760408051600160e51b62461bcd02815260206004820152600d6024820152600160991b6c34b73b30b634b2103a37b5b2b702604482015290519081900360640190fd5b6000612f4986888561392f565b600e54909150600160401b900460ff1615612fbd57866001600160a01b03166342966c68856040518263ffffffff1660e01b815260040180828152602001915050600060405180830381600087803b158015612fa457600080fd5b505af1158015612fb8573d6000803e3d6000fd5b505050505b7f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c185600187878a88600e600a9054906101000a90046001600160401b031687896040518089600281111561300c57fe5b60ff168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001858152602001846001600160401b03166001600160401b031681526020018060200184815260200180602001838103835260008152602001602001838103825284818151815260200191508051906020019080838360005b838110156130cc5781810151838201526020016130b4565b50505050905090810190601f1680156130f95780820380516001836020036101000a031916815260200191505b509a505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b03199091161790555050505050565b6001600160a01b0382166000818152600360209081526040918290208490558151928352905183927fdb5ad2e76ae20cfa4e7adbc7305d7538442164d85ead9937c98620a1aa4c255b92908290030190a25050565b600e546001600160401b03808316600160901b9092041611156113385760408051600160e51b62461bcd02815260206004820152600c60248201527f72656d6f76656420766f74650000000000000000000000000000000000000000604482015290519081900360640190fd5b6001600160401b0381166000908152600a602052604081205460ff161561326b5760408051600160e51b62461bcd02815260206004820152600b6024820152600160a81b6a636c6f73656420766f746502604482015290519081900360640190fd5b600080366040518083838082843780830192505050925050506040518091039020905061329a600084836137c3565b156128f25750506001600160401b0381166000908152600a60205260409020805460ff1916600190811790915561272e565b6000908152602081905260409020805460ff19166001179055565b6001600160401b038281166000818152601060205260408120805467ffffffffffffffff1916858516179055600f54909216101561333c57600f805467ffffffffffffffff19166001600160401b0385161790555b50600e54600160901b90046001600160401b03165b600f546001600160401b039081169082161180159061338957506001600160401b038082166000908152601060205260409020541615155b156133f6576001600160401b0381811660009081526010602090815260408083208054600f80546fffffffffffffffff0000000000000000191691909616600160401b0217909455835467ffffffffffffffff1916909355600a905220805460ff19169055600101613351565b600e80546001600160401b03909216600160901b0279ffffffffffffffff000000000000000000000000000000000000199092169190911790555050565b6001600160a01b03828116600090815260046020526040902054161561345957600080fd5b6001600160a01b0380831660008181526004602052604080822080549486166001600160a01b0319958616179055600580546001810182559083527f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db00180549094168317909355915190917f158412daecdc1456d01568828bcdb18464cc7f1ce0215ddbc3f3cfede9d1e63d91a25050565b6001600160a01b038181166000908152600460205260409020541661350f57600080fd5b6001600160a01b03811660009081526006602052604090205460ff16151560011461353957600080fd5b6001600160a01b038116600081815260066020526040808220805460ff19169055517f81ec08d3372506e176c49e626d8beb7e091712ef92908a130f4ccc6524fe2eec9190a250565b6001600160a01b03818116600090815260046020526040902054166135a657600080fd5b6001600160a01b038116600090815260046020908152604080832080546001600160a01b031916905560069091528120805460ff191690555b60055481101561369d57816001600160a01b03166005828154811061360057fe5b6000918252602090912001546001600160a01b031614156136955760058054600019810190811061362d57fe5b600091825260209091200154600580546001600160a01b03909216918390811061365357fe5b600091825260209091200180546001600160a01b0319166001600160a01b0392909216919091179055600580549061368f906000198301613cb4565b5061369d565b6001016135df565b506040516001600160a01b038216907f1d735ca20b63676dde668b718be78606b061d6bd7534ff815a90a121a6c084b690600090a250565b600180546001600160a01b0319166001600160a01b0383169081179091556040517f647672599d3468abcfa241a13c9e3d34383caadb5cc80fb67c3cdfcd5f78605990600090a250565b6001600160a01b03811661376757604051600160e51b62461bcd028152600401808060200182810382526026815260200180613d116026913960400191505060405180910390fd5b6007546040516001600160a01b038084169216907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3600780546001600160a01b0319166001600160a01b0392909216919091179055565b600080600960008660028111156137d657fe5b60ff168152602080820192909252604090810160009081206001600160401b038816825283528181203382526001810190935220549091508061383a5781546001810183556000838152602090200180546001600160a01b03191633179055613861565b60008181526003830160205260409020805460ff19811660ff918216600019019091161790555b33600090815260018301602090815260408083208790558683526003850190915290205460ff166138a75760028201805460018101825560009182526020909120018490555b60008481526003830160205260408120805460ff8082166001011660ff19909116179055600d908760028111156138da57fe5b60ff90811682526020808301939093526040918201600090812054888252600387019094529190912054918116911610613923576139188686613b7c565b600192505050612dc3565b50600095945050505050565b6001600160a01b0380831660009081526003602052604081205460015491929091161580159061395f5750600081115b15613ae557808310156139bc5760408051600160e51b62461bcd02815260206004820152601560248201527f696e73756666696369656e74206665654c696d69740000000000000000000000604482015290519081900360640190fd5b60015460408051600160e01b63a9059cbb0281526001600160a01b0392831660048201526024810184905290519186169163a9059cbb916044808201926020929091908290030181600087803b158015613a1557600080fd5b505af1158015613a29573d6000803e3d6000fd5b505050506040513d6020811015613a3f57600080fd5b50506001600160a01b03841663a9059cbb86613a61868563ffffffff61273316565b6040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b158015613ab057600080fd5b505af1158015613ac4573d6000803e3d6000fd5b505050506040513d6020811015613ada57600080fd5b50909150612dc39050565b836001600160a01b031663a9059cbb86856040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b158015613b4557600080fd5b505af1158015613b59573d6000803e3d6000fd5b505050506040513d6020811015613b6f57600080fd5b5060009695505050505050565b600060096000846002811115613b8e57fe5b60ff168152602080820192909252604090810160009081206001600160401b0386168252909252812091505b815460ff82161015613c0b57816001016000836000018360ff1681548110613bde57fe5b60009182526020808320909101546001600160a01b03168352820192909252604001812055600101613bba565b5060005b600282015460ff82161015613c6157816003016000836002018360ff1681548110613c3657fe5b600091825260208083209091015483528201929092526040019020805460ff19169055600101613c0f565b5060096000846002811115613c7257fe5b60ff168152602080820192909252604090810160009081206001600160401b0386168252909252812090613ca68282613cd8565b61151e600283016000613cd8565b81548183558181111561159657600083815260209020611596918101908301613cf2565b508054600082559060005260206000209081019061133891905b611bb891905b80821115613d0c5760008155600101613cf8565b509056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573734f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726d73672e73656e646572206973206e6f7420616e206f70657261746f72000000a165627a7a72305820f32a386ce8c65c5dfce85954647308f30d11469b2c1330830331445d9f484a020029`
+const BridgeBin = `0x60806040819052600180546001600160a01b03191690556000600255600e8054600160401b60ff0219169055600f8054600160401b600160801b0319166801000000000000000017905560208062003f198339810180604052602081101561006657600080fd5b5051600180546001600160a01b03199081169091556004805490911633179081905560405182916001600160a01b0316906000907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a360005b600260ff821610156100f45760ff81166000908152600d60205260409020805460ff19166001908117909155016100c2565b50336000818152600b60205260408120805460ff19166001908117909155600c805491820181559091527fdf6966c971051c3d54ec59162606531493a51404a002842f56009d7e5cf4a8c70180546001600160a01b0319169091179055600e8054600160481b60ff02199215156801000000000000000002600160401b60ff02199091161791909116690100000000000000000017905550613d7d806200019c6000396000f3fe6080604052600436106102935760003560e01c80638f32d59b1161015a578063c263b5d6116100c1578063e744092e1161007a578063e744092e14610edd578063ee2aec6514610f10578063efdcd97414610f45578063f1656e5314610f78578063f2fde38b1461104e578063ffa1ad741461108157610293565b8063c263b5d614610d67578063c877cf3714610d7c578063cb38f40714610da8578063cf0da29014610dd2578063d8cf98ca14610ea2578063dd9222d614610ed557610293565b8063afb6022311610113578063afb6022314610afd578063b2c0103014610c7b578063b3f0067414610ce0578063b476364114610cf5578063ba479d3314610d1f578063bab2af1d14610d3457610293565b80638f32d59b146109695780639832c1d71461097e578063989ba0d3146109b15780639ef2017b146109c6578063a066a7ed146109f9578063ac6fff0b14610ae857610293565b8063488af871116101fe578063715018a6116101b7578063715018a61461084a57806375ebdc091461085f5780637c1a0302146108e257806387b04c55146108f75780638a75eee21461092a5780638da5cb5b1461095457610293565b8063488af871146107505780634b40b8261461079557806354edad72146107aa5780635526f76b146107bf5780635eb7413a146108025780636e176ec21461083557610293565b806326c23b541161025057806326c23b541461049a5780632f88396c146105705780633682a450146105b85780633a348533146105eb578063407e6bae1461061c5780634739f7e51461071557610293565b806310693fcd146102b257806313a6738a146102e557806313e7c9d8146103345780631a2ae53e1461037b5780632014e5d1146103b457806322604742146103c9575b6002546040805160008152602081019091526102b0913391611096565b005b3480156102be57600080fd5b506102b0600480360360208110156102d557600080fd5b50356001600160a01b03166112e5565b3480156102f157600080fd5b506103186004803603602081101561030857600080fd5b50356001600160401b03166113c5565b604080516001600160401b039092168252519081900360200190f35b34801561034057600080fd5b506103676004803603602081101561035757600080fd5b50356001600160a01b03166113e0565b604080519115158252519081900360200190f35b34801561038757600080fd5b506102b06004803603604081101561039e57600080fd5b50803590602001356001600160401b03166113f5565b3480156103c057600080fd5b50610367611469565b3480156103d557600080fd5b506102b0600480360360808110156103ec57600080fd5b6001600160a01b03823581169260208101359091169160408201359190810190608081016060820135600160201b81111561042657600080fd5b82018360208201111561043857600080fd5b803590602001918460018302840111600160201b8311171561045957600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611479945050505050565b3480156104a657600080fd5b506102b0600480360360a08110156104bd57600080fd5b6001600160a01b03823581169260208101359091169160408201359160608101359181019060a081016080820135600160201b8111156104fc57600080fd5b82018360208201111561050e57600080fd5b803590602001918460018302840111600160201b8311171561052f57600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295506114fb945050505050565b34801561057c57600080fd5b506102b06004803603606081101561059357600080fd5b5080356001600160a01b031690602081013590604001356001600160401b03166115af565b3480156105c457600080fd5b506102b0600480360360208110156105db57600080fd5b50356001600160a01b0316611625565b3480156105f757600080fd5b506106006116fb565b604080516001600160a01b039092168252519081900360200190f35b34801561062857600080fd5b506102b0600480360361010081101561064057600080fd5b8135916001600160a01b03602082013581169260408301358216926060810135909216916080810135916001600160401b0360a083013581169260c081013590911691810190610100810160e0820135600160201b8111156106a157600080fd5b8201836020820111156106b357600080fd5b803590602001918460018302840111600160201b831117156106d457600080fd5b91908080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525092955061170a945050505050565b34801561072157600080fd5b506102b06004803603604081101561073857600080fd5b506001600160a01b03813581169160200135166119f0565b34801561075c57600080fd5b506107836004803603602081101561077357600080fd5b50356001600160a01b0316611af1565b60408051918252519081900360200190f35b3480156107a157600080fd5b50610318611b03565b3480156107b657600080fd5b50610318611b19565b3480156107cb57600080fd5b506107ec600480360360208110156107e257600080fd5b503560ff16611b28565b6040805160ff9092168252519081900360200190f35b34801561080e57600080fd5b506103676004803603602081101561082557600080fd5b50356001600160a01b0316611b3d565b34801561084157600080fd5b50610367611b52565b34801561085657600080fd5b506102b0611b62565b6102b06004803603606081101561087557600080fd5b6001600160a01b0382351691602081013591810190606081016040820135600160201b8111156108a457600080fd5b8201836020820111156108b657600080fd5b803590602001918460018302840111600160201b831117156108d757600080fd5b509092509050611bf6565b3480156108ee57600080fd5b50610318611c4b565b34801561090357600080fd5b506102b06004803603602081101561091a57600080fd5b50356001600160a01b0316611c61565b34801561093657600080fd5b506103676004803603602081101561094d57600080fd5b5035611ccd565b34801561096057600080fd5b50610600611ce2565b34801561097557600080fd5b50610367611cf2565b34801561098a57600080fd5b50610367600480360360208110156109a157600080fd5b50356001600160401b0316611d03565b3480156109bd57600080fd5b50610318611d18565b3480156109d257600080fd5b506102b0600480360360208110156109e957600080fd5b50356001600160a01b0316611d2e565b348015610a0557600080fd5b506102b0600480360360e0811015610a1c57600080fd5b8135916001600160a01b0360208201358116926040830135909116916060810135916001600160401b03608083013581169260a08101359091169181019060e0810160c0820135600160201b811115610a7457600080fd5b820183602082011115610a8657600080fd5b803590602001918460018302840111600160201b83111715610aa757600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550611e0f945050505050565b348015610af457600080fd5b50610318611ffa565b348015610b0957600080fd5b506102b06004803603610120811015610b2157600080fd5b8135916001600160a01b03602082013581169260408301358216926060810135909216916080810135916001600160401b0360a083013581169260c081013590911691810190610100810160e0820135600160201b811115610b8257600080fd5b820183602082011115610b9457600080fd5b803590602001918460018302840111600160201b83111715610bb557600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295949360208101935035915050600160201b811115610c0757600080fd5b820183602082011115610c1957600080fd5b803590602001918460018302840111600160201b83111715610c3a57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550612009945050505050565b348015610c8757600080fd5b50610c90612341565b60408051602080825283518183015283519192839290830191858101910280838360005b83811015610ccc578181015183820152602001610cb4565b505050509050019250505060405180910390f35b348015610cec57600080fd5b506106006123a3565b348015610d0157600080fd5b5061060060048036036020811015610d1857600080fd5b50356123b2565b348015610d2b57600080fd5b50610c906123d9565b348015610d4057600080fd5b506102b060048036036020811015610d5757600080fd5b50356001600160a01b0316612439565b348015610d7357600080fd5b506107836125d6565b348015610d8857600080fd5b506102b060048036036020811015610d9f57600080fd5b503515156125dc565b348015610db457600080fd5b5061060060048036036020811015610dcb57600080fd5b503561264a565b348015610dde57600080fd5b506102b060048036036080811015610df557600080fd5b6001600160a01b038235811692602081013592604082013590921691810190608081016060820135600160201b811115610e2e57600080fd5b820183602082011115610e4057600080fd5b803590602001918460018302840111600160201b83111715610e6157600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550612657945050505050565b348015610eae57600080fd5b506102b060048036036020811015610ec557600080fd5b50356001600160a01b0316612664565b6102b06127b2565b348015610ee957600080fd5b5061060060048036036020811015610f0057600080fd5b50356001600160a01b03166127b4565b348015610f1c57600080fd5b506102b060048036036040811015610f3357600080fd5b5060ff813581169160200135166127cf565b348015610f5157600080fd5b506102b060048036036020811015610f6857600080fd5b50356001600160a01b0316612853565b348015610f8457600080fd5b506102b0600480360360a0811015610f9b57600080fd5b6001600160a01b03823581169260208101359091169160408201359160608101359181019060a081016080820135600160201b811115610fda57600080fd5b820183602082011115610fec57600080fd5b803590602001918460018302840111600160201b8311171561100d57600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295506128a9945050505050565b34801561105a57600080fd5b506102b06004803603602081101561107157600080fd5b50356001600160a01b03166128b7565b34801561108d57600080fd5b5061031861290a565b600e54600160481b900460ff166110eb5760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b8134116111425760408051600160e51b62461bcd02815260206004820152601360248201527f696e73756666696369656e7420616d6f756e7400000000000000000000000000604482015290519081900360640190fd5b600061114d8361290f565b90507f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c1856000338682611185348963ffffffff612a4516565b600e600a9054906101000a90046001600160401b03168789604051808960028111156111ad57fe5b60ff168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001858152602001846001600160401b03166001600160401b031681526020018060200184815260200180602001838103835260008152602001602001838103825284818151815260200191508051906020019080838360005b8381101561126d578181015183820152602001611255565b50505050905090810190601f16801561129a5780820380516001836020036101000a031916815260200191505b509a505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b03199091161790555050565b6112ed611cf2565b61132f5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b038181166000908152600660205260409020541661135357600080fd5b6001600160a01b03811660009081526008602052604090205460ff161561137957600080fd5b6001600160a01b038116600081815260086020526040808220805460ff19166001179055517fca1b0a14e18ada4c44846768dd186e35630cdc5cfeaca83c404ae4acaafbecd79190a250565b6010602052600090815260409020546001600160401b031681565b600b6020526000908152604090205460ff1681565b336000908152600b602052604090205460ff1661144a5760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d32833981519152604482015290519081900360640190fd5b61145381612aa5565b61145c57611465565b61146582612b77565b5050565b600e54600160481b900460ff1681565b60408051600160e01b6323b872dd0281523360048201523060248201526044810184905290516001600160a01b038616916323b872dd91606480830192600092919082900301818387803b1580156114d057600080fd5b505af11580156114e4573d6000803e3d6000fd5b505050506114f58433858585612baa565b50505050565b6001600160a01b0385166323b872dd333061151c878763ffffffff612fe216565b6040805163ffffffff861660e01b81526001600160a01b0394851660048201529290931660248301526044820152905160648083019260209291908290030181600087803b15801561156d57600080fd5b505af1158015611581573d6000803e3d6000fd5b505050506040513d602081101561159757600080fd5b506115a89050853386868686613046565b5050505050565b336000908152600b602052604090205460ff166116045760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d32833981519152604482015290519081900360640190fd5b61160d81612aa5565b61161657611620565b61162083836133c3565b505050565b61162d611cf2565b61166f5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b0381166000908152600b602052604090205460ff161561169557600080fd5b6001600160a01b03166000818152600b60205260408120805460ff19166001908117909155600c805491820181559091527fdf6966c971051c3d54ec59162606531493a51404a002842f56009d7e5cf4a8c70180546001600160a01b0319169091179055565b6005546001600160a01b031681565b336000908152600b602052604090205460ff1661175f5760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d32833981519152604482015290519081900360640190fd5b61176883613418565b61177183613485565b61177a576119e6565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe1886001898989898988604051808981526020018860028111156117ba57fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b83811015611861578181015183820152602001611849565b50505050905090810190601f16801561188e5780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a16118ab88613548565b6118b58383613563565b600e54600160401b900460ff161561195957846001600160a01b03166340c10f1987866040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b15801561192757600080fd5b505af115801561193b573d6000803e3d6000fd5b505050506040513d602081101561195157600080fd5b506119e69050565b846001600160a01b031663a9059cbb87866040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b1580156119b957600080fd5b505af11580156119cd573d6000803e3d6000fd5b505050506040513d60208110156119e357600080fd5b50505b5050505050505050565b6119f8611cf2565b611a3a5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b038281166000908152600660205260409020541615611a5f57600080fd5b6001600160a01b0380831660008181526006602052604080822080549486166001600160a01b0319958616179055600780546001810182559083527fa66cc928b5edb82af9bd49922954155ab7b0942694bea4ce44661d9a8736c6880180549094168317909355915190917f158412daecdc1456d01568828bcdb18464cc7f1ce0215ddbc3f3cfede9d1e63d91a25050565b60036020526000908152604090205481565b600e54600160901b90046001600160401b031681565b600f546001600160401b031681565b600d6020526000908152604090205460ff1681565b60086020526000908152604090205460ff1681565b600e54600160401b900460ff1681565b611b6a611cf2565b611bac5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6004546040516000916001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600480546001600160a01b0319169055565b6000611c08348563ffffffff612a4516565b90506115a8858285858080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525061109692505050565b600e54600160501b90046001600160401b031681565b611c69611cf2565b611cab5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b600580546001600160a01b0319166001600160a01b0392909216919091179055565b60006020819052908152604090205460ff1681565b6004546001600160a01b03165b90565b6004546001600160a01b0316331490565b600a6020526000908152604090205460ff1681565b600f54600160401b90046001600160401b031681565b611d36611cf2565b611d785760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b0381811660009081526006602052604090205416611d9c57600080fd5b6001600160a01b03811660009081526008602052604090205460ff161515600114611dc657600080fd5b6001600160a01b038116600081815260086020526040808220805460ff19169055517f81ec08d3372506e176c49e626d8beb7e091712ef92908a130f4ccc6524fe2eec9190a250565b336000908152600b602052604090205460ff16611e645760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d32833981519152604482015290519081900360640190fd5b611e6d83613418565b611e7683613485565b611e7f57611ff1565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe18760008888600089898860405180898152602001886002811115611ec057fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b83811015611f67578181015183820152602001611f4f565b50505050905090810190601f168015611f945780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a1611fb187613548565b611fbb8383613563565b6040516001600160a01b0386169085156108fc029086906000818181858888f193505050501580156119e6573d6000803e3d6000fd5b50505050505050565b600e546001600160401b031681565b336000908152600b602052604090205460ff1661205e5760408051600160e51b62461bcd02815260206004820152601d6024820152600080516020613d32833981519152604482015290519081900360640190fd5b61206784613418565b61207084613485565b61207957612336565b7f18ac055e5983e19dfed37402aedc31d37f4905f6ab9ecfff472eb63cc7eaefe18960028a8a8a8a8a88604051808981526020018860028111156120b957fe5b60ff168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001856001600160a01b03166001600160a01b03168152602001848152602001836001600160401b03166001600160401b0316815260200180602001828103825283818151815260200191508051906020019080838360005b83811015612160578181015183820152602001612148565b50505050905090810190601f16801561218d5780820380516001836020036101000a031916815260200191505b50995050505050505050505060405180910390a16121aa89613548565b6121b48484613563565b600e54600160401b900460ff16156122c257856001600160a01b03166350bb4e7f8887856040518463ffffffff1660e01b815260040180846001600160a01b03166001600160a01b0316815260200183815260200180602001828103825283818151815260200191508051906020019080838360005b8381101561224257818101518382015260200161222a565b50505050905090810190601f16801561226f5780820380516001836020036101000a031916815260200191505b50945050505050602060405180830381600087803b15801561229057600080fd5b505af11580156122a4573d6000803e3d6000fd5b505050506040513d60208110156122ba57600080fd5b506123369050565b60408051600160e11b63214217070281523060048201526001600160a01b038981166024830152604482018890529151918816916342842e0e9160648082019260009290919082900301818387803b15801561231d57600080fd5b505af1158015612331573d6000803e3d6000fd5b505050505b505050505050505050565b6060600c80548060200260200160405190810160405280929190818152602001828054801561239957602002820191906000526020600020905b81546001600160a01b0316815260019091019060200180831161237b575b5050505050905090565b6001546001600160a01b031681565b600781815481106123bf57fe5b6000918252602090912001546001600160a01b0316905081565b60606007805480602002602001604051908101604052809291908181526020018280548015612399576020028201919060005260206000209081546001600160a01b0316815260019091019060200180831161237b575050505050905090565b612441611cf2565b6124835760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b03818116600090815260066020526040902054166124a757600080fd5b6001600160a01b038116600090815260066020908152604080832080546001600160a01b031916905560089091528120805460ff191690555b60075481101561259e57816001600160a01b03166007828154811061250157fe5b6000918252602090912001546001600160a01b031614156125965760078054600019810190811061252e57fe5b600091825260209091200154600780546001600160a01b03909216918390811061255457fe5b600091825260209091200180546001600160a01b0319166001600160a01b03929092169190911790556007805490612590906000198301613c8f565b5061259e565b6001016124e0565b506040516001600160a01b038216907f1d735ca20b63676dde668b718be78606b061d6bd7534ff815a90a121a6c084b690600090a250565b60025481565b6125e4611cf2565b6126265760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b600e8054911515600160481b0269ff00000000000000000019909216919091179055565b600c81815481106123bf57fe5b6114f53385848685612baa565b61266c611cf2565b6126ae5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6001600160a01b0381166000908152600b602052604090205460ff166126d357600080fd5b6001600160a01b0381166000908152600b60205260408120805460ff191690555b600c5481101561146557816001600160a01b0316600c828154811061271557fe5b6000918252602090912001546001600160a01b031614156127aa57600c8054600019810190811061274257fe5b600091825260209091200154600c80546001600160a01b03909216918390811061276857fe5b600091825260209091200180546001600160a01b0319166001600160a01b0392909216919091179055600c8054906127a4906000198301613c8f565b50611465565b6001016126f4565b565b6006602052600090815260409020546001600160a01b031681565b6127d7611cf2565b6128195760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b80600d600084600281111561282a57fe5b60ff90811682526020820192909252604001600020805460ff1916929091169190911790555050565b61285b611cf2565b61289d5760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6128a6816136b0565b50565b6115a8338686868686613046565b6128bf611cf2565b6129015760408051600160e51b62461bcd0281526020600482018190526024820152600080516020613d12833981519152604482015290519081900360640190fd5b6128a6816136fa565b600181565b600254600154600091906001600160a01b0316158015906129305750600081115b15612a0c578083101561298d5760408051600160e51b62461bcd02815260206004820152601560248201527f696e73756666696369656e74206665654c696d69740000000000000000000000604482015290519081900360640190fd5b6001546040516001600160a01b039091169082156108fc029083906000818181858888f193505050501580156129c7573d6000803e3d6000fd5b50336108fc6129dc858463ffffffff612a4516565b6040518115909202916000818181858888f19350505050158015612a04573d6000803e3d6000fd5b509050612a40565b604051339084156108fc029085906000818181858888f19350505050158015612a39573d6000803e3d6000fd5b5060009150505b919050565b600082821115612a9f5760408051600160e51b62461bcd02815260206004820152601e60248201527f536166654d6174683a207375627472616374696f6e206f766572666c6f770000604482015290519081900360640190fd5b50900390565b600e546000906001600160401b03838116911614612b0d5760408051600160e51b62461bcd02815260206004820152600e60248201527f6e6f6e6365206d69736d61746368000000000000000000000000000000000000604482015290519081900360640190fd5b6000803660405180838380828437808301925050509250505060405180910390209050612b3c6001848361379e565b15612b6e575050600e805467ffffffffffffffff19811660016001600160401b03928316810190921617909155612a40565b50600092915050565b600281905560405181907fa7a33d0996347e1aa55ca2206015b61b9534bdd881d59d59aa680e25eefac36590600090a250565b600e54600160481b900460ff16612bff5760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b6001600160a01b03851660009081526008602052604090205460ff1615612c625760408051600160e51b62461bcd02815260206004820152600c6024820152600160a11b6b3637b1b5b2b2103a37b5b2b702604482015290519081900360640190fd5b6001600160a01b0385811660009081526006602052604090205416612cc45760408051600160e51b62461bcd02815260206004820152600d6024820152600160991b6c34b73b30b634b2103a37b5b2b702604482015290519081900360640190fd5b6060856001600160a01b031663c87b56dd846040518263ffffffff1660e01b81526004018082815260200191505060006040518083038186803b158015612d0a57600080fd5b505afa158015612d1e573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526020811015612d4757600080fd5b810190808051600160201b811115612d5e57600080fd5b82016020810184811115612d7157600080fd5b8151600160201b811182820187101715612d8a57600080fd5b5050600e54909450600160401b900460ff16159250612e0591505057856001600160a01b03166342966c68846040518263ffffffff1660e01b815260040180828152602001915050600060405180830381600087803b158015612dec57600080fd5b505af1158015612e00573d6000803e3d6000fd5b505050505b7f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c185600286868987600e600a9054906101000a90046001600160401b03168760008a604051808a6002811115612e5657fe5b60ff168152602001896001600160a01b03166001600160a01b03168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001868152602001856001600160401b03166001600160401b031681526020018060200184815260200180602001838103835286818151815260200191508051906020019080838360005b83811015612f07578181015183820152602001612eef565b50505050905090810190601f168015612f345780820380516001836020036101000a031916815260200191505b50838103825284518152845160209182019186019080838360005b83811015612f67578181015183820152602001612f4f565b50505050905090810190601f168015612f945780820380516001836020036101000a031916815260200191505b509b50505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b031990911617905550505050565b60008282018381101561303f5760408051600160e51b62461bcd02815260206004820152601b60248201527f536166654d6174683a206164646974696f6e206f766572666c6f770000000000604482015290519081900360640190fd5b9392505050565b600e54600160481b900460ff1661309b5760408051600160e51b62461bcd02815260206004820152600e6024820152600160901b6d73746f707065642062726964676502604482015290519081900360640190fd5b6001600160a01b03861660009081526008602052604090205460ff16156130fe5760408051600160e51b62461bcd02815260206004820152600c6024820152600160a11b6b3637b1b5b2b2103a37b5b2b702604482015290519081900360640190fd5b600083116131565760408051600160e51b62461bcd02815260206004820152600e60248201527f7a65726f206d73672e76616c7565000000000000000000000000000000000000604482015290519081900360640190fd5b6001600160a01b03868116600090815260066020526040902054166131b85760408051600160e51b62461bcd02815260206004820152600d6024820152600160991b6c34b73b30b634b2103a37b5b2b702604482015290519081900360640190fd5b60006131c586888561390a565b600e54909150600160401b900460ff161561323957866001600160a01b03166342966c68856040518263ffffffff1660e01b815260040180828152602001915050600060405180830381600087803b15801561322057600080fd5b505af1158015613234573d6000803e3d6000fd5b505050505b7f17ac28a0af4eb8910bb2c2c0b0e0e03ee53dd9ae603f9b39c9734f9c77f2c185600187878a88600e600a9054906101000a90046001600160401b031687896040518089600281111561328857fe5b60ff168152602001886001600160a01b03166001600160a01b03168152602001876001600160a01b03166001600160a01b03168152602001866001600160a01b03166001600160a01b03168152602001858152602001846001600160401b03166001600160401b031681526020018060200184815260200180602001838103835260008152602001602001838103825284818151815260200191508051906020019080838360005b83811015613348578181015183820152602001613330565b50505050905090810190601f1680156133755780820380516001836020036101000a031916815260200191505b509a505050505050505050505060405180910390a15050600e805460016001600160401b03600160501b8084048216929092011602600160501b600160901b03199091161790555050505050565b6001600160a01b0382166000818152600360209081526040918290208490558151928352905183927fdb5ad2e76ae20cfa4e7adbc7305d7538442164d85ead9937c98620a1aa4c255b92908290030190a25050565b600e546001600160401b03808316600160901b9092041611156128a65760408051600160e51b62461bcd02815260206004820152600c60248201527f72656d6f76656420766f74650000000000000000000000000000000000000000604482015290519081900360640190fd5b6001600160401b0381166000908152600a602052604081205460ff16156134e75760408051600160e51b62461bcd02815260206004820152600b6024820152600160a81b6a636c6f73656420766f746502604482015290519081900360640190fd5b60008036604051808383808284378083019250505092505050604051809103902090506135166000848361379e565b15612b6e5750506001600160401b0381166000908152600a60205260409020805460ff19166001908117909155612a40565b6000908152602081905260409020805460ff19166001179055565b6001600160401b038281166000818152601060205260408120805467ffffffffffffffff1916858516179055600f5490921610156135b857600f805467ffffffffffffffff19166001600160401b0385161790555b50600e54600160901b90046001600160401b03165b600f546001600160401b039081169082161180159061360557506001600160401b038082166000908152601060205260409020541615155b15613672576001600160401b0381811660009081526010602090815260408083208054600f80546fffffffffffffffff0000000000000000191691909616600160401b0217909455835467ffffffffffffffff1916909355600a905220805460ff191690556001016135cd565b600e80546001600160401b03909216600160901b0279ffffffffffffffff000000000000000000000000000000000000199092169190911790555050565b600180546001600160a01b0319166001600160a01b0383169081179091556040517f647672599d3468abcfa241a13c9e3d34383caadb5cc80fb67c3cdfcd5f78605990600090a250565b6001600160a01b03811661374257604051600160e51b62461bcd028152600401808060200182810382526026815260200180613cec6026913960400191505060405180910390fd5b6004546040516001600160a01b038084169216907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3600480546001600160a01b0319166001600160a01b0392909216919091179055565b600080600960008660028111156137b157fe5b60ff168152602080820192909252604090810160009081206001600160401b03881682528352818120338252600181019093522054909150806138155781546001810183556000838152602090200180546001600160a01b0319163317905561383c565b60008181526003830160205260409020805460ff19811660ff918216600019019091161790555b33600090815260018301602090815260408083208790558683526003850190915290205460ff166138825760028201805460018101825560009182526020909120018490555b60008481526003830160205260408120805460ff8082166001011660ff19909116179055600d908760028111156138b557fe5b60ff908116825260208083019390935260409182016000908120548882526003870190945291909120549181169116106138fe576138f38686613b57565b60019250505061303f565b50600095945050505050565b6001600160a01b0380831660009081526003602052604081205460015491929091161580159061393a5750600081115b15613ac057808310156139975760408051600160e51b62461bcd02815260206004820152601560248201527f696e73756666696369656e74206665654c696d69740000000000000000000000604482015290519081900360640190fd5b60015460408051600160e01b63a9059cbb0281526001600160a01b0392831660048201526024810184905290519186169163a9059cbb916044808201926020929091908290030181600087803b1580156139f057600080fd5b505af1158015613a04573d6000803e3d6000fd5b505050506040513d6020811015613a1a57600080fd5b50506001600160a01b03841663a9059cbb86613a3c868563ffffffff612a4516565b6040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b158015613a8b57600080fd5b505af1158015613a9f573d6000803e3d6000fd5b505050506040513d6020811015613ab557600080fd5b5090915061303f9050565b836001600160a01b031663a9059cbb86856040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b158015613b2057600080fd5b505af1158015613b34573d6000803e3d6000fd5b505050506040513d6020811015613b4a57600080fd5b5060009695505050505050565b600060096000846002811115613b6957fe5b60ff168152602080820192909252604090810160009081206001600160401b0386168252909252812091505b815460ff82161015613be657816001016000836000018360ff1681548110613bb957fe5b60009182526020808320909101546001600160a01b03168352820192909252604001812055600101613b95565b5060005b600282015460ff82161015613c3c57816003016000836002018360ff1681548110613c1157fe5b600091825260208083209091015483528201929092526040019020805460ff19169055600101613bea565b5060096000846002811115613c4d57fe5b60ff168152602080820192909252604090810160009081206001600160401b0386168252909252812090613c818282613cb3565b6115a8600283016000613cb3565b81548183558181111561162057600083815260209020611620918101908301613ccd565b50805460008255906000526020600020908101906128a691905b611cef91905b80821115613ce75760008155600101613cd3565b509056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573734f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726d73672e73656e646572206973206e6f7420616e206f70657261746f72000000a165627a7a7230582030b1021914159cfd4f18cbd044016b8f95f61851aefd887d2c2c7849bde47b750029`
 
 // DeployBridge deploys a new Klaytn contract, binding an instance of Bridge to it.
 func DeployBridge(auth *bind.TransactOpts, backend bind.ContractBackend, _modeMintBurn bool) (common.Address, *types.Transaction, *Bridge, error) {
@@ -4695,13 +4695,13 @@ func (_BridgeOperator *BridgeOperatorFilterer) WatchOwnershipTransferred(opts *b
 }
 
 // BridgeTokensABI is the input ABI used to generate the binding from.
-const BridgeTokensABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenLocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenUnlocked\",\"type\":\"event\"}]"
+const BridgeTokensABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"lockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_cToken\",\"type\":\"address\"}],\"name\":\"registerToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"unlockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"deregisterToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenLocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenUnlocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"}]"
 
 // BridgeTokensBinRuntime is the compiled bytecode used for adding genesis block without deploying code.
-const BridgeTokensBinRuntime = `0x608060405234801561001057600080fd5b506004361061004c5760003560e01c80635eb7413a14610051578063b47636411461008b578063ba479d33146100c4578063e744092e1461011c575b600080fd5b6100776004803603602081101561006757600080fd5b50356001600160a01b0316610142565b604080519115158252519081900360200190f35b6100a8600480360360208110156100a157600080fd5b5035610157565b604080516001600160a01b039092168252519081900360200190f35b6100cc61017e565b60408051602080825283518183015283519192839290830191858101910280838360005b838110156101085781810151838201526020016100f0565b505050509050019250505060405180910390f35b6100a86004803603602081101561013257600080fd5b50356001600160a01b03166101e0565b60026020526000908152604090205460ff1681565b6001818154811061016457fe5b6000918252602090912001546001600160a01b0316905081565b606060018054806020026020016040519081016040528092919081815260200182805480156101d657602002820191906000526020600020905b81546001600160a01b031681526001909101906020018083116101b8575b5050505050905090565b6000602081905290815260409020546001600160a01b03168156fea165627a7a723058207a8c3c3f05a5b4ef91de5322759a600c75d3cbd342af0d5a450ae7d765605a2c0029`
+const BridgeTokensBinRuntime = `0x608060405234801561001057600080fd5b50600436106100b45760003560e01c80639ef2017b116100715780639ef2017b1461017d578063b4763641146101a3578063ba479d33146101c0578063bab2af1d14610218578063e744092e1461023e578063f2fde38b14610264576100b4565b806310693fcd146100b95780634739f7e5146100e15780635eb7413a1461010f578063715018a6146101495780638da5cb5b146101515780638f32d59b14610175575b600080fd5b6100df600480360360208110156100cf57600080fd5b50356001600160a01b031661028a565b005b6100df600480360360408110156100f757600080fd5b506001600160a01b038135811691602001351661036a565b6101356004803603602081101561012557600080fd5b50356001600160a01b031661046d565b604080519115158252519081900360200190f35b6100df610482565b610159610516565b604080516001600160a01b039092168252519081900360200190f35b610135610526565b6100df6004803603602081101561019357600080fd5b50356001600160a01b0316610537565b610159600480360360208110156101b957600080fd5b5035610618565b6101c861063f565b60408051602080825283518183015283519192839290830191858101910280838360005b838110156102045781810151838201526020016101ec565b505050509050019250505060405180910390f35b6100df6004803603602081101561022e57600080fd5b50356001600160a01b03166106a1565b6101596004803603602081101561025457600080fd5b50356001600160a01b031661083e565b6100df6004803603602081101561027a57600080fd5b50356001600160a01b0316610859565b610292610526565b6102d45760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b6001600160a01b03818116600090815260016020526040902054166102f857600080fd5b6001600160a01b03811660009081526003602052604090205460ff161561031e57600080fd5b6001600160a01b038116600081815260036020526040808220805460ff19166001179055517fca1b0a14e18ada4c44846768dd186e35630cdc5cfeaca83c404ae4acaafbecd79190a250565b610372610526565b6103b45760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b6001600160a01b0382811660009081526001602052604090205416156103d957600080fd5b6001600160a01b03808316600081815260016020819052604080832080549587166001600160a01b031996871617905560028054928301815583527f405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ace90910180549094168317909355915190917f158412daecdc1456d01568828bcdb18464cc7f1ce0215ddbc3f3cfede9d1e63d91a25050565b60036020526000908152604090205460ff1681565b61048a610526565b6104cc5760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b600080546040516001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546001600160a01b0319169055565b6000546001600160a01b03165b90565b6000546001600160a01b0316331490565b61053f610526565b6105815760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b6001600160a01b03818116600090815260016020526040902054166105a557600080fd5b6001600160a01b03811660009081526003602052604090205460ff1615156001146105cf57600080fd5b6001600160a01b038116600081815260036020526040808220805460ff19169055517f81ec08d3372506e176c49e626d8beb7e091712ef92908a130f4ccc6524fe2eec9190a250565b6002818154811061062557fe5b6000918252602090912001546001600160a01b0316905081565b6060600280548060200260200160405190810160405280929190818152602001828054801561069757602002820191906000526020600020905b81546001600160a01b03168152600190910190602001808311610679575b5050505050905090565b6106a9610526565b6106eb5760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b6001600160a01b038181166000908152600160205260409020541661070f57600080fd5b6001600160a01b038116600090815260016020908152604080832080546001600160a01b031916905560039091528120805460ff191690555b60025481101561080657816001600160a01b03166002828154811061076957fe5b6000918252602090912001546001600160a01b031614156107fe5760028054600019810190811061079657fe5b600091825260209091200154600280546001600160a01b0390921691839081106107bc57fe5b600091825260209091200180546001600160a01b0319166001600160a01b039290921691909117905560028054906107f8906000198301610952565b50610806565b600101610748565b506040516001600160a01b038216907f1d735ca20b63676dde668b718be78606b061d6bd7534ff815a90a121a6c084b690600090a250565b6001602052600090815260409020546001600160a01b031681565b610861610526565b6108a35760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b6108ac816108af565b50565b6001600160a01b0381166108f757604051600160e51b62461bcd02815260040180806020018281038252602681526020018061099a6026913960400191505060405180910390fd5b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b8154818355818111156109765760008381526020902061097691810190830161097b565b505050565b61052391905b808211156109955760008155600101610981565b509056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573734f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572a165627a7a723058202835e23c80f44ce2b214686f8f68e01b4950b312c78b8a247612abb07ed844ca0029`
 
 // BridgeTokensBin is the compiled bytecode used for deploying new contracts.
-const BridgeTokensBin = `0x608060405234801561001057600080fd5b50610227806100206000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c80635eb7413a14610051578063b47636411461008b578063ba479d33146100c4578063e744092e1461011c575b600080fd5b6100776004803603602081101561006757600080fd5b50356001600160a01b0316610142565b604080519115158252519081900360200190f35b6100a8600480360360208110156100a157600080fd5b5035610157565b604080516001600160a01b039092168252519081900360200190f35b6100cc61017e565b60408051602080825283518183015283519192839290830191858101910280838360005b838110156101085781810151838201526020016100f0565b505050509050019250505060405180910390f35b6100a86004803603602081101561013257600080fd5b50356001600160a01b03166101e0565b60026020526000908152604090205460ff1681565b6001818154811061016457fe5b6000918252602090912001546001600160a01b0316905081565b606060018054806020026020016040519081016040528092919081815260200182805480156101d657602002820191906000526020600020905b81546001600160a01b031681526001909101906020018083116101b8575b5050505050905090565b6000602081905290815260409020546001600160a01b03168156fea165627a7a723058207a8c3c3f05a5b4ef91de5322759a600c75d3cbd342af0d5a450ae7d765605a2c0029`
+const BridgeTokensBin = `0x60806040819052600080546001600160a01b03191633178082556001600160a01b0316917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a3610a0b806100576000396000f3fe608060405234801561001057600080fd5b50600436106100b45760003560e01c80639ef2017b116100715780639ef2017b1461017d578063b4763641146101a3578063ba479d33146101c0578063bab2af1d14610218578063e744092e1461023e578063f2fde38b14610264576100b4565b806310693fcd146100b95780634739f7e5146100e15780635eb7413a1461010f578063715018a6146101495780638da5cb5b146101515780638f32d59b14610175575b600080fd5b6100df600480360360208110156100cf57600080fd5b50356001600160a01b031661028a565b005b6100df600480360360408110156100f757600080fd5b506001600160a01b038135811691602001351661036a565b6101356004803603602081101561012557600080fd5b50356001600160a01b031661046d565b604080519115158252519081900360200190f35b6100df610482565b610159610516565b604080516001600160a01b039092168252519081900360200190f35b610135610526565b6100df6004803603602081101561019357600080fd5b50356001600160a01b0316610537565b610159600480360360208110156101b957600080fd5b5035610618565b6101c861063f565b60408051602080825283518183015283519192839290830191858101910280838360005b838110156102045781810151838201526020016101ec565b505050509050019250505060405180910390f35b6100df6004803603602081101561022e57600080fd5b50356001600160a01b03166106a1565b6101596004803603602081101561025457600080fd5b50356001600160a01b031661083e565b6100df6004803603602081101561027a57600080fd5b50356001600160a01b0316610859565b610292610526565b6102d45760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b6001600160a01b03818116600090815260016020526040902054166102f857600080fd5b6001600160a01b03811660009081526003602052604090205460ff161561031e57600080fd5b6001600160a01b038116600081815260036020526040808220805460ff19166001179055517fca1b0a14e18ada4c44846768dd186e35630cdc5cfeaca83c404ae4acaafbecd79190a250565b610372610526565b6103b45760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b6001600160a01b0382811660009081526001602052604090205416156103d957600080fd5b6001600160a01b03808316600081815260016020819052604080832080549587166001600160a01b031996871617905560028054928301815583527f405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ace90910180549094168317909355915190917f158412daecdc1456d01568828bcdb18464cc7f1ce0215ddbc3f3cfede9d1e63d91a25050565b60036020526000908152604090205460ff1681565b61048a610526565b6104cc5760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b600080546040516001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546001600160a01b0319169055565b6000546001600160a01b03165b90565b6000546001600160a01b0316331490565b61053f610526565b6105815760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b6001600160a01b03818116600090815260016020526040902054166105a557600080fd5b6001600160a01b03811660009081526003602052604090205460ff1615156001146105cf57600080fd5b6001600160a01b038116600081815260036020526040808220805460ff19169055517f81ec08d3372506e176c49e626d8beb7e091712ef92908a130f4ccc6524fe2eec9190a250565b6002818154811061062557fe5b6000918252602090912001546001600160a01b0316905081565b6060600280548060200260200160405190810160405280929190818152602001828054801561069757602002820191906000526020600020905b81546001600160a01b03168152600190910190602001808311610679575b5050505050905090565b6106a9610526565b6106eb5760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b6001600160a01b038181166000908152600160205260409020541661070f57600080fd5b6001600160a01b038116600090815260016020908152604080832080546001600160a01b031916905560039091528120805460ff191690555b60025481101561080657816001600160a01b03166002828154811061076957fe5b6000918252602090912001546001600160a01b031614156107fe5760028054600019810190811061079657fe5b600091825260209091200154600280546001600160a01b0390921691839081106107bc57fe5b600091825260209091200180546001600160a01b0319166001600160a01b039290921691909117905560028054906107f8906000198301610952565b50610806565b600101610748565b506040516001600160a01b038216907f1d735ca20b63676dde668b718be78606b061d6bd7534ff815a90a121a6c084b690600090a250565b6001602052600090815260409020546001600160a01b031681565b610861610526565b6108a35760408051600160e51b62461bcd02815260206004820181905260248201526000805160206109c0833981519152604482015290519081900360640190fd5b6108ac816108af565b50565b6001600160a01b0381166108f757604051600160e51b62461bcd02815260040180806020018281038252602681526020018061099a6026913960400191505060405180910390fd5b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b8154818355818111156109765760008381526020902061097691810190830161097b565b505050565b61052391905b808211156109955760008155600101610981565b509056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573734f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572a165627a7a723058202835e23c80f44ce2b214686f8f68e01b4950b312c78b8a247612abb07ed844ca0029`
 
 // DeployBridgeTokens deploys a new Klaytn contract, binding an instance of BridgeTokens to it.
 func DeployBridgeTokens(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *BridgeTokens, error) {
@@ -4936,6 +4936,32 @@ func (_BridgeTokens *BridgeTokensCallerSession) GetAllowedTokenList() ([]common.
 	return _BridgeTokens.Contract.GetAllowedTokenList(&_BridgeTokens.CallOpts)
 }
 
+// IsOwner is a free data retrieval call binding the contract method 0x8f32d59b.
+//
+// Solidity: function isOwner() constant returns(bool)
+func (_BridgeTokens *BridgeTokensCaller) IsOwner(opts *bind.CallOpts) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _BridgeTokens.contract.Call(opts, out, "isOwner")
+	return *ret0, err
+}
+
+// IsOwner is a free data retrieval call binding the contract method 0x8f32d59b.
+//
+// Solidity: function isOwner() constant returns(bool)
+func (_BridgeTokens *BridgeTokensSession) IsOwner() (bool, error) {
+	return _BridgeTokens.Contract.IsOwner(&_BridgeTokens.CallOpts)
+}
+
+// IsOwner is a free data retrieval call binding the contract method 0x8f32d59b.
+//
+// Solidity: function isOwner() constant returns(bool)
+func (_BridgeTokens *BridgeTokensCallerSession) IsOwner() (bool, error) {
+	return _BridgeTokens.Contract.IsOwner(&_BridgeTokens.CallOpts)
+}
+
 // LockedTokens is a free data retrieval call binding the contract method 0x5eb7413a.
 //
 // Solidity: function lockedTokens( address) constant returns(bool)
@@ -4960,6 +4986,299 @@ func (_BridgeTokens *BridgeTokensSession) LockedTokens(arg0 common.Address) (boo
 // Solidity: function lockedTokens( address) constant returns(bool)
 func (_BridgeTokens *BridgeTokensCallerSession) LockedTokens(arg0 common.Address) (bool, error) {
 	return _BridgeTokens.Contract.LockedTokens(&_BridgeTokens.CallOpts, arg0)
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() constant returns(address)
+func (_BridgeTokens *BridgeTokensCaller) Owner(opts *bind.CallOpts) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _BridgeTokens.contract.Call(opts, out, "owner")
+	return *ret0, err
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() constant returns(address)
+func (_BridgeTokens *BridgeTokensSession) Owner() (common.Address, error) {
+	return _BridgeTokens.Contract.Owner(&_BridgeTokens.CallOpts)
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() constant returns(address)
+func (_BridgeTokens *BridgeTokensCallerSession) Owner() (common.Address, error) {
+	return _BridgeTokens.Contract.Owner(&_BridgeTokens.CallOpts)
+}
+
+// DeregisterToken is a paid mutator transaction binding the contract method 0xbab2af1d.
+//
+// Solidity: function deregisterToken(_token address) returns()
+func (_BridgeTokens *BridgeTokensTransactor) DeregisterToken(opts *bind.TransactOpts, _token common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.contract.Transact(opts, "deregisterToken", _token)
+}
+
+// DeregisterToken is a paid mutator transaction binding the contract method 0xbab2af1d.
+//
+// Solidity: function deregisterToken(_token address) returns()
+func (_BridgeTokens *BridgeTokensSession) DeregisterToken(_token common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.Contract.DeregisterToken(&_BridgeTokens.TransactOpts, _token)
+}
+
+// DeregisterToken is a paid mutator transaction binding the contract method 0xbab2af1d.
+//
+// Solidity: function deregisterToken(_token address) returns()
+func (_BridgeTokens *BridgeTokensTransactorSession) DeregisterToken(_token common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.Contract.DeregisterToken(&_BridgeTokens.TransactOpts, _token)
+}
+
+// LockToken is a paid mutator transaction binding the contract method 0x10693fcd.
+//
+// Solidity: function lockToken(_token address) returns()
+func (_BridgeTokens *BridgeTokensTransactor) LockToken(opts *bind.TransactOpts, _token common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.contract.Transact(opts, "lockToken", _token)
+}
+
+// LockToken is a paid mutator transaction binding the contract method 0x10693fcd.
+//
+// Solidity: function lockToken(_token address) returns()
+func (_BridgeTokens *BridgeTokensSession) LockToken(_token common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.Contract.LockToken(&_BridgeTokens.TransactOpts, _token)
+}
+
+// LockToken is a paid mutator transaction binding the contract method 0x10693fcd.
+//
+// Solidity: function lockToken(_token address) returns()
+func (_BridgeTokens *BridgeTokensTransactorSession) LockToken(_token common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.Contract.LockToken(&_BridgeTokens.TransactOpts, _token)
+}
+
+// RegisterToken is a paid mutator transaction binding the contract method 0x4739f7e5.
+//
+// Solidity: function registerToken(_token address, _cToken address) returns()
+func (_BridgeTokens *BridgeTokensTransactor) RegisterToken(opts *bind.TransactOpts, _token common.Address, _cToken common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.contract.Transact(opts, "registerToken", _token, _cToken)
+}
+
+// RegisterToken is a paid mutator transaction binding the contract method 0x4739f7e5.
+//
+// Solidity: function registerToken(_token address, _cToken address) returns()
+func (_BridgeTokens *BridgeTokensSession) RegisterToken(_token common.Address, _cToken common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.Contract.RegisterToken(&_BridgeTokens.TransactOpts, _token, _cToken)
+}
+
+// RegisterToken is a paid mutator transaction binding the contract method 0x4739f7e5.
+//
+// Solidity: function registerToken(_token address, _cToken address) returns()
+func (_BridgeTokens *BridgeTokensTransactorSession) RegisterToken(_token common.Address, _cToken common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.Contract.RegisterToken(&_BridgeTokens.TransactOpts, _token, _cToken)
+}
+
+// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+//
+// Solidity: function renounceOwnership() returns()
+func (_BridgeTokens *BridgeTokensTransactor) RenounceOwnership(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _BridgeTokens.contract.Transact(opts, "renounceOwnership")
+}
+
+// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+//
+// Solidity: function renounceOwnership() returns()
+func (_BridgeTokens *BridgeTokensSession) RenounceOwnership() (*types.Transaction, error) {
+	return _BridgeTokens.Contract.RenounceOwnership(&_BridgeTokens.TransactOpts)
+}
+
+// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+//
+// Solidity: function renounceOwnership() returns()
+func (_BridgeTokens *BridgeTokensTransactorSession) RenounceOwnership() (*types.Transaction, error) {
+	return _BridgeTokens.Contract.RenounceOwnership(&_BridgeTokens.TransactOpts)
+}
+
+// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
+//
+// Solidity: function transferOwnership(newOwner address) returns()
+func (_BridgeTokens *BridgeTokensTransactor) TransferOwnership(opts *bind.TransactOpts, newOwner common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.contract.Transact(opts, "transferOwnership", newOwner)
+}
+
+// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
+//
+// Solidity: function transferOwnership(newOwner address) returns()
+func (_BridgeTokens *BridgeTokensSession) TransferOwnership(newOwner common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.Contract.TransferOwnership(&_BridgeTokens.TransactOpts, newOwner)
+}
+
+// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
+//
+// Solidity: function transferOwnership(newOwner address) returns()
+func (_BridgeTokens *BridgeTokensTransactorSession) TransferOwnership(newOwner common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.Contract.TransferOwnership(&_BridgeTokens.TransactOpts, newOwner)
+}
+
+// UnlockToken is a paid mutator transaction binding the contract method 0x9ef2017b.
+//
+// Solidity: function unlockToken(_token address) returns()
+func (_BridgeTokens *BridgeTokensTransactor) UnlockToken(opts *bind.TransactOpts, _token common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.contract.Transact(opts, "unlockToken", _token)
+}
+
+// UnlockToken is a paid mutator transaction binding the contract method 0x9ef2017b.
+//
+// Solidity: function unlockToken(_token address) returns()
+func (_BridgeTokens *BridgeTokensSession) UnlockToken(_token common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.Contract.UnlockToken(&_BridgeTokens.TransactOpts, _token)
+}
+
+// UnlockToken is a paid mutator transaction binding the contract method 0x9ef2017b.
+//
+// Solidity: function unlockToken(_token address) returns()
+func (_BridgeTokens *BridgeTokensTransactorSession) UnlockToken(_token common.Address) (*types.Transaction, error) {
+	return _BridgeTokens.Contract.UnlockToken(&_BridgeTokens.TransactOpts, _token)
+}
+
+// BridgeTokensOwnershipTransferredIterator is returned from FilterOwnershipTransferred and is used to iterate over the raw logs and unpacked data for OwnershipTransferred events raised by the BridgeTokens contract.
+type BridgeTokensOwnershipTransferredIterator struct {
+	Event *BridgeTokensOwnershipTransferred // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log      // Log channel receiving the found contract events
+	sub  klaytn.Subscription // Subscription for errors, completion and termination
+	done bool                // Whether the subscription completed delivering logs
+	fail error               // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *BridgeTokensOwnershipTransferredIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(BridgeTokensOwnershipTransferred)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(BridgeTokensOwnershipTransferred)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *BridgeTokensOwnershipTransferredIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *BridgeTokensOwnershipTransferredIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// BridgeTokensOwnershipTransferred represents a OwnershipTransferred event raised by the BridgeTokens contract.
+type BridgeTokensOwnershipTransferred struct {
+	PreviousOwner common.Address
+	NewOwner      common.Address
+	Raw           types.Log // Blockchain specific contextual infos
+}
+
+// FilterOwnershipTransferred is a free log retrieval operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
+//
+// Solidity: e OwnershipTransferred(previousOwner indexed address, newOwner indexed address)
+func (_BridgeTokens *BridgeTokensFilterer) FilterOwnershipTransferred(opts *bind.FilterOpts, previousOwner []common.Address, newOwner []common.Address) (*BridgeTokensOwnershipTransferredIterator, error) {
+
+	var previousOwnerRule []interface{}
+	for _, previousOwnerItem := range previousOwner {
+		previousOwnerRule = append(previousOwnerRule, previousOwnerItem)
+	}
+	var newOwnerRule []interface{}
+	for _, newOwnerItem := range newOwner {
+		newOwnerRule = append(newOwnerRule, newOwnerItem)
+	}
+
+	logs, sub, err := _BridgeTokens.contract.FilterLogs(opts, "OwnershipTransferred", previousOwnerRule, newOwnerRule)
+	if err != nil {
+		return nil, err
+	}
+	return &BridgeTokensOwnershipTransferredIterator{contract: _BridgeTokens.contract, event: "OwnershipTransferred", logs: logs, sub: sub}, nil
+}
+
+// WatchOwnershipTransferred is a free log subscription operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
+//
+// Solidity: e OwnershipTransferred(previousOwner indexed address, newOwner indexed address)
+func (_BridgeTokens *BridgeTokensFilterer) WatchOwnershipTransferred(opts *bind.WatchOpts, sink chan<- *BridgeTokensOwnershipTransferred, previousOwner []common.Address, newOwner []common.Address) (event.Subscription, error) {
+
+	var previousOwnerRule []interface{}
+	for _, previousOwnerItem := range previousOwner {
+		previousOwnerRule = append(previousOwnerRule, previousOwnerItem)
+	}
+	var newOwnerRule []interface{}
+	for _, newOwnerItem := range newOwner {
+		newOwnerRule = append(newOwnerRule, newOwnerItem)
+	}
+
+	logs, sub, err := _BridgeTokens.contract.WatchLogs(opts, "OwnershipTransferred", previousOwnerRule, newOwnerRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(BridgeTokensOwnershipTransferred)
+				if err := _BridgeTokens.contract.UnpackLog(event, "OwnershipTransferred", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
 }
 
 // BridgeTokensTokenDeregisteredIterator is returned from FilterTokenDeregistered and is used to iterate over the raw logs and unpacked data for TokenDeregistered events raised by the BridgeTokens contract.
@@ -5491,7 +5810,7 @@ func (_BridgeTokens *BridgeTokensFilterer) WatchTokenUnlocked(opts *bind.WatchOp
 }
 
 // BridgeTransferABI is the input ABI used to generate the binding from.
-const BridgeTransferABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"lockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"handleNoncesToBlockNums\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"operators\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isRunning\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"registerOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_cToken\",\"type\":\"address\"}],\"name\":\"registerToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"feeOfERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"lowerHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"upperHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"operatorThresholds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"modeMintBurn\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"requestNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"handledRequestTx\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"closedValueTransferVotes\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"recoveryBlockNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"unlockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"configurationNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOperatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"deregisterToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeOfKLAY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"start\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"operatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"deregisterOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteType\",\"type\":\"uint8\"},{\"name\":\"_threshold\",\"type\":\"uint8\"}],\"name\":\"setOperatorThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_modeMintBurn\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requestNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"fee\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"RequestValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"requestTxHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"handleNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"HandleValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenLocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenUnlocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"KLAYFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"ERC20FeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"feeReceiver\",\"type\":\"address\"}],\"name\":\"FeeReceiverChanged\",\"type\":\"event\"}]"
+const BridgeTransferABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"handleNoncesToBlockNums\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"operators\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isRunning\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"registerOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"feeOfERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"lowerHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"upperHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"operatorThresholds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"modeMintBurn\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"requestNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"handledRequestTx\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"closedValueTransferVotes\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"recoveryBlockNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"configurationNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOperatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeOfKLAY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"start\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"operatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"deregisterOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteType\",\"type\":\"uint8\"},{\"name\":\"_threshold\",\"type\":\"uint8\"}],\"name\":\"setOperatorThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_modeMintBurn\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requestNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"fee\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"RequestValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"requestTxHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"handleNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"HandleValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"KLAYFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"ERC20FeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"feeReceiver\",\"type\":\"address\"}],\"name\":\"FeeReceiverChanged\",\"type\":\"event\"}]"
 
 // BridgeTransferBinRuntime is the compiled bytecode used for adding genesis block without deploying code.
 const BridgeTransferBinRuntime = `0x`
@@ -5654,58 +5973,6 @@ func (_BridgeTransfer *BridgeTransferTransactorRaw) Transact(opts *bind.Transact
 	return _BridgeTransfer.Contract.contract.Transact(opts, method, params...)
 }
 
-// AllowedTokenList is a free data retrieval call binding the contract method 0xb4763641.
-//
-// Solidity: function allowedTokenList( uint256) constant returns(address)
-func (_BridgeTransfer *BridgeTransferCaller) AllowedTokenList(opts *bind.CallOpts, arg0 *big.Int) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _BridgeTransfer.contract.Call(opts, out, "allowedTokenList", arg0)
-	return *ret0, err
-}
-
-// AllowedTokenList is a free data retrieval call binding the contract method 0xb4763641.
-//
-// Solidity: function allowedTokenList( uint256) constant returns(address)
-func (_BridgeTransfer *BridgeTransferSession) AllowedTokenList(arg0 *big.Int) (common.Address, error) {
-	return _BridgeTransfer.Contract.AllowedTokenList(&_BridgeTransfer.CallOpts, arg0)
-}
-
-// AllowedTokenList is a free data retrieval call binding the contract method 0xb4763641.
-//
-// Solidity: function allowedTokenList( uint256) constant returns(address)
-func (_BridgeTransfer *BridgeTransferCallerSession) AllowedTokenList(arg0 *big.Int) (common.Address, error) {
-	return _BridgeTransfer.Contract.AllowedTokenList(&_BridgeTransfer.CallOpts, arg0)
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(address)
-func (_BridgeTransfer *BridgeTransferCaller) AllowedTokens(opts *bind.CallOpts, arg0 common.Address) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _BridgeTransfer.contract.Call(opts, out, "allowedTokens", arg0)
-	return *ret0, err
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(address)
-func (_BridgeTransfer *BridgeTransferSession) AllowedTokens(arg0 common.Address) (common.Address, error) {
-	return _BridgeTransfer.Contract.AllowedTokens(&_BridgeTransfer.CallOpts, arg0)
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(address)
-func (_BridgeTransfer *BridgeTransferCallerSession) AllowedTokens(arg0 common.Address) (common.Address, error) {
-	return _BridgeTransfer.Contract.AllowedTokens(&_BridgeTransfer.CallOpts, arg0)
-}
-
 // ClosedValueTransferVotes is a free data retrieval call binding the contract method 0x9832c1d7.
 //
 // Solidity: function closedValueTransferVotes( uint64) constant returns(bool)
@@ -5836,32 +6103,6 @@ func (_BridgeTransfer *BridgeTransferCallerSession) FeeReceiver() (common.Addres
 	return _BridgeTransfer.Contract.FeeReceiver(&_BridgeTransfer.CallOpts)
 }
 
-// GetAllowedTokenList is a free data retrieval call binding the contract method 0xba479d33.
-//
-// Solidity: function getAllowedTokenList() constant returns(address[])
-func (_BridgeTransfer *BridgeTransferCaller) GetAllowedTokenList(opts *bind.CallOpts) ([]common.Address, error) {
-	var (
-		ret0 = new([]common.Address)
-	)
-	out := ret0
-	err := _BridgeTransfer.contract.Call(opts, out, "getAllowedTokenList")
-	return *ret0, err
-}
-
-// GetAllowedTokenList is a free data retrieval call binding the contract method 0xba479d33.
-//
-// Solidity: function getAllowedTokenList() constant returns(address[])
-func (_BridgeTransfer *BridgeTransferSession) GetAllowedTokenList() ([]common.Address, error) {
-	return _BridgeTransfer.Contract.GetAllowedTokenList(&_BridgeTransfer.CallOpts)
-}
-
-// GetAllowedTokenList is a free data retrieval call binding the contract method 0xba479d33.
-//
-// Solidity: function getAllowedTokenList() constant returns(address[])
-func (_BridgeTransfer *BridgeTransferCallerSession) GetAllowedTokenList() ([]common.Address, error) {
-	return _BridgeTransfer.Contract.GetAllowedTokenList(&_BridgeTransfer.CallOpts)
-}
-
 // GetOperatorList is a free data retrieval call binding the contract method 0xb2c01030.
 //
 // Solidity: function getOperatorList() constant returns(address[])
@@ -5990,32 +6231,6 @@ func (_BridgeTransfer *BridgeTransferSession) IsRunning() (bool, error) {
 // Solidity: function isRunning() constant returns(bool)
 func (_BridgeTransfer *BridgeTransferCallerSession) IsRunning() (bool, error) {
 	return _BridgeTransfer.Contract.IsRunning(&_BridgeTransfer.CallOpts)
-}
-
-// LockedTokens is a free data retrieval call binding the contract method 0x5eb7413a.
-//
-// Solidity: function lockedTokens( address) constant returns(bool)
-func (_BridgeTransfer *BridgeTransferCaller) LockedTokens(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _BridgeTransfer.contract.Call(opts, out, "lockedTokens", arg0)
-	return *ret0, err
-}
-
-// LockedTokens is a free data retrieval call binding the contract method 0x5eb7413a.
-//
-// Solidity: function lockedTokens( address) constant returns(bool)
-func (_BridgeTransfer *BridgeTransferSession) LockedTokens(arg0 common.Address) (bool, error) {
-	return _BridgeTransfer.Contract.LockedTokens(&_BridgeTransfer.CallOpts, arg0)
-}
-
-// LockedTokens is a free data retrieval call binding the contract method 0x5eb7413a.
-//
-// Solidity: function lockedTokens( address) constant returns(bool)
-func (_BridgeTransfer *BridgeTransferCallerSession) LockedTokens(arg0 common.Address) (bool, error) {
-	return _BridgeTransfer.Contract.LockedTokens(&_BridgeTransfer.CallOpts, arg0)
 }
 
 // LowerHandleNonce is a free data retrieval call binding the contract method 0x4b40b826.
@@ -6273,48 +6488,6 @@ func (_BridgeTransfer *BridgeTransferTransactorSession) DeregisterOperator(_oper
 	return _BridgeTransfer.Contract.DeregisterOperator(&_BridgeTransfer.TransactOpts, _operator)
 }
 
-// DeregisterToken is a paid mutator transaction binding the contract method 0xbab2af1d.
-//
-// Solidity: function deregisterToken(_token address) returns()
-func (_BridgeTransfer *BridgeTransferTransactor) DeregisterToken(opts *bind.TransactOpts, _token common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.contract.Transact(opts, "deregisterToken", _token)
-}
-
-// DeregisterToken is a paid mutator transaction binding the contract method 0xbab2af1d.
-//
-// Solidity: function deregisterToken(_token address) returns()
-func (_BridgeTransfer *BridgeTransferSession) DeregisterToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.Contract.DeregisterToken(&_BridgeTransfer.TransactOpts, _token)
-}
-
-// DeregisterToken is a paid mutator transaction binding the contract method 0xbab2af1d.
-//
-// Solidity: function deregisterToken(_token address) returns()
-func (_BridgeTransfer *BridgeTransferTransactorSession) DeregisterToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.Contract.DeregisterToken(&_BridgeTransfer.TransactOpts, _token)
-}
-
-// LockToken is a paid mutator transaction binding the contract method 0x10693fcd.
-//
-// Solidity: function lockToken(_token address) returns()
-func (_BridgeTransfer *BridgeTransferTransactor) LockToken(opts *bind.TransactOpts, _token common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.contract.Transact(opts, "lockToken", _token)
-}
-
-// LockToken is a paid mutator transaction binding the contract method 0x10693fcd.
-//
-// Solidity: function lockToken(_token address) returns()
-func (_BridgeTransfer *BridgeTransferSession) LockToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.Contract.LockToken(&_BridgeTransfer.TransactOpts, _token)
-}
-
-// LockToken is a paid mutator transaction binding the contract method 0x10693fcd.
-//
-// Solidity: function lockToken(_token address) returns()
-func (_BridgeTransfer *BridgeTransferTransactorSession) LockToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.Contract.LockToken(&_BridgeTransfer.TransactOpts, _token)
-}
-
 // RegisterOperator is a paid mutator transaction binding the contract method 0x3682a450.
 //
 // Solidity: function registerOperator(_operator address) returns()
@@ -6334,27 +6507,6 @@ func (_BridgeTransfer *BridgeTransferSession) RegisterOperator(_operator common.
 // Solidity: function registerOperator(_operator address) returns()
 func (_BridgeTransfer *BridgeTransferTransactorSession) RegisterOperator(_operator common.Address) (*types.Transaction, error) {
 	return _BridgeTransfer.Contract.RegisterOperator(&_BridgeTransfer.TransactOpts, _operator)
-}
-
-// RegisterToken is a paid mutator transaction binding the contract method 0x4739f7e5.
-//
-// Solidity: function registerToken(_token address, _cToken address) returns()
-func (_BridgeTransfer *BridgeTransferTransactor) RegisterToken(opts *bind.TransactOpts, _token common.Address, _cToken common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.contract.Transact(opts, "registerToken", _token, _cToken)
-}
-
-// RegisterToken is a paid mutator transaction binding the contract method 0x4739f7e5.
-//
-// Solidity: function registerToken(_token address, _cToken address) returns()
-func (_BridgeTransfer *BridgeTransferSession) RegisterToken(_token common.Address, _cToken common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.Contract.RegisterToken(&_BridgeTransfer.TransactOpts, _token, _cToken)
-}
-
-// RegisterToken is a paid mutator transaction binding the contract method 0x4739f7e5.
-//
-// Solidity: function registerToken(_token address, _cToken address) returns()
-func (_BridgeTransfer *BridgeTransferTransactorSession) RegisterToken(_token common.Address, _cToken common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.Contract.RegisterToken(&_BridgeTransfer.TransactOpts, _token, _cToken)
 }
 
 // RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
@@ -6460,27 +6612,6 @@ func (_BridgeTransfer *BridgeTransferSession) TransferOwnership(newOwner common.
 // Solidity: function transferOwnership(newOwner address) returns()
 func (_BridgeTransfer *BridgeTransferTransactorSession) TransferOwnership(newOwner common.Address) (*types.Transaction, error) {
 	return _BridgeTransfer.Contract.TransferOwnership(&_BridgeTransfer.TransactOpts, newOwner)
-}
-
-// UnlockToken is a paid mutator transaction binding the contract method 0x9ef2017b.
-//
-// Solidity: function unlockToken(_token address) returns()
-func (_BridgeTransfer *BridgeTransferTransactor) UnlockToken(opts *bind.TransactOpts, _token common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.contract.Transact(opts, "unlockToken", _token)
-}
-
-// UnlockToken is a paid mutator transaction binding the contract method 0x9ef2017b.
-//
-// Solidity: function unlockToken(_token address) returns()
-func (_BridgeTransfer *BridgeTransferSession) UnlockToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.Contract.UnlockToken(&_BridgeTransfer.TransactOpts, _token)
-}
-
-// UnlockToken is a paid mutator transaction binding the contract method 0x9ef2017b.
-//
-// Solidity: function unlockToken(_token address) returns()
-func (_BridgeTransfer *BridgeTransferTransactorSession) UnlockToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransfer.Contract.UnlockToken(&_BridgeTransfer.TransactOpts, _token)
 }
 
 // BridgeTransferERC20FeeChangedIterator is returned from FilterERC20FeeChanged and is used to iterate over the raw logs and unpacked data for ERC20FeeChanged events raised by the BridgeTransfer contract.
@@ -7280,536 +7411,8 @@ func (_BridgeTransfer *BridgeTransferFilterer) WatchRequestValueTransfer(opts *b
 	}), nil
 }
 
-// BridgeTransferTokenDeregisteredIterator is returned from FilterTokenDeregistered and is used to iterate over the raw logs and unpacked data for TokenDeregistered events raised by the BridgeTransfer contract.
-type BridgeTransferTokenDeregisteredIterator struct {
-	Event *BridgeTransferTokenDeregistered // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log      // Log channel receiving the found contract events
-	sub  klaytn.Subscription // Subscription for errors, completion and termination
-	done bool                // Whether the subscription completed delivering logs
-	fail error               // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *BridgeTransferTokenDeregisteredIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(BridgeTransferTokenDeregistered)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(BridgeTransferTokenDeregistered)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *BridgeTransferTokenDeregisteredIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *BridgeTransferTokenDeregisteredIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// BridgeTransferTokenDeregistered represents a TokenDeregistered event raised by the BridgeTransfer contract.
-type BridgeTransferTokenDeregistered struct {
-	Token common.Address
-	Raw   types.Log // Blockchain specific contextual infos
-}
-
-// FilterTokenDeregistered is a free log retrieval operation binding the contract event 0x1d735ca20b63676dde668b718be78606b061d6bd7534ff815a90a121a6c084b6.
-//
-// Solidity: e TokenDeregistered(token indexed address)
-func (_BridgeTransfer *BridgeTransferFilterer) FilterTokenDeregistered(opts *bind.FilterOpts, token []common.Address) (*BridgeTransferTokenDeregisteredIterator, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransfer.contract.FilterLogs(opts, "TokenDeregistered", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return &BridgeTransferTokenDeregisteredIterator{contract: _BridgeTransfer.contract, event: "TokenDeregistered", logs: logs, sub: sub}, nil
-}
-
-// WatchTokenDeregistered is a free log subscription operation binding the contract event 0x1d735ca20b63676dde668b718be78606b061d6bd7534ff815a90a121a6c084b6.
-//
-// Solidity: e TokenDeregistered(token indexed address)
-func (_BridgeTransfer *BridgeTransferFilterer) WatchTokenDeregistered(opts *bind.WatchOpts, sink chan<- *BridgeTransferTokenDeregistered, token []common.Address) (event.Subscription, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransfer.contract.WatchLogs(opts, "TokenDeregistered", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(BridgeTransferTokenDeregistered)
-				if err := _BridgeTransfer.contract.UnpackLog(event, "TokenDeregistered", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// BridgeTransferTokenLockedIterator is returned from FilterTokenLocked and is used to iterate over the raw logs and unpacked data for TokenLocked events raised by the BridgeTransfer contract.
-type BridgeTransferTokenLockedIterator struct {
-	Event *BridgeTransferTokenLocked // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log      // Log channel receiving the found contract events
-	sub  klaytn.Subscription // Subscription for errors, completion and termination
-	done bool                // Whether the subscription completed delivering logs
-	fail error               // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *BridgeTransferTokenLockedIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(BridgeTransferTokenLocked)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(BridgeTransferTokenLocked)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *BridgeTransferTokenLockedIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *BridgeTransferTokenLockedIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// BridgeTransferTokenLocked represents a TokenLocked event raised by the BridgeTransfer contract.
-type BridgeTransferTokenLocked struct {
-	Token common.Address
-	Raw   types.Log // Blockchain specific contextual infos
-}
-
-// FilterTokenLocked is a free log retrieval operation binding the contract event 0xca1b0a14e18ada4c44846768dd186e35630cdc5cfeaca83c404ae4acaafbecd7.
-//
-// Solidity: e TokenLocked(token indexed address)
-func (_BridgeTransfer *BridgeTransferFilterer) FilterTokenLocked(opts *bind.FilterOpts, token []common.Address) (*BridgeTransferTokenLockedIterator, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransfer.contract.FilterLogs(opts, "TokenLocked", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return &BridgeTransferTokenLockedIterator{contract: _BridgeTransfer.contract, event: "TokenLocked", logs: logs, sub: sub}, nil
-}
-
-// WatchTokenLocked is a free log subscription operation binding the contract event 0xca1b0a14e18ada4c44846768dd186e35630cdc5cfeaca83c404ae4acaafbecd7.
-//
-// Solidity: e TokenLocked(token indexed address)
-func (_BridgeTransfer *BridgeTransferFilterer) WatchTokenLocked(opts *bind.WatchOpts, sink chan<- *BridgeTransferTokenLocked, token []common.Address) (event.Subscription, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransfer.contract.WatchLogs(opts, "TokenLocked", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(BridgeTransferTokenLocked)
-				if err := _BridgeTransfer.contract.UnpackLog(event, "TokenLocked", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// BridgeTransferTokenRegisteredIterator is returned from FilterTokenRegistered and is used to iterate over the raw logs and unpacked data for TokenRegistered events raised by the BridgeTransfer contract.
-type BridgeTransferTokenRegisteredIterator struct {
-	Event *BridgeTransferTokenRegistered // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log      // Log channel receiving the found contract events
-	sub  klaytn.Subscription // Subscription for errors, completion and termination
-	done bool                // Whether the subscription completed delivering logs
-	fail error               // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *BridgeTransferTokenRegisteredIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(BridgeTransferTokenRegistered)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(BridgeTransferTokenRegistered)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *BridgeTransferTokenRegisteredIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *BridgeTransferTokenRegisteredIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// BridgeTransferTokenRegistered represents a TokenRegistered event raised by the BridgeTransfer contract.
-type BridgeTransferTokenRegistered struct {
-	Token common.Address
-	Raw   types.Log // Blockchain specific contextual infos
-}
-
-// FilterTokenRegistered is a free log retrieval operation binding the contract event 0x158412daecdc1456d01568828bcdb18464cc7f1ce0215ddbc3f3cfede9d1e63d.
-//
-// Solidity: e TokenRegistered(token indexed address)
-func (_BridgeTransfer *BridgeTransferFilterer) FilterTokenRegistered(opts *bind.FilterOpts, token []common.Address) (*BridgeTransferTokenRegisteredIterator, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransfer.contract.FilterLogs(opts, "TokenRegistered", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return &BridgeTransferTokenRegisteredIterator{contract: _BridgeTransfer.contract, event: "TokenRegistered", logs: logs, sub: sub}, nil
-}
-
-// WatchTokenRegistered is a free log subscription operation binding the contract event 0x158412daecdc1456d01568828bcdb18464cc7f1ce0215ddbc3f3cfede9d1e63d.
-//
-// Solidity: e TokenRegistered(token indexed address)
-func (_BridgeTransfer *BridgeTransferFilterer) WatchTokenRegistered(opts *bind.WatchOpts, sink chan<- *BridgeTransferTokenRegistered, token []common.Address) (event.Subscription, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransfer.contract.WatchLogs(opts, "TokenRegistered", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(BridgeTransferTokenRegistered)
-				if err := _BridgeTransfer.contract.UnpackLog(event, "TokenRegistered", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// BridgeTransferTokenUnlockedIterator is returned from FilterTokenUnlocked and is used to iterate over the raw logs and unpacked data for TokenUnlocked events raised by the BridgeTransfer contract.
-type BridgeTransferTokenUnlockedIterator struct {
-	Event *BridgeTransferTokenUnlocked // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log      // Log channel receiving the found contract events
-	sub  klaytn.Subscription // Subscription for errors, completion and termination
-	done bool                // Whether the subscription completed delivering logs
-	fail error               // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *BridgeTransferTokenUnlockedIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(BridgeTransferTokenUnlocked)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(BridgeTransferTokenUnlocked)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *BridgeTransferTokenUnlockedIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *BridgeTransferTokenUnlockedIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// BridgeTransferTokenUnlocked represents a TokenUnlocked event raised by the BridgeTransfer contract.
-type BridgeTransferTokenUnlocked struct {
-	Token common.Address
-	Raw   types.Log // Blockchain specific contextual infos
-}
-
-// FilterTokenUnlocked is a free log retrieval operation binding the contract event 0x81ec08d3372506e176c49e626d8beb7e091712ef92908a130f4ccc6524fe2eec.
-//
-// Solidity: e TokenUnlocked(token indexed address)
-func (_BridgeTransfer *BridgeTransferFilterer) FilterTokenUnlocked(opts *bind.FilterOpts, token []common.Address) (*BridgeTransferTokenUnlockedIterator, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransfer.contract.FilterLogs(opts, "TokenUnlocked", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return &BridgeTransferTokenUnlockedIterator{contract: _BridgeTransfer.contract, event: "TokenUnlocked", logs: logs, sub: sub}, nil
-}
-
-// WatchTokenUnlocked is a free log subscription operation binding the contract event 0x81ec08d3372506e176c49e626d8beb7e091712ef92908a130f4ccc6524fe2eec.
-//
-// Solidity: e TokenUnlocked(token indexed address)
-func (_BridgeTransfer *BridgeTransferFilterer) WatchTokenUnlocked(opts *bind.WatchOpts, sink chan<- *BridgeTransferTokenUnlocked, token []common.Address) (event.Subscription, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransfer.contract.WatchLogs(opts, "TokenUnlocked", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(BridgeTransferTokenUnlocked)
-				if err := _BridgeTransfer.contract.UnpackLog(event, "TokenUnlocked", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
 // BridgeTransferERC20ABI is the input ABI used to generate the binding from.
-const BridgeTransferERC20ABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"lockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"handleNoncesToBlockNums\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"operators\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isRunning\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_feeLimit\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestERC20Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_fee\",\"type\":\"uint256\"},{\"name\":\"_requestNonce\",\"type\":\"uint64\"}],\"name\":\"setERC20Fee\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"registerOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleERC20Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_cToken\",\"type\":\"address\"}],\"name\":\"registerToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"feeOfERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"lowerHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"upperHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"operatorThresholds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"modeMintBurn\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"requestNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"handledRequestTx\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"closedValueTransferVotes\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"recoveryBlockNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"unlockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"configurationNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOperatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"deregisterToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeOfKLAY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"start\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"operatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"deregisterOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteType\",\"type\":\"uint8\"},{\"name\":\"_threshold\",\"type\":\"uint8\"}],\"name\":\"setOperatorThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_feeLimit\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"onERC20Received\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requestNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"fee\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"RequestValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"requestTxHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"handleNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"HandleValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenLocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenUnlocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"KLAYFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"ERC20FeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"feeReceiver\",\"type\":\"address\"}],\"name\":\"FeeReceiverChanged\",\"type\":\"event\"}]"
+const BridgeTransferERC20ABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"lockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"handleNoncesToBlockNums\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"operators\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isRunning\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_feeLimit\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestERC20Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_fee\",\"type\":\"uint256\"},{\"name\":\"_requestNonce\",\"type\":\"uint64\"}],\"name\":\"setERC20Fee\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"registerOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleERC20Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_cToken\",\"type\":\"address\"}],\"name\":\"registerToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"feeOfERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"lowerHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"upperHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"operatorThresholds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"modeMintBurn\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"requestNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"handledRequestTx\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"closedValueTransferVotes\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"recoveryBlockNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"unlockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"configurationNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOperatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"deregisterToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeOfKLAY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"start\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"operatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"deregisterOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteType\",\"type\":\"uint8\"},{\"name\":\"_threshold\",\"type\":\"uint8\"}],\"name\":\"setOperatorThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_feeLimit\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"onERC20Received\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requestNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"fee\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"RequestValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"requestTxHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"handleNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"HandleValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenLocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenUnlocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"KLAYFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"ERC20FeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"feeReceiver\",\"type\":\"address\"}],\"name\":\"FeeReceiverChanged\",\"type\":\"event\"}]"
 
 // BridgeTransferERC20BinRuntime is the compiled bytecode used for adding genesis block without deploying code.
 const BridgeTransferERC20BinRuntime = `0x`
@@ -10211,7 +9814,7 @@ func (_BridgeTransferERC20 *BridgeTransferERC20Filterer) WatchTokenUnlocked(opts
 }
 
 // BridgeTransferERC721ABI is the input ABI used to generate the binding from.
-const BridgeTransferERC721ABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"lockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"handleNoncesToBlockNums\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"operators\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isRunning\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestERC721Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"registerOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_cToken\",\"type\":\"address\"}],\"name\":\"registerToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"feeOfERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"lowerHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"upperHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"operatorThresholds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"modeMintBurn\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"requestNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"handledRequestTx\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"closedValueTransferVotes\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"recoveryBlockNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"unlockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"configurationNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_tokenURI\",\"type\":\"string\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleERC721Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOperatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"deregisterToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeOfKLAY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"start\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"operatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"deregisterOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteType\",\"type\":\"uint8\"},{\"name\":\"_threshold\",\"type\":\"uint8\"}],\"name\":\"setOperatorThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requestNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"fee\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"RequestValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"requestTxHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"handleNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"HandleValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenLocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenUnlocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"KLAYFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"ERC20FeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"feeReceiver\",\"type\":\"address\"}],\"name\":\"FeeReceiverChanged\",\"type\":\"event\"}]"
+const BridgeTransferERC721ABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"lockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"handleNoncesToBlockNums\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"operators\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isRunning\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestERC721Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"registerOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_cToken\",\"type\":\"address\"}],\"name\":\"registerToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"feeOfERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"lowerHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"upperHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"operatorThresholds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"modeMintBurn\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"requestNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"handledRequestTx\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"closedValueTransferVotes\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"recoveryBlockNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"unlockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"configurationNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_tokenURI\",\"type\":\"string\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleERC721Transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOperatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"deregisterToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeOfKLAY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"start\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"operatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"deregisterOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteType\",\"type\":\"uint8\"},{\"name\":\"_threshold\",\"type\":\"uint8\"}],\"name\":\"setOperatorThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requestNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"fee\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"RequestValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"requestTxHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"handleNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"HandleValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenLocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenUnlocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"KLAYFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"ERC20FeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"feeReceiver\",\"type\":\"address\"}],\"name\":\"FeeReceiverChanged\",\"type\":\"event\"}]"
 
 // BridgeTransferERC721BinRuntime is the compiled bytecode used for adding genesis block without deploying code.
 const BridgeTransferERC721BinRuntime = `0x`
@@ -12592,7 +12195,7 @@ func (_BridgeTransferERC721 *BridgeTransferERC721Filterer) WatchTokenUnlocked(op
 }
 
 // BridgeTransferKLAYABI is the input ABI used to generate the binding from.
-const BridgeTransferKLAYABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"lockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"handleNoncesToBlockNums\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"operators\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_fee\",\"type\":\"uint256\"},{\"name\":\"_requestNonce\",\"type\":\"uint64\"}],\"name\":\"setKLAYFee\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isRunning\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"registerOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_cToken\",\"type\":\"address\"}],\"name\":\"registerToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"feeOfERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"lowerHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"upperHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"operatorThresholds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"modeMintBurn\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestKLAYTransfer\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"requestNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"handledRequestTx\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"closedValueTransferVotes\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"recoveryBlockNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"unlockToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleKLAYTransfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"configurationNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOperatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllowedTokenList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"deregisterToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeOfKLAY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"start\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"operatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"deregisterOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"chargeWithoutEvent\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedTokens\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteType\",\"type\":\"uint8\"},{\"name\":\"_threshold\",\"type\":\"uint8\"}],\"name\":\"setOperatorThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requestNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"fee\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"RequestValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"requestTxHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"handleNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"HandleValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenDeregistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenLocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenUnlocked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"KLAYFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"ERC20FeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"feeReceiver\",\"type\":\"address\"}],\"name\":\"FeeReceiverChanged\",\"type\":\"event\"}]"
+const BridgeTransferKLAYABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"handleNoncesToBlockNums\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"operators\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_fee\",\"type\":\"uint256\"},{\"name\":\"_requestNonce\",\"type\":\"uint64\"}],\"name\":\"setKLAYFee\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isRunning\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"registerOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"feeOfERC20\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"lowerHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"upperHandleNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"operatorThresholds\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"modeMintBurn\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"requestKLAYTransfer\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"requestNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"handledRequestTx\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"closedValueTransferVotes\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"recoveryBlockNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_requestTxHash\",\"type\":\"bytes32\"},{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_requestedNonce\",\"type\":\"uint64\"},{\"name\":\"_requestedBlockNumber\",\"type\":\"uint64\"},{\"name\":\"_extraData\",\"type\":\"bytes\"}],\"name\":\"handleKLAYTransfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"configurationNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getOperatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"feeOfKLAY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"start\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"operatorList\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"deregisterOperator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"chargeWithoutEvent\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteType\",\"type\":\"uint8\"},{\"name\":\"_threshold\",\"type\":\"uint8\"}],\"name\":\"setOperatorThreshold\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requestNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"fee\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"RequestValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"requestTxHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"tokenType\",\"type\":\"uint8\"},{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"valueOrTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"handleNonce\",\"type\":\"uint64\"},{\"indexed\":false,\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"HandleValueTransfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"KLAYFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"ERC20FeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"feeReceiver\",\"type\":\"address\"}],\"name\":\"FeeReceiverChanged\",\"type\":\"event\"}]"
 
 // BridgeTransferKLAYBinRuntime is the compiled bytecode used for adding genesis block without deploying code.
 const BridgeTransferKLAYBinRuntime = `0x`
@@ -12755,58 +12358,6 @@ func (_BridgeTransferKLAY *BridgeTransferKLAYTransactorRaw) Transact(opts *bind.
 	return _BridgeTransferKLAY.Contract.contract.Transact(opts, method, params...)
 }
 
-// AllowedTokenList is a free data retrieval call binding the contract method 0xb4763641.
-//
-// Solidity: function allowedTokenList( uint256) constant returns(address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYCaller) AllowedTokenList(opts *bind.CallOpts, arg0 *big.Int) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _BridgeTransferKLAY.contract.Call(opts, out, "allowedTokenList", arg0)
-	return *ret0, err
-}
-
-// AllowedTokenList is a free data retrieval call binding the contract method 0xb4763641.
-//
-// Solidity: function allowedTokenList( uint256) constant returns(address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYSession) AllowedTokenList(arg0 *big.Int) (common.Address, error) {
-	return _BridgeTransferKLAY.Contract.AllowedTokenList(&_BridgeTransferKLAY.CallOpts, arg0)
-}
-
-// AllowedTokenList is a free data retrieval call binding the contract method 0xb4763641.
-//
-// Solidity: function allowedTokenList( uint256) constant returns(address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYCallerSession) AllowedTokenList(arg0 *big.Int) (common.Address, error) {
-	return _BridgeTransferKLAY.Contract.AllowedTokenList(&_BridgeTransferKLAY.CallOpts, arg0)
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYCaller) AllowedTokens(opts *bind.CallOpts, arg0 common.Address) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _BridgeTransferKLAY.contract.Call(opts, out, "allowedTokens", arg0)
-	return *ret0, err
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYSession) AllowedTokens(arg0 common.Address) (common.Address, error) {
-	return _BridgeTransferKLAY.Contract.AllowedTokens(&_BridgeTransferKLAY.CallOpts, arg0)
-}
-
-// AllowedTokens is a free data retrieval call binding the contract method 0xe744092e.
-//
-// Solidity: function allowedTokens( address) constant returns(address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYCallerSession) AllowedTokens(arg0 common.Address) (common.Address, error) {
-	return _BridgeTransferKLAY.Contract.AllowedTokens(&_BridgeTransferKLAY.CallOpts, arg0)
-}
-
 // ClosedValueTransferVotes is a free data retrieval call binding the contract method 0x9832c1d7.
 //
 // Solidity: function closedValueTransferVotes( uint64) constant returns(bool)
@@ -12937,32 +12488,6 @@ func (_BridgeTransferKLAY *BridgeTransferKLAYCallerSession) FeeReceiver() (commo
 	return _BridgeTransferKLAY.Contract.FeeReceiver(&_BridgeTransferKLAY.CallOpts)
 }
 
-// GetAllowedTokenList is a free data retrieval call binding the contract method 0xba479d33.
-//
-// Solidity: function getAllowedTokenList() constant returns(address[])
-func (_BridgeTransferKLAY *BridgeTransferKLAYCaller) GetAllowedTokenList(opts *bind.CallOpts) ([]common.Address, error) {
-	var (
-		ret0 = new([]common.Address)
-	)
-	out := ret0
-	err := _BridgeTransferKLAY.contract.Call(opts, out, "getAllowedTokenList")
-	return *ret0, err
-}
-
-// GetAllowedTokenList is a free data retrieval call binding the contract method 0xba479d33.
-//
-// Solidity: function getAllowedTokenList() constant returns(address[])
-func (_BridgeTransferKLAY *BridgeTransferKLAYSession) GetAllowedTokenList() ([]common.Address, error) {
-	return _BridgeTransferKLAY.Contract.GetAllowedTokenList(&_BridgeTransferKLAY.CallOpts)
-}
-
-// GetAllowedTokenList is a free data retrieval call binding the contract method 0xba479d33.
-//
-// Solidity: function getAllowedTokenList() constant returns(address[])
-func (_BridgeTransferKLAY *BridgeTransferKLAYCallerSession) GetAllowedTokenList() ([]common.Address, error) {
-	return _BridgeTransferKLAY.Contract.GetAllowedTokenList(&_BridgeTransferKLAY.CallOpts)
-}
-
 // GetOperatorList is a free data retrieval call binding the contract method 0xb2c01030.
 //
 // Solidity: function getOperatorList() constant returns(address[])
@@ -13091,32 +12616,6 @@ func (_BridgeTransferKLAY *BridgeTransferKLAYSession) IsRunning() (bool, error) 
 // Solidity: function isRunning() constant returns(bool)
 func (_BridgeTransferKLAY *BridgeTransferKLAYCallerSession) IsRunning() (bool, error) {
 	return _BridgeTransferKLAY.Contract.IsRunning(&_BridgeTransferKLAY.CallOpts)
-}
-
-// LockedTokens is a free data retrieval call binding the contract method 0x5eb7413a.
-//
-// Solidity: function lockedTokens( address) constant returns(bool)
-func (_BridgeTransferKLAY *BridgeTransferKLAYCaller) LockedTokens(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _BridgeTransferKLAY.contract.Call(opts, out, "lockedTokens", arg0)
-	return *ret0, err
-}
-
-// LockedTokens is a free data retrieval call binding the contract method 0x5eb7413a.
-//
-// Solidity: function lockedTokens( address) constant returns(bool)
-func (_BridgeTransferKLAY *BridgeTransferKLAYSession) LockedTokens(arg0 common.Address) (bool, error) {
-	return _BridgeTransferKLAY.Contract.LockedTokens(&_BridgeTransferKLAY.CallOpts, arg0)
-}
-
-// LockedTokens is a free data retrieval call binding the contract method 0x5eb7413a.
-//
-// Solidity: function lockedTokens( address) constant returns(bool)
-func (_BridgeTransferKLAY *BridgeTransferKLAYCallerSession) LockedTokens(arg0 common.Address) (bool, error) {
-	return _BridgeTransferKLAY.Contract.LockedTokens(&_BridgeTransferKLAY.CallOpts, arg0)
 }
 
 // LowerHandleNonce is a free data retrieval call binding the contract method 0x4b40b826.
@@ -13395,27 +12894,6 @@ func (_BridgeTransferKLAY *BridgeTransferKLAYTransactorSession) DeregisterOperat
 	return _BridgeTransferKLAY.Contract.DeregisterOperator(&_BridgeTransferKLAY.TransactOpts, _operator)
 }
 
-// DeregisterToken is a paid mutator transaction binding the contract method 0xbab2af1d.
-//
-// Solidity: function deregisterToken(_token address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYTransactor) DeregisterToken(opts *bind.TransactOpts, _token common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.contract.Transact(opts, "deregisterToken", _token)
-}
-
-// DeregisterToken is a paid mutator transaction binding the contract method 0xbab2af1d.
-//
-// Solidity: function deregisterToken(_token address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYSession) DeregisterToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.Contract.DeregisterToken(&_BridgeTransferKLAY.TransactOpts, _token)
-}
-
-// DeregisterToken is a paid mutator transaction binding the contract method 0xbab2af1d.
-//
-// Solidity: function deregisterToken(_token address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYTransactorSession) DeregisterToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.Contract.DeregisterToken(&_BridgeTransferKLAY.TransactOpts, _token)
-}
-
 // HandleKLAYTransfer is a paid mutator transaction binding the contract method 0xa066a7ed.
 //
 // Solidity: function handleKLAYTransfer(_requestTxHash bytes32, _from address, _to address, _value uint256, _requestedNonce uint64, _requestedBlockNumber uint64, _extraData bytes) returns()
@@ -13437,27 +12915,6 @@ func (_BridgeTransferKLAY *BridgeTransferKLAYTransactorSession) HandleKLAYTransf
 	return _BridgeTransferKLAY.Contract.HandleKLAYTransfer(&_BridgeTransferKLAY.TransactOpts, _requestTxHash, _from, _to, _value, _requestedNonce, _requestedBlockNumber, _extraData)
 }
 
-// LockToken is a paid mutator transaction binding the contract method 0x10693fcd.
-//
-// Solidity: function lockToken(_token address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYTransactor) LockToken(opts *bind.TransactOpts, _token common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.contract.Transact(opts, "lockToken", _token)
-}
-
-// LockToken is a paid mutator transaction binding the contract method 0x10693fcd.
-//
-// Solidity: function lockToken(_token address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYSession) LockToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.Contract.LockToken(&_BridgeTransferKLAY.TransactOpts, _token)
-}
-
-// LockToken is a paid mutator transaction binding the contract method 0x10693fcd.
-//
-// Solidity: function lockToken(_token address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYTransactorSession) LockToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.Contract.LockToken(&_BridgeTransferKLAY.TransactOpts, _token)
-}
-
 // RegisterOperator is a paid mutator transaction binding the contract method 0x3682a450.
 //
 // Solidity: function registerOperator(_operator address) returns()
@@ -13477,27 +12934,6 @@ func (_BridgeTransferKLAY *BridgeTransferKLAYSession) RegisterOperator(_operator
 // Solidity: function registerOperator(_operator address) returns()
 func (_BridgeTransferKLAY *BridgeTransferKLAYTransactorSession) RegisterOperator(_operator common.Address) (*types.Transaction, error) {
 	return _BridgeTransferKLAY.Contract.RegisterOperator(&_BridgeTransferKLAY.TransactOpts, _operator)
-}
-
-// RegisterToken is a paid mutator transaction binding the contract method 0x4739f7e5.
-//
-// Solidity: function registerToken(_token address, _cToken address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYTransactor) RegisterToken(opts *bind.TransactOpts, _token common.Address, _cToken common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.contract.Transact(opts, "registerToken", _token, _cToken)
-}
-
-// RegisterToken is a paid mutator transaction binding the contract method 0x4739f7e5.
-//
-// Solidity: function registerToken(_token address, _cToken address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYSession) RegisterToken(_token common.Address, _cToken common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.Contract.RegisterToken(&_BridgeTransferKLAY.TransactOpts, _token, _cToken)
-}
-
-// RegisterToken is a paid mutator transaction binding the contract method 0x4739f7e5.
-//
-// Solidity: function registerToken(_token address, _cToken address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYTransactorSession) RegisterToken(_token common.Address, _cToken common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.Contract.RegisterToken(&_BridgeTransferKLAY.TransactOpts, _token, _cToken)
 }
 
 // RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
@@ -13645,27 +13081,6 @@ func (_BridgeTransferKLAY *BridgeTransferKLAYSession) TransferOwnership(newOwner
 // Solidity: function transferOwnership(newOwner address) returns()
 func (_BridgeTransferKLAY *BridgeTransferKLAYTransactorSession) TransferOwnership(newOwner common.Address) (*types.Transaction, error) {
 	return _BridgeTransferKLAY.Contract.TransferOwnership(&_BridgeTransferKLAY.TransactOpts, newOwner)
-}
-
-// UnlockToken is a paid mutator transaction binding the contract method 0x9ef2017b.
-//
-// Solidity: function unlockToken(_token address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYTransactor) UnlockToken(opts *bind.TransactOpts, _token common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.contract.Transact(opts, "unlockToken", _token)
-}
-
-// UnlockToken is a paid mutator transaction binding the contract method 0x9ef2017b.
-//
-// Solidity: function unlockToken(_token address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYSession) UnlockToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.Contract.UnlockToken(&_BridgeTransferKLAY.TransactOpts, _token)
-}
-
-// UnlockToken is a paid mutator transaction binding the contract method 0x9ef2017b.
-//
-// Solidity: function unlockToken(_token address) returns()
-func (_BridgeTransferKLAY *BridgeTransferKLAYTransactorSession) UnlockToken(_token common.Address) (*types.Transaction, error) {
-	return _BridgeTransferKLAY.Contract.UnlockToken(&_BridgeTransferKLAY.TransactOpts, _token)
 }
 
 // BridgeTransferKLAYERC20FeeChangedIterator is returned from FilterERC20FeeChanged and is used to iterate over the raw logs and unpacked data for ERC20FeeChanged events raised by the BridgeTransferKLAY contract.
@@ -14445,534 +13860,6 @@ func (_BridgeTransferKLAY *BridgeTransferKLAYFilterer) WatchRequestValueTransfer
 				// New log arrived, parse the event and forward to the user
 				event := new(BridgeTransferKLAYRequestValueTransfer)
 				if err := _BridgeTransferKLAY.contract.UnpackLog(event, "RequestValueTransfer", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// BridgeTransferKLAYTokenDeregisteredIterator is returned from FilterTokenDeregistered and is used to iterate over the raw logs and unpacked data for TokenDeregistered events raised by the BridgeTransferKLAY contract.
-type BridgeTransferKLAYTokenDeregisteredIterator struct {
-	Event *BridgeTransferKLAYTokenDeregistered // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log      // Log channel receiving the found contract events
-	sub  klaytn.Subscription // Subscription for errors, completion and termination
-	done bool                // Whether the subscription completed delivering logs
-	fail error               // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *BridgeTransferKLAYTokenDeregisteredIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(BridgeTransferKLAYTokenDeregistered)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(BridgeTransferKLAYTokenDeregistered)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *BridgeTransferKLAYTokenDeregisteredIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *BridgeTransferKLAYTokenDeregisteredIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// BridgeTransferKLAYTokenDeregistered represents a TokenDeregistered event raised by the BridgeTransferKLAY contract.
-type BridgeTransferKLAYTokenDeregistered struct {
-	Token common.Address
-	Raw   types.Log // Blockchain specific contextual infos
-}
-
-// FilterTokenDeregistered is a free log retrieval operation binding the contract event 0x1d735ca20b63676dde668b718be78606b061d6bd7534ff815a90a121a6c084b6.
-//
-// Solidity: e TokenDeregistered(token indexed address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYFilterer) FilterTokenDeregistered(opts *bind.FilterOpts, token []common.Address) (*BridgeTransferKLAYTokenDeregisteredIterator, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransferKLAY.contract.FilterLogs(opts, "TokenDeregistered", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return &BridgeTransferKLAYTokenDeregisteredIterator{contract: _BridgeTransferKLAY.contract, event: "TokenDeregistered", logs: logs, sub: sub}, nil
-}
-
-// WatchTokenDeregistered is a free log subscription operation binding the contract event 0x1d735ca20b63676dde668b718be78606b061d6bd7534ff815a90a121a6c084b6.
-//
-// Solidity: e TokenDeregistered(token indexed address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYFilterer) WatchTokenDeregistered(opts *bind.WatchOpts, sink chan<- *BridgeTransferKLAYTokenDeregistered, token []common.Address) (event.Subscription, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransferKLAY.contract.WatchLogs(opts, "TokenDeregistered", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(BridgeTransferKLAYTokenDeregistered)
-				if err := _BridgeTransferKLAY.contract.UnpackLog(event, "TokenDeregistered", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// BridgeTransferKLAYTokenLockedIterator is returned from FilterTokenLocked and is used to iterate over the raw logs and unpacked data for TokenLocked events raised by the BridgeTransferKLAY contract.
-type BridgeTransferKLAYTokenLockedIterator struct {
-	Event *BridgeTransferKLAYTokenLocked // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log      // Log channel receiving the found contract events
-	sub  klaytn.Subscription // Subscription for errors, completion and termination
-	done bool                // Whether the subscription completed delivering logs
-	fail error               // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *BridgeTransferKLAYTokenLockedIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(BridgeTransferKLAYTokenLocked)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(BridgeTransferKLAYTokenLocked)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *BridgeTransferKLAYTokenLockedIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *BridgeTransferKLAYTokenLockedIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// BridgeTransferKLAYTokenLocked represents a TokenLocked event raised by the BridgeTransferKLAY contract.
-type BridgeTransferKLAYTokenLocked struct {
-	Token common.Address
-	Raw   types.Log // Blockchain specific contextual infos
-}
-
-// FilterTokenLocked is a free log retrieval operation binding the contract event 0xca1b0a14e18ada4c44846768dd186e35630cdc5cfeaca83c404ae4acaafbecd7.
-//
-// Solidity: e TokenLocked(token indexed address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYFilterer) FilterTokenLocked(opts *bind.FilterOpts, token []common.Address) (*BridgeTransferKLAYTokenLockedIterator, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransferKLAY.contract.FilterLogs(opts, "TokenLocked", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return &BridgeTransferKLAYTokenLockedIterator{contract: _BridgeTransferKLAY.contract, event: "TokenLocked", logs: logs, sub: sub}, nil
-}
-
-// WatchTokenLocked is a free log subscription operation binding the contract event 0xca1b0a14e18ada4c44846768dd186e35630cdc5cfeaca83c404ae4acaafbecd7.
-//
-// Solidity: e TokenLocked(token indexed address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYFilterer) WatchTokenLocked(opts *bind.WatchOpts, sink chan<- *BridgeTransferKLAYTokenLocked, token []common.Address) (event.Subscription, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransferKLAY.contract.WatchLogs(opts, "TokenLocked", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(BridgeTransferKLAYTokenLocked)
-				if err := _BridgeTransferKLAY.contract.UnpackLog(event, "TokenLocked", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// BridgeTransferKLAYTokenRegisteredIterator is returned from FilterTokenRegistered and is used to iterate over the raw logs and unpacked data for TokenRegistered events raised by the BridgeTransferKLAY contract.
-type BridgeTransferKLAYTokenRegisteredIterator struct {
-	Event *BridgeTransferKLAYTokenRegistered // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log      // Log channel receiving the found contract events
-	sub  klaytn.Subscription // Subscription for errors, completion and termination
-	done bool                // Whether the subscription completed delivering logs
-	fail error               // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *BridgeTransferKLAYTokenRegisteredIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(BridgeTransferKLAYTokenRegistered)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(BridgeTransferKLAYTokenRegistered)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *BridgeTransferKLAYTokenRegisteredIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *BridgeTransferKLAYTokenRegisteredIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// BridgeTransferKLAYTokenRegistered represents a TokenRegistered event raised by the BridgeTransferKLAY contract.
-type BridgeTransferKLAYTokenRegistered struct {
-	Token common.Address
-	Raw   types.Log // Blockchain specific contextual infos
-}
-
-// FilterTokenRegistered is a free log retrieval operation binding the contract event 0x158412daecdc1456d01568828bcdb18464cc7f1ce0215ddbc3f3cfede9d1e63d.
-//
-// Solidity: e TokenRegistered(token indexed address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYFilterer) FilterTokenRegistered(opts *bind.FilterOpts, token []common.Address) (*BridgeTransferKLAYTokenRegisteredIterator, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransferKLAY.contract.FilterLogs(opts, "TokenRegistered", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return &BridgeTransferKLAYTokenRegisteredIterator{contract: _BridgeTransferKLAY.contract, event: "TokenRegistered", logs: logs, sub: sub}, nil
-}
-
-// WatchTokenRegistered is a free log subscription operation binding the contract event 0x158412daecdc1456d01568828bcdb18464cc7f1ce0215ddbc3f3cfede9d1e63d.
-//
-// Solidity: e TokenRegistered(token indexed address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYFilterer) WatchTokenRegistered(opts *bind.WatchOpts, sink chan<- *BridgeTransferKLAYTokenRegistered, token []common.Address) (event.Subscription, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransferKLAY.contract.WatchLogs(opts, "TokenRegistered", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(BridgeTransferKLAYTokenRegistered)
-				if err := _BridgeTransferKLAY.contract.UnpackLog(event, "TokenRegistered", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// BridgeTransferKLAYTokenUnlockedIterator is returned from FilterTokenUnlocked and is used to iterate over the raw logs and unpacked data for TokenUnlocked events raised by the BridgeTransferKLAY contract.
-type BridgeTransferKLAYTokenUnlockedIterator struct {
-	Event *BridgeTransferKLAYTokenUnlocked // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log      // Log channel receiving the found contract events
-	sub  klaytn.Subscription // Subscription for errors, completion and termination
-	done bool                // Whether the subscription completed delivering logs
-	fail error               // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *BridgeTransferKLAYTokenUnlockedIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(BridgeTransferKLAYTokenUnlocked)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(BridgeTransferKLAYTokenUnlocked)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *BridgeTransferKLAYTokenUnlockedIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *BridgeTransferKLAYTokenUnlockedIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// BridgeTransferKLAYTokenUnlocked represents a TokenUnlocked event raised by the BridgeTransferKLAY contract.
-type BridgeTransferKLAYTokenUnlocked struct {
-	Token common.Address
-	Raw   types.Log // Blockchain specific contextual infos
-}
-
-// FilterTokenUnlocked is a free log retrieval operation binding the contract event 0x81ec08d3372506e176c49e626d8beb7e091712ef92908a130f4ccc6524fe2eec.
-//
-// Solidity: e TokenUnlocked(token indexed address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYFilterer) FilterTokenUnlocked(opts *bind.FilterOpts, token []common.Address) (*BridgeTransferKLAYTokenUnlockedIterator, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransferKLAY.contract.FilterLogs(opts, "TokenUnlocked", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return &BridgeTransferKLAYTokenUnlockedIterator{contract: _BridgeTransferKLAY.contract, event: "TokenUnlocked", logs: logs, sub: sub}, nil
-}
-
-// WatchTokenUnlocked is a free log subscription operation binding the contract event 0x81ec08d3372506e176c49e626d8beb7e091712ef92908a130f4ccc6524fe2eec.
-//
-// Solidity: e TokenUnlocked(token indexed address)
-func (_BridgeTransferKLAY *BridgeTransferKLAYFilterer) WatchTokenUnlocked(opts *bind.WatchOpts, sink chan<- *BridgeTransferKLAYTokenUnlocked, token []common.Address) (event.Subscription, error) {
-
-	var tokenRule []interface{}
-	for _, tokenItem := range token {
-		tokenRule = append(tokenRule, tokenItem)
-	}
-
-	logs, sub, err := _BridgeTransferKLAY.contract.WatchLogs(opts, "TokenUnlocked", tokenRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(BridgeTransferKLAYTokenUnlocked)
-				if err := _BridgeTransferKLAY.contract.UnpackLog(event, "TokenUnlocked", log); err != nil {
 					return err
 				}
 				event.Raw = log

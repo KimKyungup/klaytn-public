@@ -16,7 +16,9 @@
 
 pragma solidity ^0.5.6;
 
-contract BridgeTokens {
+import "../externals/openzeppelin-solidity/contracts/ownership/Ownable.sol";
+
+contract BridgeTokens is Ownable {
     mapping(address => address) public allowedTokens; // <token, counterpart token>
     address[] public allowedTokenList;
     mapping(address => bool) public lockedTokens;
@@ -30,8 +32,10 @@ contract BridgeTokens {
         return allowedTokenList;
     }
 
-    // _registerToken can update the allowed token with the counterpart token.
-    function _registerToken(address _token, address _cToken) internal
+    // registerToken can update the allowed token with the counterpart token.
+    function registerToken(address _token, address _cToken)
+        external
+        onlyOwner
     {
         require(allowedTokens[_token] == address(0));
         allowedTokens[_token] = _cToken;
@@ -40,8 +44,10 @@ contract BridgeTokens {
         emit TokenRegistered(_token);
     }
 
-    // _deregisterToken can remove the token in allowedToken list.
-    function _deregisterToken(address _token) internal
+    // deregisterToken can remove the token in allowedToken list.
+    function deregisterToken(address _token)
+        external
+        onlyOwner
     {
         require(allowedTokens[_token] != address(0));
         delete allowedTokens[_token];
@@ -58,8 +64,11 @@ contract BridgeTokens {
         emit TokenDeregistered(_token);
     }
 
-    // _lockToken can lock the token to prevent request token transferring.
-    function _lockToken(address _token) internal {
+    // lockToken can lock the token to prevent request token transferring.
+    function lockToken(address _token)
+        external
+        onlyOwner
+    {
         require(allowedTokens[_token] != address(0));
         require(lockedTokens[_token] == false);
 
@@ -68,8 +77,11 @@ contract BridgeTokens {
         emit TokenLocked(_token);
     }
 
-    // _unlockToken can unlock the token to  request token transferring.
-    function _unlockToken(address _token) internal {
+    // unlockToken can unlock the token to  request token transferring.
+    function unlockToken(address _token)
+        external
+        onlyOwner
+    {
         require(allowedTokens[_token] != address(0));
         require(lockedTokens[_token] == true);
 
