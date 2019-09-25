@@ -675,7 +675,7 @@ func generateBridgeTokenTestEnv(t *testing.T) (*backends.SimulatedBackend, *bind
 	tester := bind.NewKeyedTransactor(testKey)
 	tester.GasLimit = gasLimit
 
-	alloc := blockchain.GenesisAlloc{operator.From: {Balance: big.NewInt(params.KLAY)}}
+	alloc := blockchain.GenesisAlloc{operator.From: {Balance: big.NewInt(params.KLAY)}, tester.From: {Balance: big.NewInt(params.KLAY)}}
 	backend := backends.NewSimulatedBackend(alloc)
 
 	// Deploy Bridge
@@ -735,12 +735,16 @@ func TestBridgeContract_InitStatus(t *testing.T) {
 	isLocked, err = b.LockedTokens(nil, erc721Addr)
 	assert.NoError(t, err)
 	assert.Equal(t, false, isLocked)
+
+	isLocked, err = b.IsLockedKLAY(nil)
+	assert.NoError(t, err)
+	assert.Equal(t, false, isLocked)
 }
 
 // TestBridgeContract_InitRequest checks the following:
 // - the request value transfer can be allowed after registering it.
 func TestBridgeContract_InitRequest(t *testing.T) {
-	backend, operator, tester, _, erc20, erc721, _, _ := generateBridgeTokenTestEnv(t)
+	backend, operator, tester, b, erc20, erc721, _, _ := generateBridgeTokenTestEnv(t)
 
 	// check to allow value transfer
 	tx, err := erc20.RequestValueTransfer(tester, big.NewInt(1), operator.From, big.NewInt(0), nil)
@@ -748,11 +752,17 @@ func TestBridgeContract_InitRequest(t *testing.T) {
 	backend.Commit()
 	assert.Nil(t, bind.CheckWaitMined(backend, tx))
 
-	// check to allow value transfer
 	tx, err = erc721.RequestValueTransfer(tester, big.NewInt(1), operator.From, nil)
 	assert.NoError(t, err)
 	backend.Commit()
 	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	tester.Value = big.NewInt(1)
+	tx, err = b.RequestKLAYTransfer(tester, tester.From, big.NewInt(1), nil)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+	tester.Value = nil
 }
 
 // TestBridgeContract_TokenLock checks the following:
@@ -771,12 +781,21 @@ func TestBridgeContract_TokenLock(t *testing.T) {
 	backend.Commit()
 	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
 
+	tx, err = b.LockKLAY(operator)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
 	// check value after locking
 	isLocked, err := b.LockedTokens(nil, erc20Addr)
 	assert.NoError(t, err)
 	assert.Equal(t, true, isLocked)
 
 	isLocked, err = b.LockedTokens(nil, erc721Addr)
+	assert.NoError(t, err)
+	assert.Equal(t, true, isLocked)
+
+	isLocked, err = b.IsLockedKLAY(nil)
 	assert.NoError(t, err)
 	assert.Equal(t, true, isLocked)
 
@@ -790,16 +809,39 @@ func TestBridgeContract_TokenLock(t *testing.T) {
 	assert.NoError(t, err)
 	backend.Commit()
 	assert.NotNil(t, bind.CheckWaitMined(backend, tx))
+
+	tester.Value = big.NewInt(1)
+	tx, err = b.RequestKLAYTransfer(tester, tester.From, big.NewInt(0), nil)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.NotNil(t, bind.CheckWaitMined(backend, tx))
+	tester.Value = nil
 }
 
 // TestBridgeContract_TokenLockFail checks the following:
 // - testing the case locking token is fail.
 func TestBridgeContract_TokenLockFail(t *testing.T) {
-	backend, operator, _, b, _, _, erc20Addr, erc721Addr := generateBridgeTokenTestEnv(t)
+	backend, operator, tester, b, _, _, erc20Addr, erc721Addr := generateBridgeTokenTestEnv(t)
+
+	// fail locking token by invalid owner.
+	tx, err := b.LockToken(tester, erc20Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
+
+	tx, err = b.LockToken(tester, erc721Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
+
+	tx, err = b.LockKLAY(tester)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
 
 	// fail locking unregistered token.
 	testAddr := common.BytesToAddress([]byte("unregistered"))
-	tx, err := b.LockToken(operator, testAddr)
+	tx, err = b.LockToken(operator, testAddr)
 	assert.NoError(t, err)
 	backend.Commit()
 	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
@@ -815,12 +857,22 @@ func TestBridgeContract_TokenLockFail(t *testing.T) {
 	backend.Commit()
 	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
 
+	tx, err = b.LockKLAY(operator)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
 	tx, err = b.LockToken(operator, erc20Addr)
 	assert.NoError(t, err)
 	backend.Commit()
 	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
 
 	tx, err = b.LockToken(operator, erc721Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
+
+	tx, err = b.LockKLAY(operator)
 	assert.NoError(t, err)
 	backend.Commit()
 	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
@@ -848,6 +900,11 @@ func TestBridgeContract_TokenUnlockFail(t *testing.T) {
 	assert.NoError(t, err)
 	backend.Commit()
 	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
+
+	tx, err = b.UnlockKLAY(operator)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
 }
 
 // TestBridgeContract_CheckValueTransferAfterUnLock checks the following:
@@ -867,6 +924,11 @@ func TestBridgeContract_CheckValueTransferAfterUnLock(t *testing.T) {
 	backend.Commit()
 	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
 
+	tx, err = b.LockKLAY(operator)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
 	// unlock token
 	tx, err = b.UnlockToken(operator, erc20Addr)
 	assert.NoError(t, err)
@@ -874,6 +936,11 @@ func TestBridgeContract_CheckValueTransferAfterUnLock(t *testing.T) {
 	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
 
 	tx, err = b.UnlockToken(operator, erc721Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
+	tx, err = b.UnlockKLAY(operator)
 	assert.NoError(t, err)
 	backend.Commit()
 	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
@@ -897,4 +964,11 @@ func TestBridgeContract_CheckValueTransferAfterUnLock(t *testing.T) {
 	assert.NoError(t, err)
 	backend.Commit()
 	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	tester.Value = big.NewInt(1)
+	tx, err = b.RequestKLAYTransfer(tester, tester.From, big.NewInt(0), nil)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.NotNil(t, bind.CheckWaitMined(backend, tx))
+	tester.Value = nil
 }
