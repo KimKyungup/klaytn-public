@@ -79,6 +79,7 @@ contract BridgeTransferERC721 is IERC721BridgeReceiver, BridgeTransfer {
         internal
     {
         require(isRunning, "stopped bridge");
+        require(lockedTokens[_tokenAddress] == false, "locked token");
         require(allowedTokens[_tokenAddress] != address(0), "invalid token");
 
         string memory uri = ERC721Metadata(_tokenAddress).tokenURI(_tokenId);

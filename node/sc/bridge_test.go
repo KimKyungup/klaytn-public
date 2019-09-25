@@ -38,7 +38,7 @@ import (
 )
 
 const (
-	gasLimit uint64 = 3000000         // gasLimit for contract transaction.
+	gasLimit uint64 = 10000000        // gasLimit for contract transaction.
 	timeOut         = 3 * time.Second // timeout of context and event loop for simulated backend.
 )
 
@@ -664,4 +664,237 @@ func TestExtendedBridgeAndCallbackERC721(t *testing.T) {
 	case <-time.After(time.Second):
 		t.Fatalf("registerOfferEvent was not found.")
 	}
+}
+
+func generateBridgeTokenTestEnv(t *testing.T) (*backends.SimulatedBackend, *bind.TransactOpts, *bind.TransactOpts, *bridge.Bridge, *sctoken.ServiceChainToken, *scnft.ServiceChainNFT, common.Address, common.Address) {
+	key, _ := crypto.GenerateKey()
+	operator := bind.NewKeyedTransactor(key)
+	operator.GasLimit = gasLimit
+
+	testKey, _ := crypto.GenerateKey()
+	tester := bind.NewKeyedTransactor(testKey)
+	tester.GasLimit = gasLimit
+
+	alloc := blockchain.GenesisAlloc{operator.From: {Balance: big.NewInt(params.KLAY)}}
+	backend := backends.NewSimulatedBackend(alloc)
+
+	// Deploy Bridge
+	bridgeAddr, tx, b, err := bridge.DeployBridge(operator, backend, true)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	// Deploy ERC20
+	erc20Addr, tx, erc20, err := sctoken.DeployServiceChainToken(operator, backend, bridgeAddr)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	// Register ERC20
+	tx, err = b.RegisterToken(operator, erc20Addr, erc20Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	// Charge token to tester
+	tx, err = erc20.Transfer(operator, tester.From, big.NewInt(100))
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	// Deploy ERC721
+	erc721Addr, tx, erc721, err := scnft.DeployServiceChainNFT(operator, backend, bridgeAddr)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	// Register ERC721
+	tx, err = b.RegisterToken(operator, erc721Addr, erc721Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	// Mint token to tester
+	tx, err = erc721.RegisterBulk(operator, tester.From, big.NewInt(0), big.NewInt(10))
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	return backend, operator, tester, b, erc20, erc721, erc20Addr, erc721Addr
+}
+
+// TestBridgeContract_InitStatus checks initial lock status.
+func TestBridgeContract_InitStatus(t *testing.T) {
+	_, _, _, b, _, _, erc20Addr, erc721Addr := generateBridgeTokenTestEnv(t)
+
+	// initial value check
+	isLocked, err := b.LockedTokens(nil, erc20Addr)
+	assert.NoError(t, err)
+	assert.Equal(t, false, isLocked)
+
+	isLocked, err = b.LockedTokens(nil, erc721Addr)
+	assert.NoError(t, err)
+	assert.Equal(t, false, isLocked)
+}
+
+// TestBridgeContract_InitRequest checks the following:
+// - the request value transfer can be allowed after registering it.
+func TestBridgeContract_InitRequest(t *testing.T) {
+	backend, operator, tester, _, erc20, erc721, _, _ := generateBridgeTokenTestEnv(t)
+
+	// check to allow value transfer
+	tx, err := erc20.RequestValueTransfer(tester, big.NewInt(1), operator.From, big.NewInt(0), nil)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	// check to allow value transfer
+	tx, err = erc721.RequestValueTransfer(tester, big.NewInt(1), operator.From, nil)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+}
+
+// TestBridgeContract_TokenLock checks the following:
+// - the token can be lock to prevent value transfer requests.
+func TestBridgeContract_TokenLock(t *testing.T) {
+	backend, operator, tester, b, erc20, erc721, erc20Addr, erc721Addr := generateBridgeTokenTestEnv(t)
+
+	// lock token
+	tx, err := b.LockToken(operator, erc20Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
+	tx, err = b.LockToken(operator, erc721Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
+	// check value after locking
+	isLocked, err := b.LockedTokens(nil, erc20Addr)
+	assert.NoError(t, err)
+	assert.Equal(t, true, isLocked)
+
+	isLocked, err = b.LockedTokens(nil, erc721Addr)
+	assert.NoError(t, err)
+	assert.Equal(t, true, isLocked)
+
+	// check to prevent value transfer
+	tx, err = erc20.RequestValueTransfer(tester, big.NewInt(1), operator.From, big.NewInt(0), nil)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.NotNil(t, bind.CheckWaitMined(backend, tx))
+
+	tx, err = erc721.RequestValueTransfer(tester, big.NewInt(1), operator.From, nil)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.NotNil(t, bind.CheckWaitMined(backend, tx))
+}
+
+// TestBridgeContract_TokenLockFail checks the following:
+// - testing the case locking token is fail.
+func TestBridgeContract_TokenLockFail(t *testing.T) {
+	backend, operator, _, b, _, _, erc20Addr, erc721Addr := generateBridgeTokenTestEnv(t)
+
+	// fail locking unregistered token.
+	testAddr := common.BytesToAddress([]byte("unregistered"))
+	tx, err := b.LockToken(operator, testAddr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
+
+	// fail locking token if it is already locked.
+	tx, err = b.LockToken(operator, erc20Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
+	tx, err = b.LockToken(operator, erc721Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
+	tx, err = b.LockToken(operator, erc20Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
+
+	tx, err = b.LockToken(operator, erc721Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
+}
+
+// TestBridgeContract_TokenUnlockFail checks the following:
+// - testing the case unlocking token is fail.
+func TestBridgeContract_TokenUnlockFail(t *testing.T) {
+	backend, operator, _, b, _, _, erc20Addr, erc721Addr := generateBridgeTokenTestEnv(t)
+
+	// fail locking unregistered token.
+	testAddr := common.BytesToAddress([]byte("unregistered"))
+	tx, err := b.UnlockToken(operator, testAddr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
+
+	// fail locking token if it is already unlocked.
+	tx, err = b.UnlockToken(operator, erc20Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
+
+	tx, err = b.UnlockToken(operator, erc721Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusErrExecutionReverted, t)
+}
+
+// TestBridgeContract_CheckValueTransferAfterUnLock checks the following:
+// - the token can be unlock to allow value transfer requests.
+func TestBridgeContract_CheckValueTransferAfterUnLock(t *testing.T) {
+	//backend, operator, tester, b, erc20, erc721, erc20Addr, erc721Addr := generateBridgeTokenTestEnv(t)
+	backend, operator, tester, b, erc20, erc721, erc20Addr, erc721Addr := generateBridgeTokenTestEnv(t)
+
+	// lock token
+	tx, err := b.LockToken(operator, erc20Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
+	tx, err = b.LockToken(operator, erc721Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
+	// unlock token
+	tx, err = b.UnlockToken(operator, erc20Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
+	tx, err = b.UnlockToken(operator, erc721Addr)
+	assert.NoError(t, err)
+	backend.Commit()
+	CheckReceipt(backend, tx, 1*time.Second, types.ReceiptStatusSuccessful, t)
+
+	// check value after unlocking
+	isLocked, err := b.LockedTokens(nil, erc20Addr)
+	assert.NoError(t, err)
+	assert.Equal(t, false, isLocked)
+
+	isLocked, err = b.LockedTokens(nil, erc721Addr)
+	assert.NoError(t, err)
+	assert.Equal(t, false, isLocked)
+
+	// check to allow value transfer
+	tx, err = erc20.RequestValueTransfer(tester, big.NewInt(1), operator.From, big.NewInt(0), nil)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
+
+	tx, err = erc721.RequestValueTransfer(tester, big.NewInt(1), operator.From, nil)
+	assert.NoError(t, err)
+	backend.Commit()
+	assert.Nil(t, bind.CheckWaitMined(backend, tx))
 }

@@ -21,9 +21,9 @@ import "../externals/openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./BridgeHandledRequests.sol";
 import "./BridgeFee.sol";
 import "./BridgeOperator.sol";
+import "./BridgeTokens.sol";
 
-
-contract BridgeTransfer is BridgeHandledRequests, BridgeFee, BridgeOperator {
+contract BridgeTransfer is BridgeHandledRequests, BridgeFee, BridgeTokens, BridgeOperator {
     bool public modeMintBurn = false;
     bool public isRunning;
 
@@ -35,9 +35,6 @@ contract BridgeTransfer is BridgeHandledRequests, BridgeFee, BridgeOperator {
 
     using SafeMath for uint256;
 
-    mapping(address => address) public allowedTokens; // <token, counterpart token>
-    address[] public allowedTokenList;
-
     enum TokenType {
         KLAY,
         ERC20,
@@ -47,10 +44,6 @@ contract BridgeTransfer is BridgeHandledRequests, BridgeFee, BridgeOperator {
     constructor(bool _modeMintBurn) BridgeFee(address(0)) internal {
         modeMintBurn = _modeMintBurn;
         isRunning = true;
-    }
-
-    function getAllowedTokenList() external view returns(address[] memory) {
-        return allowedTokenList;
     }
 
     // start can allow or disallow the value transfer request.
@@ -66,9 +59,7 @@ contract BridgeTransfer is BridgeHandledRequests, BridgeFee, BridgeOperator {
         external
         onlyOwner
     {
-        require(allowedTokens[_token] == address(0));
-        allowedTokens[_token] = _cToken;
-        allowedTokenList.push(_token);
+        _registerToken(_token, _cToken);
     }
 
     // deregisterToken can remove the token in allowedToken list.
@@ -76,16 +67,23 @@ contract BridgeTransfer is BridgeHandledRequests, BridgeFee, BridgeOperator {
         external
         onlyOwner
     {
-        require(allowedTokens[_token] != address(0));
-        delete allowedTokens[_token];
+        _deregisterToken(_token);
+    }
 
-        for (uint i = 0; i < allowedTokenList.length; i++) {
-            if (allowedTokenList[i] == _token) {
-                allowedTokenList[i] = allowedTokenList[allowedTokenList.length-1];
-                allowedTokenList.length--;
-                break;
-            }
-        }
+    // lockToken can lock the token to prevent request token transferring.
+    function lockToken(address _token)
+        external
+        onlyOwner
+    {
+        _lockToken(_token);
+    }
+
+    // unlockToken can unlock the token to request token transferring.
+    function unlockToken(address _token)
+        external
+        onlyOwner
+    {
+        _unlockToken(_token);
     }
 
     /**

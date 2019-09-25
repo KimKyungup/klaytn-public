@@ -78,6 +78,7 @@ contract BridgeTransferERC20 is IERC20BridgeReceiver, BridgeTransfer {
         internal
     {
         require(isRunning, "stopped bridge");
+        require(lockedTokens[_tokenAddress] == false, "locked token");
         require(_value > 0, "zero msg.value");
         require(allowedTokens[_tokenAddress] != address(0), "invalid token");
 
