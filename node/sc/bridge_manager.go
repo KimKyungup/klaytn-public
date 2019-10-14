@@ -195,6 +195,10 @@ func (bi *BridgeInfo) GetPendingRequestEvents(start uint64) []*RequestValueTrans
 		"bi.pendingRequestEvent.Len()", bi.pendingRequestEvent.Len())
 
 	ready := bi.pendingRequestEvent.Ready(start)
+
+	logger.Info("GetPendingRequestEvents",
+		"len(ready)", len(ready))
+
 	var readyEvent []*RequestValueTransferEvent
 	for _, item := range ready {
 		readyEvent = append(readyEvent, item.(*RequestValueTransferEvent))
