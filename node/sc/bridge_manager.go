@@ -194,10 +194,14 @@ func (bi *BridgeInfo) GetPendingRequestEvents(start uint64) []*RequestValueTrans
 	logger.Info("GetPendingRequestEvents",
 		"bi.pendingRequestEvent.Len()", bi.pendingRequestEvent.Len())
 
+	size := bi.pendingRequestEvent.Len()
 	ready := bi.pendingRequestEvent.Ready(start)
 
-	logger.Info("GetPendingRequestEvents",
-		"len(ready)", len(ready))
+	if size > 0 && 0 == len(ready) {
+		logger.Error("GetPendingRequestEvents","size",size, "len(ready)",len(ready),
+			"minimumNonce",bi.pendingRequestEvent.Flatten()[0].Nonce(),
+			"start",start)
+	}
 
 	var readyEvent []*RequestValueTransferEvent
 	for _, item := range ready {
@@ -386,7 +390,7 @@ func (bi *BridgeInfo) AddRequestValueTransferEvents(evs []*RequestValueTransferE
 		return
 	}
 
-	logger.Info("AddRequestValueTransferEvents",
+	logger.Debug("AddRequestValueTransferEvents",
 		"bi.pendingRequestEvent.Len()", bi.pendingRequestEvent.Len(),
 		"len(evs)", len(evs))
 
@@ -394,7 +398,7 @@ func (bi *BridgeInfo) AddRequestValueTransferEvents(evs []*RequestValueTransferE
 		bi.UpdateRequestNonceFromCounterpart(ev.RequestNonce + 1)
 		bi.pendingRequestEvent.Put(ev)
 	}
-	logger.Info("added pending request events to the bridge info:", "bi.pendingRequestEvent", bi.pendingRequestEvent.Len())
+	logger.Debug("added pending request events to the bridge info:", "bi.pendingRequestEvent", bi.pendingRequestEvent.Len())
 
 	vtPendingRequestEventGauge.Update((int64)(bi.pendingRequestEvent.Len()))
 
