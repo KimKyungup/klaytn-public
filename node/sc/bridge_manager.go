@@ -382,11 +382,15 @@ func (bi *BridgeInfo) AddRequestValueTransferEvents(evs []*RequestValueTransferE
 		return
 	}
 
+	logger.Info("AddRequestValueTransferEvents",
+		"bi.pendingRequestEvent.Len()", bi.pendingRequestEvent.Len(),
+		"len(evs)", len(evs))
+
 	for _, ev := range evs {
 		bi.UpdateRequestNonceFromCounterpart(ev.RequestNonce + 1)
 		bi.pendingRequestEvent.Put(ev)
 	}
-	logger.Trace("added pending request events to the bridge info:", "bi.pendingRequestEvent", bi.pendingRequestEvent.Len())
+	logger.Info("added pending request events to the bridge info:", "bi.pendingRequestEvent", bi.pendingRequestEvent.Len())
 
 	vtPendingRequestEventGauge.Update((int64)(bi.pendingRequestEvent.Len()))
 
