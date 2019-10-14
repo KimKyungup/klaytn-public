@@ -191,7 +191,7 @@ func (bi *BridgeInfo) GetCounterPartToken(token common.Address) common.Address {
 }
 
 func (bi *BridgeInfo) GetPendingRequestEvents(start uint64) []*RequestValueTransferEvent {
-	logger.Info("GetPendingRequestEvents",
+	logger.Debug("GetPendingRequestEvents",
 		"bi.pendingRequestEvent.Len()", bi.pendingRequestEvent.Len())
 
 	size := bi.pendingRequestEvent.Len()
