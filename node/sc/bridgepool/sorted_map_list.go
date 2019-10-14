@@ -97,6 +97,28 @@ func (m *ItemSortedMap) Put(event itemWithNonce) {
 	m.items[nonce], m.cache = event, nil
 }
 
+// Forward removes all items from the map with a nonce lower than the
+// provided threshold. Every removed items is returned for any post-removal
+// maintenance.
+func (m *ItemSortedMap) Forward(threshold uint64) items {
+	var removed items
+
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	// Pop off heap items until the threshold is reached
+	for m.index.Len() > 0 && (*m.index)[0] < threshold {
+		nonce := heap.Pop(m.index).(uint64)
+		removed = append(removed, m.items[nonce])
+		delete(m.items, nonce)
+	}
+	// If we had a cached order, shift the front
+	if m.cache != nil {
+		m.cache = m.cache[len(removed):]
+	}
+	return removed
+}
+
 // Ready retrieves a sequentially increasing list of events starting at the
 // provided nonce that is ready for processing. The returned events will be
 // removed from the list.
