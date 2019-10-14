@@ -191,6 +191,9 @@ func (bi *BridgeInfo) GetCounterPartToken(token common.Address) common.Address {
 }
 
 func (bi *BridgeInfo) GetPendingRequestEvents(start uint64) []*RequestValueTransferEvent {
+	logger.Info("GetPendingRequestEvents",
+		"bi.pendingRequestEvent.Len()", bi.pendingRequestEvent.Len())
+
 	ready := bi.pendingRequestEvent.Ready(start)
 	var readyEvent []*RequestValueTransferEvent
 	for _, item := range ready {
@@ -385,7 +388,7 @@ func (bi *BridgeInfo) AddRequestValueTransferEvents(evs []*RequestValueTransferE
 	}
 	logger.Trace("added pending request events to the bridge info:", "bi.pendingRequestEvent", bi.pendingRequestEvent.Len())
 
-	vtPendingRequestEventMeter.Inc(int64(len(evs)))
+	vtPendingRequestEventGauge.Update((int64)(bi.pendingRequestEvent.Len()))
 
 	select {
 	case bi.newEvent <- struct{}{}:
