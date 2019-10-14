@@ -195,7 +195,7 @@ func (bi *BridgeInfo) GetPendingRequestEvents(start uint64) []*RequestValueTrans
 		"bi.pendingRequestEvent.Len()", bi.pendingRequestEvent.Len())
 
 	size := bi.pendingRequestEvent.Len()
-	ready := bi.pendingRequestEvent.Forward(100) //bi.pendingRequestEvent.Ready(start)
+	ready := bi.pendingRequestEvent.FlattenByCount(100) //bi.pendingRequestEvent.Ready(start)
 
 	if size > 0 && 0 == len(ready) {
 		logger.Error("GetPendingRequestEvents","size",size, "len(ready)",len(ready),
