@@ -195,7 +195,7 @@ func (bi *BridgeInfo) GetPendingRequestEvents(start uint64) []*RequestValueTrans
 		"bi.pendingRequestEvent.Len()", bi.pendingRequestEvent.Len())
 
 	size := bi.pendingRequestEvent.Len()
-	ready := bi.pendingRequestEvent.FlattenByCount(100) //bi.pendingRequestEvent.Ready(start)
+	ready := bi.pendingRequestEvent.FlattenByCount(maxPendingNonceDiff/2) //bi.pendingRequestEvent.Ready(start)
 
 	if size > 0 && 0 == len(ready) {
 		logger.Error("GetPendingRequestEvents","size",size, "len(ready)",len(ready),
@@ -222,24 +222,24 @@ func (bi *BridgeInfo) processingPendingRequestEvents() error {
 
 	logger.Trace("Get ready request value transfer event", "len(readyEvent)", len(ReadyEvent), "nextHandleNonce", bi.nextHandleNonce, "len(pendingEvent)", bi.pendingRequestEvent.Len())
 
-	diff := bi.requestNonceFromCounterPart - bi.handleNonce
-	if diff > errorDiffRequestHandleNonce {
-		logger.Error("Value transfer requested/handled nonce gap is too much.", "toSC", bi.onChildChain, "diff", diff, "requestedNonce", bi.requestNonceFromCounterPart, "handledNonce", bi.handleNonce)
-		// TODO-Klaytn need to consider starting value transfer recovery.
-	}
+	//diff := bi.requestNonceFromCounterPart - bi.handleNonce
+	//if diff > errorDiffRequestHandleNonce {
+	//	logger.Error("Value transfer requested/handled nonce gap is too much.", "toSC", bi.onChildChain, "diff", diff, "requestedNonce", bi.requestNonceFromCounterPart, "handledNonce", bi.handleNonce)
+	//	// TODO-Klaytn need to consider starting value transfer recovery.
+	//}
 
 	for idx, ev := range ReadyEvent {
-		if ev.RequestNonce < bi.handleNonce {
-			logger.Trace("past requests are ignored", "RequestNonce", ev.RequestNonce, "handleNonce", bi.handleNonce)
-			continue
-		}
-
-		logger.Trace("handle value transfer event", "evt", ev)
-
-		if ev.RequestNonce > bi.handleNonce+maxPendingNonceDiff {
-			logger.Trace("nonce diff is too large", "limitation", maxPendingNonceDiff)
-			return errors.New("nonce diff is too large")
-		}
+		//if ev.RequestNonce < bi.handleNonce {
+		//	logger.Trace("past requests are ignored", "RequestNonce", ev.RequestNonce, "handleNonce", bi.handleNonce)
+		//	continue
+		//}
+		//
+		//logger.Trace("handle value transfer event", "evt", ev)
+		//
+		//if ev.RequestNonce > bi.handleNonce+maxPendingNonceDiff {
+		//	logger.Trace("nonce diff is too large", "limitation", maxPendingNonceDiff)
+		//	return errors.New("nonce diff is too large")
+		//}
 
 		if err := bi.handleRequestValueTransferEvent(ev); err != nil {
 			bi.AddRequestValueTransferEvents(ReadyEvent[idx:])
