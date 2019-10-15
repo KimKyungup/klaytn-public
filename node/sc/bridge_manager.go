@@ -39,7 +39,7 @@ import (
 const (
 	TokenEventChanSize  = 10000
 	BridgeAddrJournal   = "bridge_addrs.rlp"
-	maxPendingNonceDiff = 20000 // TODO-Klaytn-ServiceChain: update this limitation. Currently, 2 * 10000 TPS.
+	maxPendingNonceDiff = 1000 // TODO-Klaytn-ServiceChain: update this limitation. Currently, 2 * 500 TPS.
 )
 
 const (
@@ -195,7 +195,7 @@ func (bi *BridgeInfo) GetPendingRequestEvents(start uint64) []*RequestValueTrans
 		"bi.pendingRequestEvent.Len()", bi.pendingRequestEvent.Len())
 
 	size := bi.pendingRequestEvent.Len()
-	ready := bi.pendingRequestEvent.FlattenByCount(100) //bi.pendingRequestEvent.Ready(start)
+	ready := bi.pendingRequestEvent.Pop(100) //bi.pendingRequestEvent.Ready(start)
 
 	if size > 0 && 0 == len(ready) {
 		logger.Error("GetPendingRequestEvents","size",size, "len(ready)",len(ready),
@@ -547,6 +547,10 @@ func (bm *BridgeManager) LogBridgeStatus() {
 	p2cTotalRequestNonce, p2cTotalHandleNonce := uint64(0), uint64(0)
 	c2pTotalRequestNonce, c2pTotalHandleNonce := uint64(0), uint64(0)
 
+	for _, b := range bm.bridges {
+		b.UpdateInfo()
+	}
+
 	for bAddr, b := range bm.bridges {
 		diffNonce := b.requestNonceFromCounterPart - b.handleNonce
 
@@ -561,7 +565,7 @@ func (bm *BridgeManager) LogBridgeStatus() {
 				c2pTotalRequestNonce += b.requestNonceFromCounterPart
 				c2pTotalHandleNonce += b.handleNonce
 			}
-			logger.Debug(headStr, "bridge", bAddr.String(), "requestNonce", b.requestNonceFromCounterPart, "handleNonce", b.handleNonce, "pending", diffNonce)
+			logger.Info(headStr, "bridge", bAddr.String(), "requestNonce", b.requestNonceFromCounterPart, "handleNonce", b.handleNonce, "pending", diffNonce)
 		}
 	}
 

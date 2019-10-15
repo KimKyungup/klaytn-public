@@ -129,6 +129,28 @@ func (m *ItemSortedMap) Forward(threshold uint64) items {
 	return removed
 }
 
+// Pop removes minimum nonce given count items from the map.
+// Every removed items is returned for any post-removal maintenance.
+func (m *ItemSortedMap) Pop(count int) items {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	// Short circuit if no events are available
+	if m.index.Len() == 0 {
+		return nil
+	}
+
+	// Otherwise start accumulating incremental events
+	var ready items
+	for nonce := (*m.index)[0]; m.index.Len() > 0 && len(ready) < count; nonce=(*m.index)[0] {
+		ready = append(ready, m.items[nonce])
+		delete(m.items, nonce)
+		heap.Pop(m.index)
+	}
+
+	return ready
+}
+
 // Ready retrieves a sequentially increasing list of events starting at the
 // provided nonce that is ready for processing. The returned events will be
 // removed from the list.

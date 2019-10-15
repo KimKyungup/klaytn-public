@@ -25,7 +25,7 @@ import (
 
 var (
 	filterLogsStride = uint64(100)
-	maxPendingTxs    = 100000
+	maxPendingTxs    = 1000
 )
 
 // valueTransferHint stores the last handled block number and nonce (Request or Handle).
