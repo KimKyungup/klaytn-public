@@ -103,6 +103,7 @@ type BridgeInfo struct {
 
 	isRunning                   bool
 	handleNonce                 uint64 // the nonce from the handle value transfer event from the bridge.
+	lowerHandleNonce            uint64 // the nonce from the handle value transfer event from the bridge.
 	requestNonceFromCounterPart uint64 // the nonce from the request value transfer event from the counter part bridge.
 	requestNonce                uint64 // the nonce from the request value transfer event from the counter part bridge.
 
@@ -126,6 +127,7 @@ func NewBridgeInfo(sb *SubBridge, addr common.Address, bridge *bridgecontract.Br
 		bridgepool.NewItemSortedMap(),
 		0,
 		true,
+		0,
 		0,
 		0,
 		0,
@@ -269,6 +271,9 @@ func (bi *BridgeInfo) UpdateInfo() error {
 	if err != nil {
 		return err
 	}
+
+	bi.lowerHandleNonce = hn
+
 	bi.UpdateHandledNonce(hn)
 	bi.UpdateRequestNonceFromCounterpart(hn)
 
