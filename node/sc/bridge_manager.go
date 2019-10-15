@@ -547,10 +547,6 @@ func (bm *BridgeManager) LogBridgeStatus() {
 	p2cTotalRequestNonce, p2cTotalHandleNonce := uint64(0), uint64(0)
 	c2pTotalRequestNonce, c2pTotalHandleNonce := uint64(0), uint64(0)
 
-	for _, b := range bm.bridges {
-		b.UpdateInfo()
-	}
-
 	for bAddr, b := range bm.bridges {
 		diffNonce := b.requestNonceFromCounterPart - b.handleNonce
 
