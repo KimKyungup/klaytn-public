@@ -385,16 +385,25 @@ func (bi *BridgeInfo) UpdateHandledNonce(nonce uint64) {
 
 // AddRequestValueTransferEvents adds events into the pendingRequestEvent.
 func (bi *BridgeInfo) AddRequestValueTransferEvents(evs []*RequestValueTransferEvent) {
-	if bi.pendingRequestEvent.Len() > maxPendingNonceDiff {
-		logger.Trace("adding request value transfer events is ignored", "len", bi.pendingRequestEvent.Len(), "limit", maxPendingNonceDiff)
-		return
-	}
+	//if bi.pendingRequestEvent.Len() > maxPendingNonceDiff {
+	//	logger.Trace("adding request value transfer events is ignored", "len", bi.pendingRequestEvent.Len(), "limit", maxPendingNonceDiff)
+	//	return
+	//}
 
 	logger.Debug("AddRequestValueTransferEvents",
 		"bi.pendingRequestEvent.Len()", bi.pendingRequestEvent.Len(),
 		"len(evs)", len(evs))
 
 	for _, ev := range evs {
+		if bi.pendingRequestEvent.Len() > maxPendingNonceDiff {
+			flatten := bi.pendingRequestEvent.Flatten()
+			maxNonce := flatten[len(flatten)-1].Nonce()
+			if ev.Nonce() >= maxNonce {
+				continue
+			}
+			bi.pendingRequestEvent.Remove(maxNonce)
+		}
+
 		bi.UpdateRequestNonceFromCounterpart(ev.RequestNonce + 1)
 		bi.pendingRequestEvent.Put(ev)
 	}
