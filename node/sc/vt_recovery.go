@@ -289,7 +289,7 @@ pendingTxLoop:
 		endBlkNum = startBlkNum + filterLogsStride
 	}
 
-	logger.Debug("retrieved pending events", "len(pendingEvents)", len(pendingEvents))
+	logger.Info("retrieved pending events", "bridge", bi.address.String(), "len(pendingEvents)", len(pendingEvents), "1st nonce", pendingEvents[0].Nonce())
 	return pendingEvents, nil
 }
 

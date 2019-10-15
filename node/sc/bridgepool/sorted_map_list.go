@@ -138,7 +138,7 @@ func (m *ItemSortedMap) Pop(count int) items {
 	// Otherwise start accumulating incremental events
 	var ready items
 	for m.index.Len() > 0 && len(ready) < count {
-		nonce := (*m.index)[0];
+		nonce := (*m.index)[0]
 		ready = append(ready, m.items[nonce])
 		delete(m.items, nonce)
 		heap.Pop(m.index)
