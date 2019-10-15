@@ -85,11 +85,11 @@ func (m *ItemSortedMap) Get(nonce uint64) itemWithNonce {
 }
 
 // Exist returns if the nonce exist.
-func (m *ItemSortedMap) Exist(nonce uint64) bool{
+func (m *ItemSortedMap) Exist(nonce uint64) bool {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
-	_, exist :=  m.items[nonce]
+	_, exist := m.items[nonce]
 
 	return exist
 }
@@ -129,20 +129,16 @@ func (m *ItemSortedMap) Forward(threshold uint64) items {
 	return removed
 }
 
-// Pop removes minimum nonce given count items from the map.
+// Pop removes given count number of minimum nonce items from the map.
 // Every removed items is returned for any post-removal maintenance.
 func (m *ItemSortedMap) Pop(count int) items {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
-	// Short circuit if no events are available
-	if m.index.Len() == 0 {
-		return nil
-	}
-
 	// Otherwise start accumulating incremental events
 	var ready items
-	for nonce := (*m.index)[0]; m.index.Len() > 0 && len(ready) < count; nonce=(*m.index)[0] {
+	for m.index.Len() > 0 && len(ready) < count {
+		nonce := (*m.index)[0];
 		ready = append(ready, m.items[nonce])
 		delete(m.items, nonce)
 		heap.Pop(m.index)
