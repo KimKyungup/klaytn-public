@@ -402,6 +402,7 @@ func (bi *BridgeInfo) AddRequestValueTransferEvents(evs []*RequestValueTransferE
 				continue
 			}
 			bi.pendingRequestEvent.Remove(maxNonce)
+			logger.Info("List is full but add requestValueTransfer ", "newNonce", ev.Nonce(), "removedNonce", maxNonce)
 		}
 
 		bi.UpdateRequestNonceFromCounterpart(ev.RequestNonce + 1)
