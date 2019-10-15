@@ -243,7 +243,7 @@ func (bi *BridgeInfo) processingPendingRequestEvents() error {
 
 		if err := bi.handleRequestValueTransferEvent(ev); err != nil {
 			bi.AddRequestValueTransferEvents(ReadyEvent[idx:])
-			logger.Error("Failed handle request value transfer event", "err", err, "len(RePutEvent)", len(ReadyEvent[idx:]))
+			logger.Debug("Failed handle request value transfer event", "err", err, "len(RePutEvent)", len(ReadyEvent[idx:]))
 			return err
 		}
 		if bi.nextHandleNonce <= ev.RequestNonce {
@@ -398,7 +398,7 @@ func (bi *BridgeInfo) AddRequestValueTransferEvents(evs []*RequestValueTransferE
 		if bi.pendingRequestEvent.Len() > maxPendingNonceDiff {
 			flatten := bi.pendingRequestEvent.Flatten()
 			maxNonce := flatten[len(flatten)-1].Nonce()
-			if ev.Nonce() >= maxNonce {
+			if ev.Nonce() >= maxNonce || bi.pendingRequestEvent.Exist(ev.Nonce()) {
 				continue
 			}
 			bi.pendingRequestEvent.Remove(maxNonce)

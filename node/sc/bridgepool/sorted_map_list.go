@@ -84,6 +84,16 @@ func (m *ItemSortedMap) Get(nonce uint64) itemWithNonce {
 	return m.items[nonce]
 }
 
+// Exist returns if the nonce exist.
+func (m *ItemSortedMap) Exist(nonce uint64) bool{
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	_, exist :=  m.items[nonce]
+
+	return exist
+}
+
 // Put inserts a new item into the map, also updating the map's nonce
 // index. If a item already exists with the same nonce, it's overwritten.
 func (m *ItemSortedMap) Put(event itemWithNonce) {

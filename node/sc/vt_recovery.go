@@ -217,7 +217,7 @@ func updateRecoveryHintFromTo(prevHint *valueTransferHint, from, to *BridgeInfo)
 	}
 	hint.handleNonce = handleNonce
 
-	logger.Trace("updateRecoveryHintFromTo finish", "rnonce", hint.requestNonce, "hnonce", hint.handleNonce, "phnonce", hint.prevHandleNonce, "cand", hint.candidate)
+	logger.Info("updateRecoveryHintFromTo finish", "rnonce", hint.requestNonce, "hnonce", hint.handleNonce, "phnonce", hint.prevHandleNonce, "cand", hint.candidate)
 
 	return &hint, nil
 }
