@@ -39,7 +39,7 @@ import (
 const (
 	TokenEventChanSize  = 10000
 	BridgeAddrJournal   = "bridge_addrs.rlp"
-	maxPendingNonceDiff = 1000 // TODO-Klaytn-ServiceChain: update this limitation. Currently, 2 * 500 TPS.
+	maxPendingNonceDiff = 50000 // TODO-Klaytn-ServiceChain: update this limitation. Currently, 2 * 500 TPS.
 )
 
 const (
@@ -190,7 +190,7 @@ func (bi *BridgeInfo) GetCounterPartToken(token common.Address) common.Address {
 }
 
 func (bi *BridgeInfo) GetPendingRequestEvents() []*RequestValueTransferEvent {
-	ready := bi.pendingRequestEvent.Pop(maxPendingNonceDiff / 2)
+	ready := bi.pendingRequestEvent.Pop(maxPendingNonceDiff / 100)
 	var readyEvent []*RequestValueTransferEvent
 	for _, item := range ready {
 		readyEvent = append(readyEvent, item.(*RequestValueTransferEvent))
