@@ -493,6 +493,7 @@ func (api *PrivateDebugAPI) traceBlock(ctx context.Context, block *types.Block, 
 			// Fetch and execute the next transaction trace tasks
 			for task := range jobs {
 				if blockReceipt[task.index].Status != types.ReceiptStatusSuccessful {
+					logger.Warn("Skip Trance", "txIdx", task.index, "txHash",txs[task.index].Hash().String(), "status", blockReceipt[task.index].Status)
 					results[task.index] = &txTraceResult{Error: "skip reverted tx : "+ strconv.Itoa(int(blockReceipt[task.index].Status))}
 					continue
 				}
