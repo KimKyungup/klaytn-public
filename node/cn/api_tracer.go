@@ -29,6 +29,7 @@ import (
 	"io/ioutil"
 	"os"
 	"runtime"
+	"strconv"
 	"sync"
 	"time"
 
@@ -450,6 +451,12 @@ func (api *PrivateDebugAPI) traceBlock(ctx context.Context, block *types.Block, 
 	if parent == nil {
 		return nil, fmt.Errorf("parent %x not found", block.ParentHash())
 	}
+
+	blockReceipt := api.cn.blockchain.GetReceiptsByBlockHash(block.ParentHash())
+	if blockReceipt == nil {
+		return nil, fmt.Errorf("parent %x receipts not found", block.ParentHash())
+	}
+
 	reexec := defaultTraceReexec
 	if config != nil && config.Reexec != nil {
 		reexec = *config.Reexec
@@ -479,6 +486,10 @@ func (api *PrivateDebugAPI) traceBlock(ctx context.Context, block *types.Block, 
 
 			// Fetch and execute the next transaction trace tasks
 			for task := range jobs {
+				if blockReceipt[task.index].Status != types.ReceiptStatusSuccessful {
+					results[task.index] = &txTraceResult{Error: "skip reverted tx : "+ strconv.Itoa(int(blockReceipt[task.index].Status))}
+					continue
+				}
 				msg, _ := txs[task.index].AsMessageWithAccountKeyPicker(signer, task.statedb, block.NumberU64())
 				vmctx := blockchain.NewEVMContext(msg, block.Header(), api.cn.blockchain, nil)
 
