@@ -390,6 +390,7 @@ func (self *StateDB) GetKey(addr common.Address) accountkey.AccountKey {
 	if stateObject != nil {
 		return stateObject.GetKey()
 	}
+	logger.Error("GetKey return newAccountKeyLegacy", "addr", addr.String())
 	return accountkey.NewAccountKeyLegacy()
 }
 
@@ -542,6 +543,7 @@ func (self *StateDB) getStateObject(addr common.Address) *stateObject {
 	// First, check stateObjects if there is "live" object.
 	if obj := self.stateObjects[addr]; obj != nil {
 		if obj.deleted {
+			logger.Error("cached state object is not *stateObject type!", "addr", addr.String())
 			return nil
 		}
 		return obj
