@@ -634,7 +634,7 @@ func (tx *Transaction) ValidateFeePayer(signer Signer, p AccountKeyPicker, curre
 	}
 
 	if err := accountkey.ValidateAccountKey(feePayer, accKey, pubkey, accountkey.RoleFeePayer); err != nil {
-		logger.Error("ValidateFeePayer", tx.Hash().String(), "feePayer",feePayer.String(), "tx", "err", err)
+		logger.Error("ValidateFeePayer", tx.Hash().String(), "feePayer", feePayer.String(), "tx", "err", err)
 		return 0, ErrInvalidSigFeePayer
 	}
 

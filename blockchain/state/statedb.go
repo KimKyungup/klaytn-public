@@ -390,7 +390,7 @@ func (self *StateDB) GetKey(addr common.Address) accountkey.AccountKey {
 	if stateObject != nil {
 		return stateObject.GetKey()
 	}
-	logger.Error("GetKey return newAccountKeyLegacy", "addr", addr.String())
+	logger.Debug("GetKey return newAccountKeyLegacy", "addr", addr.String())
 	return accountkey.NewAccountKeyLegacy()
 }
 
@@ -568,6 +568,7 @@ func (self *StateDB) getStateObject(addr common.Address) *stateObject {
 	enc, err := self.trie.TryGet(addr[:])
 	if len(enc) == 0 {
 		self.setError(err)
+		logger.Error("TryGet", "addr", addr.String(), "err", err)
 		return nil
 	}
 	serializer := account.NewAccountSerializer()
