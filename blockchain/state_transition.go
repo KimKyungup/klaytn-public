@@ -202,6 +202,7 @@ func (st *StateTransition) preCheck() error {
 	if st.msg.CheckNonce() {
 		nonce := st.state.GetNonce(st.msg.ValidatedSender())
 		if nonce < st.msg.Nonce() {
+			logger.Error("preCheck nonce too high", "addr", st.msg.ValidatedSender().String(), "nonce", nonce, "msg.Nonce", st.msg.Nonce())
 			return ErrNonceTooHigh
 		} else if nonce > st.msg.Nonce() {
 			return ErrNonceTooLow
