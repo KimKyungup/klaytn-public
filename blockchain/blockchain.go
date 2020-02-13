@@ -107,9 +107,9 @@ type BlockChain struct {
 	chainConfigMu *sync.RWMutex
 	cacheConfig   *CacheConfig // stateDB caching and trie caching/pruning configuration
 
-	db      database.DBManager // Low level persistent database to store final content in
-	triegc  *prque.Prque       // Priority queue mapping block numbers to tries to gc
-	gcEvent chan uint64		   // Gc trigger event delivers latest block number
+	db                  database.DBManager // Low level persistent database to store final content in
+	triegc              *prque.Prque       // Priority queue mapping block numbers to tries to gc
+	gcStateDBCacheEvent chan uint64        // Gc trigger event delivers latest block number
 
 	hc            *HeaderChain
 	rmLogsFeed    event.Feed
@@ -180,21 +180,21 @@ func NewBlockChain(db database.DBManager, cacheConfig *CacheConfig, chainConfig 
 	}
 
 	bc := &BlockChain{
-		chainConfig:     chainConfig,
-		chainConfigMu:   new(sync.RWMutex),
-		cacheConfig:     cacheConfig,
-		db:              db,
-		triegc:          prque.New(),
-		gcEvent:         make(chan uint64),
-		stateCache:      state.NewDatabaseWithCache(db, cacheConfig.TrieCacheLimit, cacheConfig.DataArchivingBlockNum),
-		quit:            make(chan struct{}),
-		futureBlocks:    futureBlocks,
-		engine:          engine,
-		vmConfig:        vmConfig,
-		badBlocks:       badBlocks,
-		parallelDBWrite: db.IsParallelDBWrite(),
-		nonceCache:      nonceCache,
-		balanceCache:    balanceCache,
+		chainConfig:         chainConfig,
+		chainConfigMu:       new(sync.RWMutex),
+		cacheConfig:         cacheConfig,
+		db:                  db,
+		triegc:              prque.New(),
+		gcStateDBCacheEvent: make(chan uint64),
+		stateCache:          state.NewDatabaseWithCache(db, cacheConfig.TrieCacheLimit, cacheConfig.DataArchivingBlockNum),
+		quit:                make(chan struct{}),
+		futureBlocks:        futureBlocks,
+		engine:              engine,
+		vmConfig:            vmConfig,
+		badBlocks:           badBlocks,
+		parallelDBWrite:     db.IsParallelDBWrite(),
+		nonceCache:          nonceCache,
+		balanceCache:        balanceCache,
 	}
 
 	bc.SetValidator(NewBlockValidator(chainConfig, bc, engine))
@@ -231,7 +231,7 @@ func NewBlockChain(db database.DBManager, cacheConfig *CacheConfig, chainConfig 
 	}
 	// Take ownership of this particular state
 	go bc.update()
-	go bc.gcTrieDbLoop()
+	go bc.gcStateDBCacheLoop()
 	return bc, nil
 }
 
@@ -445,6 +445,17 @@ func (bc *BlockChain) State() (*state.StateDB, error) {
 // StateAt returns a new mutable state based on a particular point in time.
 func (bc *BlockChain) StateAt(root common.Hash) (*state.StateDB, error) {
 	return state.New(root, bc.stateCache)
+}
+
+// StateAtWithRLockStateCache returns a new mutable state based on a particular point in time with read lock of the state nodes.
+func (bc *BlockChain) StateAtWithRLockStateCache(root common.Hash) (*state.StateDB, error) {
+	bc.RLockStateCache()
+	exist := bc.stateCache.TrieDB().DoesExistCachedNode(root)
+	if exist {
+		return state.New(root, bc.stateCache)
+	}
+	bc.RUnLockStateCache()
+	return nil, errors.New("the node does not exist in state cache")
 }
 
 // StateCache returns the caching database underpinning the blockchain instance.
@@ -1048,37 +1059,44 @@ func (bc *BlockChain) writeStateTrie(block *types.Block, state *state.StateDB) e
 			trieDB.Commit(block.Header().Root, true, block.NumberU64())
 		}
 
+		// trigger to GC stateDB cache
 		select {
-		case bc.gcEvent <- block.NumberU64():
+		case bc.gcStateDBCacheEvent <- block.NumberU64():
 		default:
 		}
 	}
 	return nil
 }
 
-func (bc *BlockChain) gcTrieDbLoop() {
+func (bc *BlockChain) RLockStateCache() {
+	bc.stateCache.RLock()
+}
+
+func (bc *BlockChain) RUnLockStateCache() {
+	bc.stateCache.RUnLock()
+}
+
+func (bc *BlockChain) gcStateDBCacheLoop() {
 	trieDB := bc.stateCache.TrieDB()
 
 	for {
 		select {
-			case current := <-bc.gcEvent:
-				// TODO-Klaytn need to add lock
+		case current := <-bc.gcStateDBCacheEvent:
+			if current > triesInMemory {
+				// Find the next state trie we need to commit
+				header := bc.GetHeaderByNumber(current - triesInMemory)
+				chosen := header.Number.Uint64()
 
-				if current > triesInMemory {
-					// Find the next state trie we need to commit
-					header := bc.GetHeaderByNumber(current - triesInMemory)
-					chosen := header.Number.Uint64()
-
-					// Garbage collect anything below our required write retention
-					for !bc.triegc.Empty() {
-						root, number := bc.triegc.Pop()
-						if uint64(-number) > chosen {
-							bc.triegc.Push(root, number)
-							break
-						}
-						trieDB.Dereference(root.(common.Hash))
+				// Garbage collect anything below our required write retention
+				for !bc.triegc.Empty() {
+					root, number := bc.triegc.Pop()
+					if uint64(-number) > chosen {
+						bc.triegc.Push(root, number)
+						break
 					}
+					trieDB.Dereference(root.(common.Hash))
 				}
+			}
 		case <-bc.quit:
 			return
 		}

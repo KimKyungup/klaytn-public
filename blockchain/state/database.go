@@ -54,6 +54,9 @@ type Database interface {
 
 	// TrieDB retrieves the low level trie database used for data storage.
 	TrieDB() *statedb.Database
+
+	RLock()
+	RUnLock()
 }
 
 // Trie is a Klaytn Merkle Patricia trie.
@@ -171,4 +174,12 @@ func (db *cachingDB) ContractCodeSize(codeHash common.Hash) (int, error) {
 // TrieDB retrieves the low level trie database used for data storage.
 func (db *cachingDB) TrieDB() *statedb.Database {
 	return db.db
+}
+
+func (db *cachingDB) RLock() {
+	db.db.RLock()
+}
+
+func (db *cachingDB) RUnLock() {
+	db.db.RUnLock()
 }

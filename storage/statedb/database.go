@@ -339,6 +339,14 @@ func (db *Database) DiskDB() database.DBManager {
 	return db.diskDB
 }
 
+func (db *Database) RLock() {
+	db.lock.RLock()
+}
+
+func (db *Database) RUnLock() {
+	db.lock.RUnlock()
+}
+
 // InsertBlob writes a new reference tracked blob to the memory database if it's
 // yet unknown. This method should only be used for non-trie nodes that require
 // reference counting, since trie nodes are garbage collected directly through
@@ -423,6 +431,14 @@ func (db *Database) setCachedNode(hash, enc []byte) {
 // node retrieves a cached trie node from memory, or returns nil if none can be
 // found in the memory cache.
 func (db *Database) node(hash common.Hash) node {
+	// Retrieve the node from the state cache if available
+	db.lock.RLock()
+	node := db.nodes[hash]
+	db.lock.RUnlock()
+	if node != nil {
+		return node.obj(hash)
+	}
+
 	// Retrieve the node from the trie node cache if available
 	if enc := db.getCachedNode(hash); enc != nil {
 		if dec, err := decodeNode(hash[:], enc); err == nil {
@@ -431,13 +447,7 @@ func (db *Database) node(hash common.Hash) node {
 			logger.Error("node from cached trie node fails to be decoded!", "err", err)
 		}
 	}
-	db.lock.RLock()
-	node := db.nodes[hash]
-	db.lock.RUnlock()
 
-	if node != nil {
-		return node.obj(hash)
-	}
 	// Content unavailable in memory, attempt to retrieve from disk
 	enc, err := db.diskDB.ReadCachedTrieNode(hash)
 	if err != nil || enc == nil {
@@ -472,6 +482,15 @@ func (db *Database) Node(hash common.Hash) ([]byte, error) {
 		db.setCachedNode(hash[:], enc)
 	}
 	return enc, err
+}
+
+// DoesExistCachedNode return if the noce exist from cached trie node in memory.
+func (db *Database) DoesExistCachedNode(hash common.Hash) bool {
+	// Retrieve the node from cache if available
+	db.lock.RLock()
+	defer db.lock.RUnlock()
+	_, ok := db.nodes[hash]
+	return ok
 }
 
 // preimage retrieves a cached trie node pre-image from memory. If it cannot be

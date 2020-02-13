@@ -127,6 +127,14 @@ func NewWithCache(root common.Hash, db Database, cachedStateObjects common.Cache
 	}
 }
 
+func (self *StateDB) RLockStateCache() {
+	self.db.RLock()
+}
+
+func (self *StateDB) RUnLockStateCache() {
+	self.db.RUnLock()
+}
+
 // setError remembers the first non-nil error it is called with.
 func (self *StateDB) setError(err error) {
 	if self.dbErr == nil {
@@ -568,6 +576,9 @@ func (self *StateDB) getStateObject(addr common.Address) *stateObject {
 	enc, err := self.trie.TryGet(addr[:])
 	if len(enc) == 0 {
 		self.setError(err)
+		if addr.String() == "0x0000000000000000000000000000000000000001" {
+			logger.ErrorWithStack("TryGet 0x0000000000000000000000000000000000000001")
+		}
 		logger.Error("TryGet", "addr", addr.String(), "err", err)
 		return nil
 	}

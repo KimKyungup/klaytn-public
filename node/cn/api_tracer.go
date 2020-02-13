@@ -460,10 +460,21 @@ func (api *PrivateDebugAPI) traceBlock(ctx context.Context, block *types.Block, 
 	if config != nil && config.Reexec != nil {
 		reexec = *config.Reexec
 	}
-	statedb, err := api.computeStateDB(parent, reexec)
+
+	var statedb *state.StateDB
+	// If we have the state fully available, use that.
+	statedb, err := api.cn.blockchain.StateAtWithRLockStateCache(block.Root())
 	if err != nil {
-		return nil, err
+		// If no state is locally available, the desired state will be generated.
+		statedb, err = api.computeStateDB(parent, reexec)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		// During this processing, this lock will prevent to evict the state.
+		defer statedb.RUnLockStateCache()
 	}
+
 	// Execute all the transaction contained within the block concurrently
 	var (
 		signer = types.MakeSigner(api.config, block.Number())
@@ -565,10 +576,21 @@ func (api *PrivateDebugAPI) standardTraceBlockToFile(ctx context.Context, block 
 	if config != nil && config.Reexec != nil {
 		reexec = *config.Reexec
 	}
-	statedb, err := api.computeStateDB(parent, reexec)
+
+	var statedb *state.StateDB
+	// If we have the state fully available, use that.
+	statedb, err := api.cn.blockchain.StateAtWithRLockStateCache(block.Root())
 	if err != nil {
-		return nil, err
+		// If no state is locally available, the desired state will be generated.
+		statedb, err = api.computeStateDB(parent, reexec)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		// During this processing, this lock will prevent to evict the state.
+		defer statedb.RUnLockStateCache()
 	}
+
 	// Retrieve the tracing configurations, or use default values
 	var (
 		logConfig vm.LogConfig
@@ -643,17 +665,14 @@ func (api *PrivateDebugAPI) standardTraceBlockToFile(ctx context.Context, block 
 }
 
 // computeStateDB retrieves the state database associated with a certain block.
-// If no state is locally available for the given block, a number of blocks are
-// attempted to be reexecuted to generate the desired state.
+// A number of blocks are attempted to be reexecuted to generate the desired state.
 func (api *PrivateDebugAPI) computeStateDB(block *types.Block, reexec uint64) (*state.StateDB, error) {
-	// If we have the state fully available, use that
-	statedb, err := api.cn.blockchain.StateAt(block.Root())
-	if err == nil {
-		return statedb, nil
-	}
-	// Otherwise try to reexec blocks until we find a state or reach our limit
+	// try to reexec blocks until we find a state or reach our limit
 	origin := block.NumberU64()
 	database := state.NewDatabaseWithCache(api.cn.ChainDB(), 16, 0)
+
+	var statedb *state.StateDB
+	var err error
 
 	for i := uint64(0); i < reexec; i++ {
 		block = api.cn.blockchain.GetBlock(block.ParentHash(), block.NumberU64()-1)
@@ -803,10 +822,21 @@ func (api *PrivateDebugAPI) computeTxEnv(blockHash common.Hash, txIndex int, ree
 	if parent == nil {
 		return nil, vm.Context{}, nil, fmt.Errorf("parent %#x not found", block.ParentHash())
 	}
-	statedb, err := api.computeStateDB(parent, reexec)
+
+	var statedb *state.StateDB
+	// If we have the state fully available, use that.
+	statedb, err := api.cn.blockchain.StateAtWithRLockStateCache(block.Root())
 	if err != nil {
-		return nil, vm.Context{}, nil, err
+		// If no state is locally available, the desired state will be generated.
+		statedb, err = api.computeStateDB(parent, reexec)
+		if err != nil {
+			return nil, vm.Context{}, nil, fmt.Errorf("can not compute the state of block %#x: %v", blockHash, err)
+		}
+	} else {
+		// During this processing, this lock will prevent to evict the state.
+		defer statedb.RUnLockStateCache()
 	}
+
 	// Recompute transactions up to the target index.
 	signer := types.MakeSigner(api.config, block.Number())
 
