@@ -449,12 +449,12 @@ func (bc *BlockChain) StateAt(root common.Hash) (*state.StateDB, error) {
 
 // StateAtWithRLockStateCache returns a new mutable state based on a particular point in time with read lock of the state nodes.
 func (bc *BlockChain) StateAtWithRLockStateCache(root common.Hash) (*state.StateDB, error) {
-	bc.RLockStateCache()
+	bc.LockGCStateCache()
 	exist := bc.stateCache.TrieDB().DoesExistCachedNode(root)
 	if exist {
 		return state.New(root, bc.stateCache)
 	}
-	bc.RUnLockStateCache()
+	bc.UnLockGCStateCache()
 	return nil, errors.New("the node does not exist in state cache")
 }
 
@@ -1068,12 +1068,12 @@ func (bc *BlockChain) writeStateTrie(block *types.Block, state *state.StateDB) e
 	return nil
 }
 
-func (bc *BlockChain) RLockStateCache() {
-	bc.stateCache.RLock()
+func (bc *BlockChain) LockGCStateCache() {
+	bc.stateCache.LockGCStateCache()
 }
 
-func (bc *BlockChain) RUnLockStateCache() {
-	bc.stateCache.RUnLock()
+func (bc *BlockChain) UnLockGCStateCache() {
+	bc.stateCache.UnLockGCStateCache()
 }
 
 func (bc *BlockChain) gcStateDBCacheLoop() {

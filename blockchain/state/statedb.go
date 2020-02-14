@@ -127,12 +127,12 @@ func NewWithCache(root common.Hash, db Database, cachedStateObjects common.Cache
 	}
 }
 
-func (self *StateDB) RLockStateCache() {
-	self.db.RLock()
+func (self *StateDB) LockGCStateCache() {
+	self.db.LockGCStateCache()
 }
 
-func (self *StateDB) RUnLockStateCache() {
-	self.db.RUnLock()
+func (self *StateDB) UnLockGCStateCache() {
+	self.db.UnLockGCStateCache()
 }
 
 // setError remembers the first non-nil error it is called with.

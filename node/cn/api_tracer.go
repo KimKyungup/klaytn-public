@@ -463,16 +463,18 @@ func (api *PrivateDebugAPI) traceBlock(ctx context.Context, block *types.Block, 
 
 	var statedb *state.StateDB
 	// If we have the state fully available, use that.
-	statedb, err := api.cn.blockchain.StateAtWithRLockStateCache(block.Root())
+	statedb, err := api.cn.blockchain.StateAtWithRLockStateCache(parent.Root())
 	if err != nil {
 		// If no state is locally available, the desired state will be generated.
 		statedb, err = api.computeStateDB(parent, reexec)
 		if err != nil {
 			return nil, err
 		}
+		logger.Debug("Get stateDB by computeStateDB", "block", block.NumberU64())
 	} else {
+		logger.Debug("Get stateDB from stateCache", "block", block.NumberU64(), "&stateDB", fmt.Sprintf("%p", statedb))
 		// During this processing, this lock will prevent to evict the state.
-		defer statedb.RUnLockStateCache()
+		defer statedb.UnLockGCStateCache()
 	}
 
 	// Execute all the transaction contained within the block concurrently
@@ -579,16 +581,18 @@ func (api *PrivateDebugAPI) standardTraceBlockToFile(ctx context.Context, block 
 
 	var statedb *state.StateDB
 	// If we have the state fully available, use that.
-	statedb, err := api.cn.blockchain.StateAtWithRLockStateCache(block.Root())
+	statedb, err := api.cn.blockchain.StateAtWithRLockStateCache(parent.Root())
 	if err != nil {
 		// If no state is locally available, the desired state will be generated.
 		statedb, err = api.computeStateDB(parent, reexec)
 		if err != nil {
 			return nil, err
 		}
+		logger.Debug("Get stateDB by computeStateDB", "block", block.NumberU64())
 	} else {
+		logger.Debug("Get stateDB from stateCache", "block", block.NumberU64(), "&stateDB", fmt.Sprintf("%p", statedb))
 		// During this processing, this lock will prevent to evict the state.
-		defer statedb.RUnLockStateCache()
+		defer statedb.UnLockGCStateCache()
 	}
 
 	// Retrieve the tracing configurations, or use default values
@@ -825,16 +829,18 @@ func (api *PrivateDebugAPI) computeTxEnv(blockHash common.Hash, txIndex int, ree
 
 	var statedb *state.StateDB
 	// If we have the state fully available, use that.
-	statedb, err := api.cn.blockchain.StateAtWithRLockStateCache(block.Root())
+	statedb, err := api.cn.blockchain.StateAtWithRLockStateCache(parent.Root())
 	if err != nil {
 		// If no state is locally available, the desired state will be generated.
 		statedb, err = api.computeStateDB(parent, reexec)
 		if err != nil {
 			return nil, vm.Context{}, nil, fmt.Errorf("can not compute the state of block %#x: %v", blockHash, err)
 		}
+		logger.Debug("Get stateDB by computeStateDB", "block", block.NumberU64())
 	} else {
+		logger.Debug("Get stateDB from stateCache", "block", block.NumberU64(), "&stateDB", fmt.Sprintf("%p", statedb))
 		// During this processing, this lock will prevent to evict the state.
-		defer statedb.RUnLockStateCache()
+		defer statedb.UnLockGCStateCache()
 	}
 
 	// Recompute transactions up to the target index.

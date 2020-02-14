@@ -98,6 +98,7 @@ type Database struct {
 	gctime  time.Duration      // Time spent on garbage collection since last commit
 	gcnodes uint64             // Nodes garbage collected since last commit
 	gcsize  common.StorageSize // Data storage garbage collected since last commit
+	gcLock sync.Mutex		   // Lock for preventing to garbage collect cachedNode without flushing.
 
 	flushtime  time.Duration      // Time spent on data flushing since last commit
 	flushnodes uint64             // Nodes flushed since last commit
@@ -339,12 +340,12 @@ func (db *Database) DiskDB() database.DBManager {
 	return db.diskDB
 }
 
-func (db *Database) RLock() {
-	db.lock.RLock()
+func (db *Database) LockGCStateCache() {
+	db.gcLock.Lock()
 }
 
-func (db *Database) RUnLock() {
-	db.lock.RUnlock()
+func (db *Database) UnLockGCStateCache() {
+	db.gcLock.Unlock()
 }
 
 // InsertBlob writes a new reference tracked blob to the memory database if it's
@@ -431,14 +432,6 @@ func (db *Database) setCachedNode(hash, enc []byte) {
 // node retrieves a cached trie node from memory, or returns nil if none can be
 // found in the memory cache.
 func (db *Database) node(hash common.Hash) node {
-	// Retrieve the node from the state cache if available
-	db.lock.RLock()
-	node := db.nodes[hash]
-	db.lock.RUnlock()
-	if node != nil {
-		return node.obj(hash)
-	}
-
 	// Retrieve the node from the trie node cache if available
 	if enc := db.getCachedNode(hash); enc != nil {
 		if dec, err := decodeNode(hash[:], enc); err == nil {
@@ -446,6 +439,14 @@ func (db *Database) node(hash common.Hash) node {
 		} else {
 			logger.Error("node from cached trie node fails to be decoded!", "err", err)
 		}
+	}
+
+	// Retrieve the node from the state cache if available
+	db.lock.RLock()
+	node := db.nodes[hash]
+	db.lock.RUnlock()
+	if node != nil {
+		return node.obj(hash)
 	}
 
 	// Content unavailable in memory, attempt to retrieve from disk
@@ -487,8 +488,6 @@ func (db *Database) Node(hash common.Hash) ([]byte, error) {
 // DoesExistCachedNode return if the noce exist from cached trie node in memory.
 func (db *Database) DoesExistCachedNode(hash common.Hash) bool {
 	// Retrieve the node from cache if available
-	db.lock.RLock()
-	defer db.lock.RUnlock()
 	_, ok := db.nodes[hash]
 	return ok
 }
@@ -560,6 +559,9 @@ func (db *Database) reference(child common.Hash, parent common.Hash) {
 
 // Dereference removes an existing reference from a root node.
 func (db *Database) Dereference(root common.Hash) {
+	db.gcLock.Lock()
+	defer db.gcLock.Unlock()
+
 	db.lock.Lock()
 	defer db.lock.Unlock()
 

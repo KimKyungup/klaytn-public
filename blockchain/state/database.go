@@ -55,8 +55,8 @@ type Database interface {
 	// TrieDB retrieves the low level trie database used for data storage.
 	TrieDB() *statedb.Database
 
-	RLock()
-	RUnLock()
+	LockGCStateCache()
+	UnLockGCStateCache()
 }
 
 // Trie is a Klaytn Merkle Patricia trie.
@@ -176,10 +176,10 @@ func (db *cachingDB) TrieDB() *statedb.Database {
 	return db.db
 }
 
-func (db *cachingDB) RLock() {
-	db.db.RLock()
+func (db *cachingDB) LockGCStateCache() {
+	db.db.LockGCStateCache()
 }
 
-func (db *cachingDB) RUnLock() {
-	db.db.RUnLock()
+func (db *cachingDB) UnLockGCStateCache() {
+	db.db.UnLockGCStateCache()
 }
