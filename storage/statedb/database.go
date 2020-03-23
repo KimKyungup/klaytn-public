@@ -30,6 +30,7 @@ import (
 	"github.com/klaytn/klaytn/storage/database"
 	"github.com/rcrowley/go-metrics"
 	"io"
+	"math"
 	"sync"
 	"time"
 )
@@ -73,6 +74,10 @@ const commitResultChSizeLimit = 100 * 10000
 // NoDataArchivingPreparation is used to indicate that certain Database.Commit operations
 // do not need preparation of data archiving.
 const NoDataArchivingPreparation = 0
+
+// AutoScaling is for auto-scaling cache size. If cacheSize is set to this value,
+// cache size is set scaling to physical memeory
+const AutoScaling = -1
 
 type DatabaseReader interface {
 	// Get retrieves the value associated with key from the database.
@@ -314,17 +319,23 @@ func NewDatabase(diskDB database.DBManager) *Database {
 // NewDatabaseWithCache creates a new trie database to store ephemeral trie content
 // before its written out to disk or garbage collected. It also acts as a read cache
 // for nodes loaded from disk.
-func NewDatabaseWithCache(diskDB database.DBManager, cacheSize int, daBlockNum uint64) *Database {
+func NewDatabaseWithCache(diskDB database.DBManager, cacheSizeMB int, daBlockNum uint64) *Database {
 	var trieNodeCache *bigcache.BigCache
-	if cacheSize > 0 {
+	if cacheSizeMB == AutoScaling {
+		cacheSizeMB = getTrieNodeCacheSizeMB()
+	}
+	if cacheSizeMB > 0 {
+		maxEntrySizeByte := 512
+		maxEntriesInWindow := cacheSizeMB * 1024 * 1024 / maxEntrySizeByte
 		trieNodeCache, _ = bigcache.NewBigCache(bigcache.Config{
 			Shards:             1024,
-			LifeWindow:         time.Hour,
-			MaxEntriesInWindow: cacheSize * 1024,
-			MaxEntrySize:       512,
-			HardMaxCacheSize:   cacheSize,
+			LifeWindow:         time.Hour * 24 * 365 * 200,
+			MaxEntriesInWindow: maxEntriesInWindow,
+			MaxEntrySize:       maxEntrySizeByte,
+			HardMaxCacheSize:   cacheSizeMB,
 			Hasher:             trieNodeHasher{},
 		})
+		logger.Info("Initialize BigCache", "HardMaxCacheSize", cacheSizeMB, "MaxEntrySize", maxEntrySizeByte, "MaxEntriesInWindow", maxEntriesInWindow)
 	}
 	return &Database{
 		diskDB:                diskDB,
@@ -333,6 +344,17 @@ func NewDatabaseWithCache(diskDB database.DBManager, cacheSize int, daBlockNum u
 		trieNodeCache:         trieNodeCache,
 		dataArchivingBlockNum: daBlockNum,
 	}
+}
+
+// getTrieNodeCacheSizeMB retrieves size for trie cache.
+func getTrieNodeCacheSizeMB() int {
+	totalPhysicalMem := float64(common.TotalPhysicalMemGB)
+	memoryMarginGB := 20.0    // margin for processing and other cache
+	memoryScalePercent := 0.6 // leave margin proportional to physical memory size
+
+	cacheSizeGB := math.Max((totalPhysicalMem-memoryMarginGB)*memoryScalePercent, 0.0)
+
+	return int(cacheSizeGB * 1024)
 }
 
 // DiskDB retrieves the persistent database backing the trie database.
@@ -923,6 +945,10 @@ func (db *Database) Size() (common.StorageSize, common.StorageSize) {
 	// counted. For every useful node, we track 2 extra hashes as the flushlist.
 	var flushlistSize = common.StorageSize((len(db.nodes) - 1) * 2 * common.HashLength)
 	return db.nodesSize + flushlistSize, db.preimagesSize
+}
+
+func (db *Database) CacheSize() int {
+	return db.trieNodeCache.Capacity()
 }
 
 // verifyIntegrity is a debug method to iterate over the entire trie stored in
