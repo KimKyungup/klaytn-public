@@ -334,6 +334,7 @@ func NewDatabaseWithCache(diskDB database.DBManager, cacheSizeMB int, daBlockNum
 			MaxEntrySize:       maxEntrySizeByte,
 			HardMaxCacheSize:   cacheSizeMB,
 			Hasher:             trieNodeHasher{},
+			Verbose:            true,
 		})
 		logger.Info("Initialize BigCache", "HardMaxCacheSize", cacheSizeMB, "MaxEntrySize", maxEntrySizeByte, "MaxEntriesInWindow", maxEntriesInWindow)
 	}
