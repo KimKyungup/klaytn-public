@@ -326,7 +326,7 @@ func NewDatabaseWithCache(diskDB database.DBManager, cacheSizeMB int, daBlockNum
 	}
 	if cacheSizeMB > 0 {
 		maxEntrySizeByte := 512
-		maxEntriesInWindow := cacheSizeMB * 1024 * 1024 / maxEntrySizeByte
+		maxEntriesInWindow := cacheSizeMB * 1024 * 1024 / maxEntrySizeByte / 8
 		trieNodeCache, _ = bigcache.NewBigCache(bigcache.Config{
 			Shards:             1024,
 			LifeWindow:         time.Hour * 24 * 365 * 200,
