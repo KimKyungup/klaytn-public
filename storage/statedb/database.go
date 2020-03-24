@@ -317,13 +317,17 @@ func NewDatabase(diskDB database.DBManager) *Database {
 func NewDatabaseWithCache(diskDB database.DBManager, cacheSize int, daBlockNum uint64) *Database {
 	var trieNodeCache *bigcache.BigCache
 	if cacheSize > 0 {
+		maxEntrySizeByte := 512
+		maxEntriesInWindow := cacheSize * 1024 * 1024 / maxEntrySizeByte
+
 		trieNodeCache, _ = bigcache.NewBigCache(bigcache.Config{
 			Shards:             1024,
-			LifeWindow:         time.Hour,
-			MaxEntriesInWindow: cacheSize * 1024,
-			MaxEntrySize:       512,
+			LifeWindow:         time.Hour * 24 * 365 * 200,
+			MaxEntriesInWindow: maxEntriesInWindow,
+			MaxEntrySize:       maxEntrySizeByte,
 			HardMaxCacheSize:   cacheSize,
 			Hasher:             trieNodeHasher{},
+			Verbose: true,
 		})
 	}
 	return &Database{
