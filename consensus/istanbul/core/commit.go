@@ -29,7 +29,7 @@ import (
 func (c *core) sendCommit() {
 	logger := c.logger.NewWith("state", c.state)
 	if c.current.Preprepare == nil {
-		logger.Error("Failed to get parentHash from roundState in sendCommit")
+		logger.Warn("Failed to get parentHash from roundState in sendCommit")
 		return
 	}
 
@@ -51,7 +51,7 @@ func (c *core) broadcastCommit(sub *istanbul.Subject) {
 
 	encodedSubject, err := Encode(sub)
 	if err != nil {
-		logger.Error("Failed to encode", "subject", sub)
+		logger.Warn("Failed to encode", "subject", sub)
 		return
 	}
 
@@ -70,7 +70,9 @@ func (c *core) handleCommit(msg *message, src istanbul.Validator) error {
 		return errFailedDecodeCommit
 	}
 
-	//logger.Error("receive handle commit","num", commit.View.Sequence)
+	if commit.View != nil && src != nil {
+		logger.Warn("receive commit", "num", commit.View.Sequence, "src", src.Address())
+	}
 
 	if err := c.checkMessage(msgCommit, commit.View); err != nil {
 		//logger.Error("### istanbul/commit.go checkMessage","num",commit.View.Sequence,"err",err)
@@ -115,7 +117,7 @@ func (c *core) acceptCommit(msg *message, src istanbul.Validator) error {
 
 	// Add the COMMIT message to current round state
 	if err := c.current.Commits.Add(msg); err != nil {
-		logger.Error("Failed to record commit message", "msg", msg, "err", err)
+		logger.Warn("Failed to record commit message", "msg", msg, "err", err)
 		return err
 	}
 

@@ -42,7 +42,7 @@ func (c *core) sendRoundChange(round *big.Int) {
 
 	cv := c.currentView()
 	if cv.Round.Cmp(round) >= 0 {
-		logger.Error("Cannot send out the round change", "current round", cv.Round, "target round", round)
+		logger.Warn("Cannot send out the round change", "current round", cv.Round, "target round", round)
 		return
 	}
 
@@ -64,7 +64,7 @@ func (c *core) sendRoundChange(round *big.Int) {
 
 	payload, err := Encode(rc)
 	if err != nil {
-		logger.Error("Failed to encode ROUND CHANGE", "rc", rc, "err", err)
+		logger.Warn("Failed to encode ROUND CHANGE", "rc", rc, "err", err)
 		return
 	}
 
@@ -81,7 +81,7 @@ func (c *core) handleRoundChange(msg *message, src istanbul.Validator) error {
 	// Decode ROUND CHANGE message
 	var rc *istanbul.Subject
 	if err := msg.Decode(&rc); err != nil {
-		logger.Error("Failed to decode ROUND CHANGE", "err", err)
+		logger.Warn("Failed to decode ROUND CHANGE", "err", err)
 		return errInvalidMessage
 	}
 

@@ -41,7 +41,7 @@ func (c *core) sendPreprepare(request *istanbul.Request) {
 			Proposal: request.Proposal,
 		})
 		if err != nil {
-			logger.Error("Failed to encode", "view", curView)
+			logger.Warn("Failed to encode", "view", curView)
 			return
 		}
 
@@ -61,6 +61,10 @@ func (c *core) handlePreprepare(msg *message, src istanbul.Validator) error {
 	err := msg.Decode(&preprepare)
 	if err != nil {
 		return errFailedDecodePreprepare
+	}
+
+	if preprepare.View != nil && src != nil {
+		logger.Warn("receive preprepare", "num", preprepare.View.Sequence, "src", src.Address())
 	}
 
 	// Ensure we have the same view with the PRE-PREPARE message
@@ -119,6 +123,7 @@ func (c *core) handlePreprepare(msg *message, src istanbul.Validator) error {
 				c.acceptPreprepare(preprepare)
 				c.setState(StatePrepared)
 				c.sendCommit()
+				logger.Warn("Send commit in handlePreprepare")
 			} else {
 				// Send round change
 				c.sendNextRoundChange("handlePrepare. HashLocked, but received hash is different from locked hash")
@@ -130,6 +135,7 @@ func (c *core) handlePreprepare(msg *message, src istanbul.Validator) error {
 			c.acceptPreprepare(preprepare)
 			c.setState(StatePreprepared)
 			c.sendPrepare()
+			logger.Warn("Send prepare in handlePreprepare")
 		}
 	}
 

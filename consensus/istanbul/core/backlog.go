@@ -88,7 +88,7 @@ func (c *core) storeBacklog(msg *message, src istanbul.Validator) {
 		return
 	}
 
-	logger.Trace("Store future message")
+	logger.Warn("Store future message")
 
 	c.backlogsMu.Lock()
 	defer c.backlogsMu.Unlock()
@@ -153,22 +153,22 @@ func (c *core) processBacklog() {
 				prevHash = sub.PrevHash
 			}
 			if view == nil {
-				logger.Debug("Nil view", "msg", msg)
+				logger.Warn("Nil view", "msg", msg)
 				continue
 			}
 			// Push back if it's a future message
 			err := c.checkMessage(msg.Code, view)
 			if err != nil {
 				if err == errFutureMessage {
-					logger.Trace("Stop processing backlog", "msg", msg)
+					logger.Warn("Stop processing backlog", "msg", msg)
 					backlog.Push(msg, prio)
 					isFuture = true
 					break
 				}
-				logger.Trace("Skip the backlog event", "msg", msg, "err", err)
+				logger.Warn("Skip the backlog event", "msg", msg, "err", err)
 				continue
 			}
-			logger.Trace("Post backlog event", "msg", msg)
+			logger.Warn("Post backlog event", "msg", msg)
 
 			go c.sendEvent(backlogEvent{
 				src:  src,

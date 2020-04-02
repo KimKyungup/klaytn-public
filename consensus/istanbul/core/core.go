@@ -191,7 +191,7 @@ func (c *core) commit() {
 		}
 	} else {
 		// TODO-Klaytn never happen, but if proposal is nil, mining is not working.
-		logger.Error("istanbul.core current.Proposal is NULL")
+		logger.Warn("istanbul.core current.Proposal is NULL")
 		c.current.UnlockHash() //Unlock block when insertion fails
 		c.sendNextRoundChange("commit failure. proposal is nil")
 		return
@@ -214,7 +214,7 @@ func (c *core) startNewRound(round *big.Int) {
 	//	c.current = nil
 	//} else {
 	if c.current == nil {
-		logger.Trace("Start to the initial round")
+		logger.Warn("Start to the initial round")
 	} else if lastProposal.Number().Cmp(c.current.Sequence()) >= 0 {
 		diff := new(big.Int).Sub(lastProposal.Number(), c.current.Sequence())
 		c.sequenceMeter.Mark(new(big.Int).Add(diff, common.Big1).Int64())
@@ -223,7 +223,7 @@ func (c *core) startNewRound(round *big.Int) {
 			c.consensusTimeGauge.Update(int64(time.Since(c.consensusTimestamp)))
 			c.consensusTimestamp = time.Time{}
 		}
-		logger.Trace("Catch up latest proposal", "number", lastProposal.Number().Uint64(), "hash", lastProposal.Hash())
+		logger.Warn("Catch up latest proposal", "number", lastProposal.Number().Uint64(), "hash", lastProposal.Hash())
 	} else if lastProposal.Number().Cmp(big.NewInt(c.current.Sequence().Int64()-1)) == 0 {
 		if round.Cmp(common.Big0) == 0 {
 			// same seq and round, don't need to start new round
@@ -286,8 +286,8 @@ func (c *core) startNewRound(round *big.Int) {
 	}
 	c.newRoundChangeTimer()
 
-	logger.Debug("New round", "new_round", newView.Round, "new_seq", newView.Sequence, "new_proposer", c.valSet.GetProposer(), "isProposer", c.isProposer())
-	logger.Trace("New round", "new_round", newView.Round, "new_seq", newView.Sequence, "size", c.valSet.Size(), "valSet", c.valSet.List())
+	logger.Warn("New round", "new_round", newView.Round, "new_seq", newView.Sequence, "new_proposer", c.valSet.GetProposer(), "isProposer", c.isProposer())
+	logger.Warn("New round", "new_round", newView.Round, "new_seq", newView.Sequence, "size", c.valSet.Size(), "valSet", c.valSet.List())
 }
 
 func (c *core) catchUpRound(view *istanbul.View) {
@@ -390,7 +390,7 @@ func (c *core) newRoundChangeTimer() {
 		c.sendEvent(timeoutEvent{})
 	}))
 
-	logger.Debug("New RoundChangeTimer Set", "seq", c.current.Sequence(), "round", round, "timeout", timeout)
+	logger.Warn("New RoundChangeTimer Set", "seq", c.current.Sequence(), "round", round, "timeout", timeout)
 }
 
 func (c *core) checkValidatorSignature(data []byte, sig []byte) (common.Address, error) {

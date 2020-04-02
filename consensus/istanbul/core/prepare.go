@@ -50,10 +50,26 @@ func (c *core) handlePrepare(msg *message, src istanbul.Validator) error {
 		return errFailedDecodePrepare
 	}
 
-	//logger.Error("call receive prepare","num",prepare.View.Sequence)
+	if prepare.View != nil && src != nil {
+		logger.Warn("receive prepare", "num", prepare.View.Sequence, "src", src.Address())
+	}
 
 	if err := c.checkMessage(msgPrepare, prepare.View); err != nil {
 		return err
+	}
+
+	if prepare.View.Sequence.Uint64() == 100 && prepare.View.Round.Uint64() == 0 {
+		logger.Info("print validator list", "validators", c.valSet.List())
+
+		_, lastProposer := c.backend.LastProposal()
+
+		for i := 0; i < 2*c.valSet.F()-1; i++ {
+			futureProposer := c.valSet.Selector(c.valSet, lastProposer, uint64(i+1))
+			if futureProposer.Address() == c.address {
+				logger.Warn("Pretend a faulty node", "ProposeRound", i)
+				return nil
+			}
+		}
 	}
 
 	// If it is locked, it can only process on the locked block.
@@ -71,6 +87,7 @@ func (c *core) handlePrepare(msg *message, src istanbul.Validator) error {
 		c.current.LockHash()
 		c.setState(StatePrepared)
 		c.sendCommit()
+		logger.Warn("Send commit in hadlePrepare")
 	}
 
 	return nil
@@ -94,7 +111,7 @@ func (c *core) acceptPrepare(msg *message, src istanbul.Validator) error {
 
 	// Add the PREPARE message to current round state
 	if err := c.current.Prepares.Add(msg); err != nil {
-		logger.Error("Failed to add PREPARE message to round state", "msg", msg, "err", err)
+		logger.Warn("Failed to add PREPARE message to round state", "msg", msg, "err", err)
 		return err
 	}
 

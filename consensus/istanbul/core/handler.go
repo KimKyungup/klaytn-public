@@ -150,7 +150,7 @@ func (c *core) handleMsg(payload []byte) error {
 	msg := new(message)
 	if err := msg.FromPayload(payload, c.validateFn); err != nil {
 		if c.backend.NodeType() == common.CONSENSUSNODE {
-			logger.Error("Failed to decode message from payload", "err", err)
+			logger.Warn("Failed to decode message from payload", "err", err)
 		}
 		return err
 	}
@@ -158,7 +158,7 @@ func (c *core) handleMsg(payload []byte) error {
 	// Only accept message if the address is valid
 	_, src := c.valSet.GetByAddress(msg.Address)
 	if src == nil {
-		logger.Error("Invalid address in message", "msg", msg)
+		logger.Warn("Invalid address in message", "msg", msg)
 		return istanbul.ErrUnauthorizedAddress
 	}
 
@@ -177,6 +177,10 @@ func (c *core) handleCheckedMsg(msg *message, src istanbul.Validator) error {
 		return err
 	}
 
+	if msg != nil && src != nil {
+		logger.Warn("handleCheckedMsg", "msgCode", msg.Code, "src", src.Address())
+	}
+
 	switch msg.Code {
 	case msgPreprepare:
 		return testBacklog(c.handlePreprepare(msg, src))
@@ -187,7 +191,7 @@ func (c *core) handleCheckedMsg(msg *message, src istanbul.Validator) error {
 	case msgRoundChange:
 		return testBacklog(c.handleRoundChange(msg, src))
 	default:
-		logger.Error("Invalid message", "msg", msg)
+		logger.Warn("Invalid message", "msg", msg)
 	}
 
 	return errInvalidMessage
@@ -208,7 +212,7 @@ func (c *core) handleTimeoutMsg() {
 
 	lastProposal, _ := c.backend.LastProposal()
 	if lastProposal != nil && lastProposal.Number().Cmp(c.current.Sequence()) >= 0 {
-		c.logger.Trace("round change timeout, catch up latest sequence", "number", lastProposal.Number().Uint64())
+		c.logger.Warn("round change timeout, catch up latest sequence", "number", lastProposal.Number().Uint64())
 		c.startNewRound(common.Big0)
 	} else {
 		c.sendNextRoundChange("handleTimeoutMsg. lastProposal is nil or lastProposal's number is smaller than current sequence")
