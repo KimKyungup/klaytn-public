@@ -296,7 +296,7 @@ func (self *worker) update() {
 	go self.handleTxsCh(quitByErr)
 
 	// Initialize reset watchdog
-	if self.nodetype == common.CONSENSUSNODE && self.resetFn != nil{
+	if self.nodetype == common.CONSENSUSNODE && self.resetFn != nil && self.resetTimeOut > 0{
 		callback := func() {
 			logger.Warn("Consensus timeout")
 			self.resetFn()
