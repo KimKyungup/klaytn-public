@@ -498,7 +498,7 @@ func (self *worker) commitNewWork() {
 		}
 	}
 
-	timeout := 10 * time.Minute
+	timeout := 5 * time.Minute
 	if self.watchdog == nil {
 		if parent.Time().Int64() >= tstamp-2 {
 			logger.Info("New block time close with present. Set Timer", "lastBlock", parent.NumberU64(), "timestamp", parent.Time().Int64(), "nowUnix", time.Now().Unix())
