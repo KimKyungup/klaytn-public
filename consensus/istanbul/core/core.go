@@ -105,6 +105,8 @@ type core struct {
 
 	councilSizeGauge   metrics.Gauge
 	committeeSizeGauge metrics.Gauge
+
+	lastErrorBlkNum uint64
 }
 
 func (c *core) finalizeMessage(msg *message) ([]byte, error) {
