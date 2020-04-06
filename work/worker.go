@@ -141,9 +141,14 @@ type worker struct {
 	atWork int32
 
 	nodetype common.ConnType
+
+	lastBlockTime int64
+
+	reset    func()
+	watchdog *time.Timer
 }
 
-func newWorker(config *params.ChainConfig, engine consensus.Engine, rewardbase common.Address, backend Backend, mux *event.TypeMux, nodetype common.ConnType, TxResendUseLegacy bool) *worker {
+func newWorker(config *params.ChainConfig, engine consensus.Engine, rewardbase common.Address, backend Backend, mux *event.TypeMux, nodetype common.ConnType, TxResendUseLegacy bool, reset func()) *worker {
 	worker := &worker{
 		config:      config,
 		engine:      engine,
@@ -159,6 +164,7 @@ func newWorker(config *params.ChainConfig, engine consensus.Engine, rewardbase c
 		agents:      make(map[Agent]struct{}),
 		nodetype:    nodetype,
 		rewardbase:  rewardbase,
+		reset:       reset,
 	}
 
 	// istanbul BFT
@@ -490,6 +496,23 @@ func (self *worker) commitNewWork() {
 			logger.Info("Mining too far in the future", "wait", common.PrettyDuration(wait))
 			time.Sleep(wait)
 		}
+	}
+
+	timeout := 10 * time.Minute
+	if self.watchdog == nil {
+		if parent.Time().Int64() >= tstamp-2 {
+			logger.Info("New block time close with present. Set Timer", "lastBlock", parent.NumberU64(), "timestamp", parent.Time().Int64(), "nowUnix", time.Now().Unix())
+			callback := func() {
+				logger.Warn("New block consensus is timeout.", "lastBlock", parent.NumberU64(), "timestamp", parent.Time().Int64(), "nowUnix", time.Now().Unix())
+				self.reset()
+			}
+			self.watchdog = time.AfterFunc(timeout, callback)
+			self.lastBlockTime = parent.Time().Int64()
+		}
+	} else {
+		self.watchdog.Reset(timeout)
+		self.lastBlockTime = parent.Time().Int64()
+		logger.Info("Reset Watchdog for Consensus", "lastBlock", parent.NumberU64(), "timestamp", self.lastBlockTime)
 	}
 
 	num := parent.Number()

@@ -139,6 +139,10 @@ type Config struct {
 
 	// use separate network different from baobab or cypress
 	IsPrivate bool
+
+	// Restart
+	AutoRestartFlag bool
+	DaemonPathFlag  string
 }
 
 type configMarshaling struct {

@@ -51,6 +51,7 @@ import (
 	"github.com/klaytn/klaytn/storage/database"
 	"github.com/klaytn/klaytn/work"
 	"math/big"
+	"os/exec"
 	"runtime"
 	"sync"
 )
@@ -320,8 +321,21 @@ func New(ctx *node.ServiceContext, config *Config) (*CN, error) {
 		}
 	}
 
+	reset := func() {
+		if !config.AutoRestartFlag {
+			logger.Warn("Disabled restart node")
+			return
+		}
+
+		daemonPath := config.DaemonPathFlag
+
+		logger.Warn("Restart node", "command", daemonPath+" restart")
+		cmd := exec.Command(daemonPath, "restart")
+		cmd.Run()
+	}
+
 	// TODO-Klaytn improve to handle drop transaction on network traffic in PN and EN
-	cn.miner = work.New(cn, cn.chainConfig, cn.EventMux(), cn.engine, ctx.NodeType(), crypto.PubkeyToAddress(ctx.NodeKey().PublicKey), cn.config.TxResendUseLegacy)
+	cn.miner = work.New(cn, cn.chainConfig, cn.EventMux(), cn.engine, ctx.NodeType(), crypto.PubkeyToAddress(ctx.NodeKey().PublicKey), cn.config.TxResendUseLegacy, reset)
 	// istanbul BFT
 	cn.miner.SetExtra(makeExtraData(config.ExtraData))
 

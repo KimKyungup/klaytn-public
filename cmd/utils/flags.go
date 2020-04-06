@@ -1182,6 +1182,9 @@ func SetKlayConfig(ctx *cli.Context, stack *node.Node, cfg *cn.Config) {
 		}
 	}
 
+	cfg.DaemonPathFlag = ctx.GlobalString(DaemonPathFlag.Name)
+	cfg.AutoRestartFlag = ctx.GlobalBool(AutoRestartFlag.Name)
+
 	// Override any default configs for hard coded network.
 	// TODO-Klaytn-Bootnode: Discuss and add `baobab` test network's genesis block
 	/*
