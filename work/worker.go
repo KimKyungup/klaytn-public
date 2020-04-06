@@ -503,7 +503,7 @@ func (self *worker) commitNewWork() {
 		if parent.Time().Int64() >= tstamp-2 {
 			logger.Info("New block time close with present. Set Timer", "lastBlock", parent.NumberU64(), "timestamp", parent.Time().Int64(), "nowUnix", time.Now().Unix())
 			callback := func() {
-				logger.Warn("New block consensus is timeout.", "lastBlock", parent.NumberU64(), "timestamp", parent.Time().Int64(), "nowUnix", time.Now().Unix())
+				logger.Warn("New block consensus is timeout")
 				self.reset()
 			}
 			self.watchdog = time.AfterFunc(timeout, callback)

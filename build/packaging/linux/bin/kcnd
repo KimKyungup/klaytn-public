@@ -43,6 +43,7 @@ __kill_timeout() {
         sleep 0.1
     done
     kill -9 $PIDNUM && echo "Killed"
+    sleep 3
 }
 
 start() {
