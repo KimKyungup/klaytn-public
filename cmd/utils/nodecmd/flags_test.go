@@ -767,14 +767,14 @@ var flagsWithValues = []struct {
 		errors:      []int{ErrorInvalidValue, ErrorInvalidValue},
 	},
 	{
-		flag:        "--daemon.path",
+		flag:        "--autorestart.daemon.path",
 		flagType:    FlagTypeArgument,
 		values:      []string{"~/klaytn/bin/kcnd", "~/klaytn/bin/kpnd", "~/klaytn/bin/kend"},
 		wrongValues: commonThreeErrors,
 		errors:      []int{NonError, NonError, NonError},
 	},
 	{
-		flag:     "--auto.restart",
+		flag:     "--autorestart.enable",
 		flagType: FlagTypeBoolean,
 	},
 }

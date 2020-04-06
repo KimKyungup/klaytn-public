@@ -71,7 +71,7 @@ start() {
 
         BASEDIR="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
         CURRENTFILE=`basename "$0"`
-        OPTIONS="$OPTIONS --daemon.path $BASEDIR/$CURRENTFILE"
+        OPTIONS="$OPTIONS --autorestart.daemon.path $BASEDIR/$CURRENTFILE"
 
         $kbn ${OPTIONS} >> ${LOG_DIR}/kbnd.out 2>&1 &
         RETVAL=$?

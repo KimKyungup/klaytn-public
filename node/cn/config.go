@@ -142,6 +142,7 @@ type Config struct {
 
 	// Restart
 	AutoRestartFlag bool
+	ResetTimeOutFlag time.Duration
 	DaemonPathFlag  string
 }
 
