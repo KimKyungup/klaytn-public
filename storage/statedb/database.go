@@ -900,7 +900,7 @@ func (db *Database) Commit(node common.Hash, report bool, blockNum uint64) error
 	if !report {
 		localLogger = logger.Debug
 	}
-	localLogger("Persisted trie from memory database", "updated nodes", numNodes-len(db.nodes), "updated nodes size", nodesSize-db.nodesSize, "time", commitEnd.Sub(commitStart),
+	localLogger("Persisted trie from memory database", "blockNum", blockNum, "updated nodes", numNodes-len(db.nodes), "updated nodes size", nodesSize-db.nodesSize, "time", commitEnd.Sub(commitStart),
 		"gcnodes", db.gcnodes, "gcsize", db.gcsize, "gctime", db.gctime, "livenodes", len(db.nodes), "livesize", db.nodesSize)
 
 	// Reset the garbage collection statistics
