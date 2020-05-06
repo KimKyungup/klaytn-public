@@ -35,6 +35,7 @@ NodeAddress of additional staking contract : begin with 9
 package validator
 
 import (
+	"encoding/json"
 	"github.com/klaytn/klaytn/common"
 	"github.com/klaytn/klaytn/consensus/istanbul"
 	"github.com/klaytn/klaytn/reward"
@@ -98,6 +99,14 @@ func TestWeightedCouncil_getStakingAmountsOfValidators(t *testing.T) {
 	}
 	for _, testCase := range testCases {
 		council := newTestWeightedCouncil(testCase.validators)
+
+		// json marshal/unmarshal test
+		data, err := json.Marshal(testCase.stakingInfo)
+		assert.NoError(t, err)
+		stakingInfo := new(reward.StakingInfo)
+		err = json.Unmarshal(data, stakingInfo)
+		assert.NoError(t, err)
+		assert.Equal(t, stakingInfo, testCase.stakingInfo)
 
 		weightedValidators, stakingAmounts, err := council.getStakingAmountsOfValidators(testCase.stakingInfo)
 
@@ -166,6 +175,14 @@ func TestCalcTotalAmount(t *testing.T) {
 		},
 	}
 	for _, testCase := range testCases {
+		// json marshal/unmarshal test
+		data, err := json.Marshal(testCase.stakingInfo)
+		assert.NoError(t, err)
+		stakingInfo := new(reward.StakingInfo)
+		err = json.Unmarshal(data, stakingInfo)
+		assert.NoError(t, err)
+		assert.Equal(t, stakingInfo, testCase.stakingInfo)
+
 		stakingAmounts := testCase.stakingAmounts
 		totalAmount := calcTotalAmount(testCase.weightedValidators, testCase.stakingInfo, stakingAmounts)
 
@@ -305,6 +322,14 @@ func TestWeightedCouncil_validatorWeightWithStakingInfo(t *testing.T) {
 		},
 	}
 	for _, testCase := range testCases {
+		// json marshal/unmarshal test
+		data, err := json.Marshal(testCase.stakingInfo)
+		assert.NoError(t, err)
+		stakingInfo := new(reward.StakingInfo)
+		err = json.Unmarshal(data, stakingInfo)
+		assert.NoError(t, err)
+		assert.Equal(t, stakingInfo, testCase.stakingInfo)
+
 		council := newTestWeightedCouncil(testCase.validators)
 
 		weightedValidators, stakingAmounts, err := council.getStakingAmountsOfValidators(testCase.stakingInfo)

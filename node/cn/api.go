@@ -155,6 +155,31 @@ func (api *PrivateAdminAPI) ImportChain(file string) (bool, error) {
 	return true, nil
 }
 
+// StartStateMigration starts state migration.
+func (api *PrivateAdminAPI) StartStateMigration() error {
+	// TODO-Klaytn add the routine to change valid block number.
+	currentBlock := api.cn.blockchain.CurrentBlock().NumberU64()
+	targetBlock := currentBlock - (currentBlock % blockchain.DefaultBlockInterval)
+	targetRoot := api.cn.blockchain.GetBlockByNumber(targetBlock).Root()
+	logger.Info("Start state migration", "currentBlock", currentBlock, "targetBlock", targetBlock, "targetRoot", targetRoot)
+	return api.cn.BlockChain().StartStateMigration(targetBlock, targetRoot)
+}
+
+// StopStateMigration stops state migration and remove all data.
+func (api *PrivateAdminAPI) StopStateMigration() error {
+	return api.cn.BlockChain().StopStateMigration()
+}
+
+// StatusStateMigration returns the status information of state trie migration.
+func (api *PrivateAdminAPI) StatusStateMigration() map[string]interface{} {
+	isMigration, committed, pending := api.cn.BlockChain().StatusStateMigration()
+	return map[string]interface{}{
+		"isMigration": isMigration,
+		"committed":   committed,
+		"pending":     pending,
+	}
+}
+
 // PublicDebugAPI is the collection of Klaytn full node APIs exposed
 // over the public debugging endpoint.
 type PublicDebugAPI struct {
