@@ -279,18 +279,18 @@ func (td *stateTrieMigrationDB) ReadPreimage(hash common.Hash) []byte {
 	return td.ReadPreimageFromNew(hash)
 }
 
-func (bc *BlockChain) stateMigrationCommit(s *statedb.TrieSync, db database.DBManager) (int, time.Duration, error) {
+func (bc *BlockChain) stateMigrationCommit(s *statedb.TrieSync, batch database.Batch) (int, time.Duration, error) {
 	start := time.Now()
-	stateTrieBatch := db.NewBatch(database.StateTrieDB)
-
-	written, err := s.Commit(stateTrieBatch)
+	written, err := s.Commit(batch)
 	if written == 0 || err != nil {
 		return written, 0, err
 	}
 
-	if err := stateTrieBatch.Write(); err != nil {
+	if err := batch.Write(); err != nil {
 		return 0, 0, fmt.Errorf("DB write error: %v", err)
 	}
+
+	batch.Reset()
 
 	return written, time.Since(start), nil
 }
@@ -321,6 +321,8 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 	targetDB := statedb.NewDatabase(&stateTrieMigrationDB{bc.db})
 
 	trieSync := state.NewStateSync(rootHash, targetDB.DiskDB())
+	stateTrieBatch := bc.db.GetStateTrieMigrationDB().NewBatch()
+
 	var queue []common.Hash
 	readCnt := 0
 	committedCnt := 0
@@ -332,10 +334,10 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 	threads := runtime.NumCPU()
 	hashCh := make(chan common.Hash, threads)
 	resultCh := make(chan statedb.SyncResult, threads)
-
 	for th := 0; th < threads; th++ {
 		go bc.concurrentRead(srcCachedDB, quitCh, hashCh, resultCh)
 	}
+	logger.Warn("State migration concurrentRead", "threads", threads)
 
 	// Migration main loop
 	for trieSync.Pending() > 0 {
@@ -368,7 +370,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 		}
 
 		// Commit trie nodes
-		written, writeElapsed, err := bc.stateMigrationCommit(trieSync, targetDB.DiskDB())
+		written, writeElapsed, err := bc.stateMigrationCommit(trieSync, stateTrieBatch)
 		if err != nil {
 			logger.Error("State migration is failed by commit error", "err", err)
 			return fmt.Errorf("failed to commit data #%d: %v", written, err)
@@ -382,9 +384,10 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 		progressStr = strings.TrimRight(progressStr, "0")
 		progressStr = strings.TrimRight(progressStr, ".") + "%"
 
-		logger.Warn("State migration progress",
-			"progress", progressStr, "committedCnt", committedCnt, "pendingCnt", bc.pendingCnt,
-			"read", read, "readElapsed", readElapsed, "written", written, "writeElapsed", writeElapsed,
+		logger.Warn("State migration progress", "progress", progressStr,
+			"readCnt", readCnt, "committedCnt", committedCnt, "pendingCnt", bc.pendingCnt,
+			"read", read, "readElapsed", readElapsed,
+			"written", written, "writeElapsed", writeElapsed,
 			"elapsed", time.Since(startIter))
 
 		select {
@@ -399,6 +402,15 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 		default:
 		}
 	}
+
+	// Commit trie nodes
+	written, _, err := bc.stateMigrationCommit(trieSync, stateTrieBatch)
+	if err != nil {
+		logger.Error("State migration is failed by commit error", "err", err)
+		return fmt.Errorf("failed to commit data #%d: %v", written, err)
+	}
+	logger.Error("State migration : last commit", "written", written)
+
 	bc.readCnt, bc.committedCnt, bc.pendingCnt, bc.progress = readCnt, committedCnt, trieSync.Pending(), trieSync.CalcProgressPercentage()
 
 	logger.Error("Finish and logging status", "trieSync.Pending()", trieSync.Pending())
@@ -413,7 +425,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 	// Cross check that the two tries are in sync
 	// TODO-Klaytn consider to check Trie contents optionally
 	// TODO-Klaytn consider to check storage trie also
-	dirty, err := bc.checkTrieContents(targetDB, srcCachedDB, rootHash)
+	dirty, err := bc.checkTrieContents(srcCachedDB, targetDB, rootHash)
 	if err != nil || len(dirty) > 0 {
 		logger.Error("copied state is invalid", "err", err, "len(dirty)", len(dirty))
 		// TODO-Klaytn Remove new DB and log.Error
@@ -441,7 +453,7 @@ func (bc *BlockChain) checkTrieContents(oldDB, newDB *statedb.Database, root com
 		return nil, err
 	}
 
-	diff, _ := statedb.NewDifferenceIterator(oldTrie.NodeIterator([]byte{}), newTrie.NodeIterator([]byte{}))
+	diff, _ := statedb.NewDifferenceIterator(newTrie.NodeIterator([]byte{}), oldTrie.NodeIterator([]byte{}))
 	iter := statedb.NewIterator(diff)
 
 	var dirty []common.Address
