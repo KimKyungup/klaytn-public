@@ -165,6 +165,7 @@ type BlockChain struct {
 	// State migration
 	prepareStateMigration bool
 	stopStateMigration    chan struct{}
+	readCnt               int
 	committedCnt          int
 	pendingCnt            int
 	progress              float64
@@ -321,6 +322,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 
 	trieSync := state.NewStateSync(rootHash, targetDB.DiskDB())
 	var queue []common.Hash
+	readCnt := 0
 	committedCnt := 0
 
 	quitCh := make(chan struct{})
@@ -373,8 +375,9 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 		}
 
 		// Report progress
+		readCnt += read
 		committedCnt += written
-		bc.committedCnt, bc.pendingCnt, bc.progress = committedCnt, trieSync.Pending(), trieSync.CalcProgressPercentage()
+		bc.readCnt, bc.committedCnt, bc.pendingCnt, bc.progress = readCnt, committedCnt, trieSync.Pending(), trieSync.CalcProgressPercentage()
 		progressStr := strconv.FormatFloat(bc.progress, 'f', 4, 64)
 		progressStr = strings.TrimRight(progressStr, "0")
 		progressStr = strings.TrimRight(progressStr, ".") + "%"
@@ -396,11 +399,13 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 		default:
 		}
 	}
-	bc.committedCnt, bc.pendingCnt, bc.progress = committedCnt, trieSync.Pending(), trieSync.CalcProgressPercentage()
+	bc.readCnt, bc.committedCnt, bc.pendingCnt, bc.progress = readCnt, committedCnt, trieSync.Pending(), trieSync.CalcProgressPercentage()
+
+	logger.Error("Finish and logging status", "trieSync.Pending()", trieSync.Pending())
 
 	elapsed := time.Since(start)
 	speed := float64(committedCnt) / elapsed.Seconds()
-	logger.Info("State migration is completed", "committedCnt", committedCnt, "elapsed", elapsed, "committed per second", speed)
+	logger.Info("State migration is completed", "readCnt", readCnt, "committedCnt", committedCnt, "elapsed", elapsed, "committed per second", speed)
 
 	// Preimage Copy
 	// TODO-Klaytn consider to copy preimage
