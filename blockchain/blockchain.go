@@ -327,6 +327,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 	stateTrieBatch := bc.db.GetStateTrieMigrationDB().NewBatch()
 
 	var queue []common.Hash
+	var reQueue []common.Hash
 	readCnt := 0
 	committedCnt := 0
 
@@ -345,7 +346,8 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 	// Migration main loop
 	for trieSync.Pending() > 0 {
 		bc.committedCnt, bc.pendingCnt = committedCnt, trieSync.Pending()
-		queue = append(queue[:0], trieSync.Missing(100000)...)
+		queue = append(reQueue, trieSync.Missing(100000)...)
+		reQueue = reQueue[:0]
 		results := make([]statedb.SyncResult, len(queue))
 
 		// Read the trie nodes
@@ -359,10 +361,10 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 		for i := 0; i < len(queue); i++ {
 			result := <-resultCh
 			if result.Err != nil {
-				logger.Error("State migration is failed by resultCh", "result.hash", result.Hash.String(), "result.Err", result.Err)
-				return fmt.Errorf("failed to retrieve node data for %x: %v", result.Hash, result.Err)
+				logger.Error("State migration re-queue a hash by failed resultCh", "result.hash", result.Hash.String(), "result.Err", result.Err)
+				reQueue = append(reQueue, result.Hash)
 			}
-			results[i] = result
+			results = append(results, result)
 		}
 		read, readElapsed := len(queue), time.Since(startIter)
 
