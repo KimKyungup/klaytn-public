@@ -237,9 +237,13 @@ func (s *TrieSync) Commit(dbw database.Putter) (int, error) {
 	}
 	written := len(s.membatch.order)
 
+	return written, nil
+}
+
+// CleanMemBatch removes the membatch list.
+func (s *TrieSync) CleanMemBatch() {
 	// Drop the membatch data and return
 	s.membatch = newSyncMemBatch()
-	return written, nil
 }
 
 // Pending returns the number of state entries currently pending for download.

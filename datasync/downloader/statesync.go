@@ -336,6 +336,10 @@ func (s *stateSync) commit(force bool) error {
 	if err := stateTrieBatch.Write(); err != nil {
 		return fmt.Errorf("DB write error: %v", err)
 	}
+
+	// CleanMemBatch after write
+	s.sched.CleanMemBatch()
+
 	s.updateStats(s.numUncommitted, 0, 0, time.Since(start))
 	s.numUncommitted = 0
 	s.bytesUncommitted = 0

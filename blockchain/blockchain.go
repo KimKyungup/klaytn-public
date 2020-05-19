@@ -292,6 +292,9 @@ func (bc *BlockChain) stateMigrationCommit(s *statedb.TrieSync, batch database.B
 
 	batch.Reset()
 
+	// CleanMemBatch after write
+	s.CleanMemBatch()
+
 	return written, time.Since(start), nil
 }
 
