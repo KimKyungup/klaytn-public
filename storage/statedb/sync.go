@@ -234,6 +234,7 @@ func (s *TrieSync) Commit(dbw database.Putter) (int, error) {
 		if err := dbw.Put(key[:], s.membatch.batch[key]); err != nil {
 			return i, err
 		}
+		logger.Info("write node in migration", "key", key.String())
 	}
 	written := len(s.membatch.order)
 
