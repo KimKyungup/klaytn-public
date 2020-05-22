@@ -165,8 +165,8 @@ func checkStateConsistency(db database.DBManager, root common.Hash) error {
 	return it.Error
 }
 
-// compareStatesConsistency checks that all data of given two states.
-func compareStatesConsistency(oldDB database.DBManager, newDB database.DBManager, root common.Hash) error {
+// CompareStateConsistency checks that all data of given two states.
+func CompareStateConsistency(oldDB database.DBManager, newDB database.DBManager, root common.Hash) error {
 	// Create and iterate a state trie rooted in a sub-node
 	if _, err := oldDB.ReadStateTrieNode(root.Bytes()); err != nil {
 		return err
@@ -251,7 +251,7 @@ func testIterativeStateSync(t *testing.T, count int) {
 	// Cross check that the two states are in sync
 	checkStateAccounts(t, dstDb, srcRoot, srcAccounts)
 
-	err := compareStatesConsistency(srcDb.TrieDB().DiskDB(), dstDb, srcRoot)
+	err := CompareStateConsistency(srcDb.TrieDB().DiskDB(), dstDb, srcRoot)
 	assert.NoError(t, err)
 }
 
