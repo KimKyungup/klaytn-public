@@ -694,7 +694,6 @@ func (db *Database) Cap(limit common.StorageSize) error {
 	}
 	// Keep committing nodes from the flush-list until we're below allowance
 	oldest := db.oldest
-	// TODO-Klaytn What kind of batch should be used below?
 	batch := db.diskDB.NewBatch(database.StateTrieDB)
 	for size > limit && oldest != (common.Hash{}) {
 		// Fetch the oldest referenced node and push into the batch
