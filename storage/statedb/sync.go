@@ -117,7 +117,7 @@ func (s *TrieSync) AddSubTrie(root common.Hash, depth int, parent common.Hash, c
 		logger.Info("skip write node in migration by membatch", "AddSubTrie", root.String())
 		return
 	}
-	if s.bloom.Contains(root[:]) {
+	if s.bloom.Contains(root[:]) || depth < 6 {
 		key := root.Bytes()
 		blob, _ := s.database.ReadStateTrieNode(key)
 		if local, err := decodeNode(key, blob); local != nil && err == nil {
@@ -125,7 +125,9 @@ func (s *TrieSync) AddSubTrie(root common.Hash, depth int, parent common.Hash, c
 			return
 		}
 		// False positive, bump fault meter
-		bloomFaultMeter.Mark(1)
+		if !(depth < 6) {
+			bloomFaultMeter.Mark(1)
+		}
 	}
 	// Assemble the new sub-trie sync request
 	req := &request{
@@ -164,13 +166,15 @@ func (s *TrieSync) AddRawEntry(hash common.Hash, depth int, parent common.Hash) 
 		logger.Info("skip write node in migration by membatch", "AddRawEntry", hash.String())
 		return
 	}
-	if s.bloom.Contains(hash[:]) {
+	if s.bloom.Contains(hash[:]) || depth < 6 {
 		if ok, _ := s.database.HasStateTrieNode(hash.Bytes()); ok {
 			logger.Info("skip write node in migration by HasStateTrieNode", "AddRawEntry", hash.String())
 			return
 		}
 		// False positive, bump fault meter
-		bloomFaultMeter.Mark(1)
+		if !(depth < 6) {
+			bloomFaultMeter.Mark(1)
+		}
 	}
 	// Assemble the new sub-trie sync request
 	req := &request{
@@ -352,14 +356,16 @@ func (s *TrieSync) children(req *request, object node) ([]*request, error) {
 				logger.Info("skip child by membatch", "hash", hash.String())
 				continue
 			}
-			if s.bloom.Contains(node) {
+			if s.bloom.Contains(node) || child.depth < 6 {
 				// Bloom filter says this might be a duplicate, double check
 				if ok, _ := s.database.HasStateTrieNode(node); ok {
 					logger.Info("skip child by HasStateTrieNode", "hash", hash.String())
 					continue
 				}
 				// False positive, bump fault meter
-				bloomFaultMeter.Mark(1)
+				if !(child.depth < 6) {
+					bloomFaultMeter.Mark(1)
+				}
 			}
 			// Locally unknown node, schedule for retrieval
 			requests = append(requests, &request{
