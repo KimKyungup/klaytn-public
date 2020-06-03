@@ -61,7 +61,7 @@ func (bc *BlockChain) stateMigrationCommit(s *statedb.TrieSync, db database.DBMa
 		return written, 0, err
 	}
 
-	if err := stateTrieBatch.Write(); err != nil {
+	if _, err := database.WriteBatches(stateTrieBatch); err != nil {
 		return 0, 0, fmt.Errorf("DB write error: %v", err)
 	}
 
@@ -76,6 +76,13 @@ func (bc *BlockChain) concurrentRead(db *statedb.Database, quitCh chan struct{},
 		case hash := <-hashCh:
 			data, err := db.NodeFromOld(hash)
 			if err != nil {
+				time.Sleep(10 * time.Millisecond)
+				data, err := db.NodeFromOld(hash)
+				if err == nil {
+					resultCh <- statedb.SyncResult{Hash: hash, Data: data}
+					logger.Error("concurrentRead succeed after failure", "hash", hash.String())
+					continue
+				}
 				resultCh <- statedb.SyncResult{Hash: hash, Err: err}
 				continue
 			}
@@ -97,7 +104,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 	// Present bloom filter for migration.
 	// Since iterator doesn't support partitionedDB, we cannot use targetDB.
 	// If state migration is finished without restarting node, this fake empty DB is ok.
-	stateBloom := statedb.NewSyncBloom(uint64(512), database.NewMemDB())
+	stateBloom := statedb.NewSyncBloom(uint64(2048), database.NewMemDB())
 	defer stateBloom.Close()
 
 	trieSync := state.NewStateSync(rootHash, targetDB.DiskDB(), stateBloom)
@@ -120,7 +127,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 	for trieSync.Pending() > 0 {
 		bc.committedCnt, bc.pendingCnt = committedCnt, trieSync.Pending()
 		queue = append(queue[:0], trieSync.Missing(database.IdealBatchSize)...)
-		results := make([]statedb.SyncResult, len(queue))
+		results := make([]statedb.SyncResult, 0, len(queue))
 
 		// Read the trie nodes
 		startIter := time.Now()
@@ -133,10 +140,12 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 		for i := 0; i < len(queue); i++ {
 			result := <-resultCh
 			if result.Err != nil {
-				logger.Error("State migration is failed by resultCh", "result.hash", result.Hash.String(), "result.Err", result.Err)
-				return fmt.Errorf("failed to retrieve node data for %x: %v", result.Hash, result.Err)
+				logger.Error("State migration concurrent read failed and reschedule", "result.hash", result.Hash.String(), "result.Err", result.Err)
+				trieSync.Reschedule(queue[i])
+				//return fmt.Errorf("failed to retrieve node data for %x: %v", result.Hash, result.Err)
+				continue
 			}
-			results[i] = result
+			results = append(results, result)
 		}
 		read, readElapsed := len(queue), time.Since(startIter)
 

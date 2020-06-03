@@ -243,6 +243,7 @@ func (s *TrieSync) Process(results []SyncResult) (bool, int, error) {
 func (s *TrieSync) Commit(dbw database.Putter) (int, error) {
 	// Dump the membatch into a database dbw
 	for i, key := range s.membatch.order {
+		logger.Error("write node in migration", "key", key.String())
 		if err := dbw.Put(key[:], s.membatch.batch[key]); err != nil {
 			return i, err
 		}
@@ -276,6 +277,14 @@ func (s *TrieSync) schedule(req *request) {
 	// Schedule the request for future retrieval
 	s.queue.Push(req.hash, float32(req.depth))
 	s.requests[req.hash] = req
+}
+
+// Reschedule inserts a state retrieval request into the fetch queue again.
+func (s *TrieSync) Reschedule(hash common.Hash) {
+	if req, ok := s.requests[hash]; ok {
+		// Schedule the request for future retrieval
+		s.queue.Push(req.hash, float32(req.depth))
+	}
 }
 
 // children retrieves all the missing children of a state trie entry for future
@@ -391,8 +400,11 @@ func (s *TrieSync) CalcProgressPercentage() float64 {
 	//4	 	65,536 	 	0.00153
 	//5	 	1,048,576 	0.00010
 
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 30; i++ {
 		c, r := s.CommittedByDepth(i), s.RetrievedByDepth(i)
+		if r == 0 {
+			break
+		}
 
 		var progressByDepth float64
 
