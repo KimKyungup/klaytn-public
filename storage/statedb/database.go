@@ -398,6 +398,7 @@ func (db *Database) insert(hash common.Hash, lenEncoded uint16, node node) {
 			c.parents++
 		}
 	}
+	logger.Error("insert node", "hash",hash.String())
 	db.nodes[hash] = entry
 
 	// Update the flush-list endpoints
@@ -734,6 +735,7 @@ func (db *Database) Cap(limit common.StorageSize) error {
 	for db.oldest != oldest {
 		node := db.nodes[db.oldest]
 		delete(db.nodes, db.oldest)
+		logger.Error("flushed oldest node", "oldest", oldest.String())
 		db.oldest = node.flushNext
 
 		db.nodesSize -= common.StorageSize(common.HashLength + int(node.size))
@@ -944,6 +946,7 @@ func (db *Database) uncache(hash common.Hash) {
 		db.uncache(child)
 	}
 	delete(db.nodes, hash)
+	logger.Error("uncached node", "hash", hash.String())
 	db.nodesSize -= common.StorageSize(common.HashLength + int(node.size))
 }
 
