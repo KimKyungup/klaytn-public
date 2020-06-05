@@ -198,6 +198,13 @@ func CheckStateConsistency(oldDB database.DBManager, newDB database.DBManager, r
 	for oldIt.Next() {
 		cnt++
 
+		logger.Info("CheckStateConsistency next",
+			"idx", cnt,
+			"type", oldIt.Type,
+			"hash", oldIt.Hash.String(),
+			"parent", oldIt.Parent.String(),
+			"path", statedb.HexKeyPathToHashString(oldIt.Path))
+
 		if !newIt.Next() {
 			return fmt.Errorf("newDB iterator finished earlier : oldIt.Hash(%v) oldIt.Parent(%v)", oldIt.Hash.String(), oldIt.Parent.String())
 		}
@@ -232,13 +239,6 @@ func CheckStateConsistency(oldDB database.DBManager, newDB database.DBManager, r
 		if !common.EmptyHash(oldIt.Hash) {
 			nodes[oldIt.Hash] = true
 		}
-
-		logger.Info("CheckStateConsistency next",
-			"idx", cnt,
-			"type", oldIt.Type,
-			"hash", oldIt.Hash.String(),
-			"parent", oldIt.Parent.String(),
-			"path", statedb.HexKeyPathToHashString(oldIt.Path))
 	}
 
 	if newIt.Next() {
