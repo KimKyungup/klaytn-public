@@ -301,7 +301,7 @@ func (s *TrieSync) children(req *request, object node) ([]*request, error) {
 	case *shortNode:
 		children = []child{{
 			node:  node.Val,
-			depth: req.depth + 1 + shortNodeDepthOffset,
+			depth: req.depth + len(node.Key),
 		}}
 	case *fullNode:
 		for i := 0; i < 17; i++ {
