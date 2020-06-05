@@ -84,9 +84,13 @@ func (bc *BlockChain) concurrentRead(db *statedb.Database, quitCh chan struct{},
 	}
 }
 
-func (bc *BlockChain) migrateState(rootHash common.Hash) error {
+func (bc *BlockChain) migrateState(rootHash common.Hash) (returnErr error) {
 	bc.wg.Add(1)
 	defer bc.wg.Done()
+
+	defer func() {
+		bc.db.FinishStateMigration(returnErr == nil)
+	}()
 
 	start := time.Now()
 
@@ -118,6 +122,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 
 	// Migration main loop
 	for trieSync.Pending() > 0 {
+		time.Sleep(time.Second)
 		bc.committedCnt, bc.pendingCnt = committedCnt, trieSync.Pending()
 		queue = append(queue[:0], trieSync.Missing(database.IdealBatchSize)...)
 		results := make([]statedb.SyncResult, len(queue))
@@ -167,9 +172,6 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 
 		select {
 		case <-bc.stopStateMigration:
-			// TODO-Klaytn Revert DB.
-			// - copied new DB data to old DB.
-			// - remove new DB
 			logger.Error("State migration is failed by stop")
 			return errors.New("stop state migration")
 		case <-bc.quit:
@@ -192,7 +194,6 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 		return err
 	}
 
-	bc.db.FinishStateMigration()
 	logger.Info("completed state migration")
 
 	return nil
