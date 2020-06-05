@@ -199,15 +199,15 @@ func CheckStateConsistency(oldDB database.DBManager, newDB database.DBManager, r
 		cnt++
 
 		if !newIt.Next() {
-			return fmt.Errorf("newDB iterator finished earlier : oldIt.Hash(%v) oldIt.Parent(%v)", oldIt.Hash, oldIt.Parent)
+			return fmt.Errorf("newDB iterator finished earlier : oldIt.Hash(%v) oldIt.Parent(%v)", oldIt.Hash.String(), oldIt.Parent.String())
 		}
 
 		if oldIt.Hash != newIt.Hash {
-			return fmt.Errorf("mismatched hash oldIt.Hash : oldIt.Hash(%v) newIt.Hash(%v)", oldIt.Hash, newIt.Hash)
+			return fmt.Errorf("mismatched hash oldIt.Hash : oldIt.Hash(%v) newIt.Hash(%v)", oldIt.Hash.String(), newIt.Hash.String())
 		}
 
 		if oldIt.Parent != newIt.Parent {
-			return fmt.Errorf("mismatched parent hash : oldIt.Parent(%v) newIt.Parent(%v)", oldIt.Parent, newIt.Parent)
+			return fmt.Errorf("mismatched parent hash : oldIt.Parent(%v) newIt.Parent(%v)", oldIt.Parent.String(), newIt.Parent.String())
 		}
 
 		if !bytes.Equal(oldIt.Path, newIt.Path) {
@@ -233,7 +233,8 @@ func CheckStateConsistency(oldDB database.DBManager, newDB database.DBManager, r
 			nodes[oldIt.Hash] = true
 		}
 
-		logger.Trace("CheckStateConsistency next",
+		logger.Info("CheckStateConsistency next",
+			"idx", cnt,
 			"type", oldIt.Type,
 			"hash", oldIt.Hash.String(),
 			"parent", oldIt.Parent.String(),
