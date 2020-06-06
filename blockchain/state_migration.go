@@ -89,7 +89,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) (returnErr error) {
 	defer bc.wg.Done()
 
 	defer func() {
-		bc.db.FinishStateMigration(returnErr == nil)
+		//bc.db.FinishStateMigration(returnErr == nil)
 	}()
 
 	start := time.Now()
@@ -195,7 +195,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) (returnErr error) {
 	}
 
 	logger.Info("completed state migration")
-
+	bc.db.FinishStateMigration(true)
 	return nil
 }
 
