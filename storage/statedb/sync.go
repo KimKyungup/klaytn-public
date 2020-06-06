@@ -138,6 +138,12 @@ func (s *TrieSync) AddSubTrie(root common.Hash, depth int, parent common.Hash, c
 			panic(fmt.Sprintf("sub-trie ancestor not found: %x", parent))
 		}
 		ancestor.deps++
+
+		logger.Info("AddSubTrie",
+			"ancestor.hash", ancestor.hash.String(),
+			"parent", parent.String(),
+			"ancestor.deps",ancestor.deps)
+
 		req.parents = append(req.parents, ancestor)
 	}
 	s.schedule(req)
@@ -176,6 +182,11 @@ func (s *TrieSync) AddRawEntry(hash common.Hash, depth int, parent common.Hash) 
 		}
 		ancestor.deps++
 		req.parents = append(req.parents, ancestor)
+
+		logger.Info("AddRawEntry",
+			"ancestor.hash", ancestor.hash.String(),
+			"parent", parent.String(),
+			"ancestor.deps",ancestor.deps)
 	}
 	s.schedule(req)
 }
@@ -229,7 +240,13 @@ func (s *TrieSync) Process(results []SyncResult) (bool, int, error) {
 			continue
 		}
 		request.deps += len(requests)
+		logger.Info("Process add deps",
+			"request.hash",request.hash.String(),
+			"child requests", len(requests),
+			"request.deps",request.deps)
+
 		for _, child := range requests {
+			logger.Info("Process schedule","child.hash",child.hash.String())
 			s.schedule(child)
 		}
 	}
@@ -241,6 +258,7 @@ func (s *TrieSync) Process(results []SyncResult) (bool, int, error) {
 func (s *TrieSync) Commit(dbw database.Putter) (int, error) {
 	// Dump the membatch into a database dbw
 	for i, key := range s.membatch.order {
+		logger.Error("write node in migration", "key", key.String())
 		if err := dbw.Put(key[:], s.membatch.batch[key]); err != nil {
 			return i, err
 		}
@@ -265,6 +283,10 @@ func (s *TrieSync) schedule(req *request) {
 	// If we're already requesting this node, add a new reference and stop
 	if old, ok := s.requests[req.hash]; ok {
 		old.parents = append(old.parents, req.parents...)
+
+		logger.Info("schedule but already requested",
+			"req.hash",req.hash.String(),
+			"len(old.parents)", len(old.parents))
 		return
 	}
 
@@ -353,11 +375,20 @@ func (s *TrieSync) commit(req *request) (err error) {
 	s.membatch.batch[req.hash] = req.data
 	s.membatch.order = append(s.membatch.order, req.hash)
 
+	logger.Info("commit",
+		"req.hash", req.hash.String())
+
 	delete(s.requests, req.hash)
 
 	// Check all parents for completion
 	for _, parent := range req.parents {
 		parent.deps--
+
+		logger.Info("check parent after commit",
+			"req.hash", req.hash.String(),
+			"parent.hash",parent.hash.String(),
+			"parent.deps", parent.deps)
+
 		if parent.deps == 0 {
 			if err := s.commit(parent); err != nil {
 				return err
