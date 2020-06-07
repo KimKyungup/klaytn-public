@@ -54,7 +54,7 @@ func (td *stateTrieMigrationDB) ReadPreimage(hash common.Hash) []byte {
 
 func (bc *BlockChain) stateMigrationCommit(s *statedb.TrieSync, db database.DBManager) (int, time.Duration, error) {
 	start := time.Now()
-	stateTrieBatch := db.NewBatch(database.StateTrieDB)
+	stateTrieBatch := db.NewBatch(database.StateTrieMigrationDB)
 
 	written, err := s.Commit(stateTrieBatch)
 	if written == 0 || err != nil {
