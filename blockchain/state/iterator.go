@@ -24,6 +24,7 @@ import (
 	"fmt"
 	"github.com/klaytn/klaytn/blockchain/types/account"
 	"github.com/klaytn/klaytn/common"
+	"github.com/klaytn/klaytn/crypto/sha3"
 	"github.com/klaytn/klaytn/ser/rlp"
 	"github.com/klaytn/klaytn/storage/database"
 	"github.com/klaytn/klaytn/storage/statedb"
@@ -194,6 +195,17 @@ func CheckStateConsistency(oldDB database.DBManager, newDB database.DBManager, r
 
 	cnt := 0
 	nodes := make(map[common.Hash]bool)
+
+	hasher := sha3.NewKeccak256()
+	h := common.HexToHash("0x18cc709976b7181fffd367a13eceb847c0ce3a16c69c643720c4aba2785fb80a")
+	data, _ := oldState.db.TrieDB().Node(h)
+	var result common.Hash
+	hasher.Reset()
+	hasher.Write(data)
+	hasher.Sum(result[:0])
+
+	logger.Info("check node", "h", h.String(), "hash.result", result.String())
+	return fmt.Errorf("test")
 
 	for oldIt.Next() {
 		cnt++
