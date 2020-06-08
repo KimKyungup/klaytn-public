@@ -140,9 +140,9 @@ func (s *TrieSync) AddSubTrie(root common.Hash, depth int, parent common.Hash, c
 		ancestor.deps++
 
 		logger.Info("AddSubTrie",
-			"ancestor.hash", ancestor.hash.String(),
+			"root", root.String(),
 			"parent", parent.String(),
-			"ancestor.deps",ancestor.deps)
+			"ancestor.deps", ancestor.deps)
 
 		req.parents = append(req.parents, ancestor)
 	}
@@ -186,7 +186,7 @@ func (s *TrieSync) AddRawEntry(hash common.Hash, depth int, parent common.Hash) 
 		logger.Info("AddRawEntry",
 			"ancestor.hash", ancestor.hash.String(),
 			"parent", parent.String(),
-			"ancestor.deps",ancestor.deps)
+			"ancestor.deps", ancestor.deps)
 	}
 	s.schedule(req)
 }
@@ -241,12 +241,11 @@ func (s *TrieSync) Process(results []SyncResult) (bool, int, error) {
 		}
 		request.deps += len(requests)
 		logger.Info("Process add deps",
-			"request.hash",request.hash.String(),
-			"child requests", len(requests),
-			"request.deps",request.deps)
+			"request.hash", request.hash.String(),
+			"request.deps", request.deps)
 
 		for _, child := range requests {
-			logger.Info("Process schedule","child.hash",child.hash.String())
+			logger.Info("Process schedule", "child.hash", child.hash.String())
 			s.schedule(child)
 		}
 	}
@@ -285,7 +284,7 @@ func (s *TrieSync) schedule(req *request) {
 		old.parents = append(old.parents, req.parents...)
 
 		logger.Info("schedule but already requested",
-			"req.hash",req.hash.String(),
+			"req.hash", req.hash.String(),
 			"len(old.parents)", len(old.parents))
 		return
 	}
@@ -342,11 +341,13 @@ func (s *TrieSync) children(req *request, object node) ([]*request, error) {
 			// Try to resolve the node from the local database
 			hash := common.BytesToHash(node)
 			if _, ok := s.membatch.batch[hash]; ok {
+				logger.Info("skip child by membatch", "hash", hash.String())
 				continue
 			}
 			if s.bloom.Contains(node) {
 				// Bloom filter says this might be a duplicate, double check
 				if ok, _ := s.database.HasStateTrieNode(node); ok {
+					logger.Info("skip child by HasStateTrieNode", "hash", hash.String())
 					continue
 				}
 				// False positive, bump fault meter
@@ -361,6 +362,9 @@ func (s *TrieSync) children(req *request, object node) ([]*request, error) {
 			})
 		}
 	}
+
+	logger.Info("children", "len(children)", len(children), "len(requests)", len(requests))
+
 	return requests, nil
 }
 
@@ -386,7 +390,7 @@ func (s *TrieSync) commit(req *request) (err error) {
 
 		logger.Info("check parent after commit",
 			"req.hash", req.hash.String(),
-			"parent.hash",parent.hash.String(),
+			"parent.hash", parent.hash.String(),
 			"parent.deps", parent.deps)
 
 		if parent.deps == 0 {
