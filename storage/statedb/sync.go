@@ -114,12 +114,14 @@ func (s *TrieSync) AddSubTrie(root common.Hash, depth int, parent common.Hash, c
 		return
 	}
 	if _, ok := s.membatch.batch[root]; ok {
+		logger.Info("skip write node in migration by membatch", "AddSubTrie", root.String())
 		return
 	}
 	if s.bloom.Contains(root[:]) {
 		key := root.Bytes()
 		blob, _ := s.database.ReadStateTrieNode(key)
 		if local, err := decodeNode(key, blob); local != nil && err == nil {
+			logger.Info("skip write node in migration by ReadStateTrieNode", "AddSubTrie", root.String())
 			return
 		}
 		// False positive, bump fault meter
@@ -138,6 +140,12 @@ func (s *TrieSync) AddSubTrie(root common.Hash, depth int, parent common.Hash, c
 			panic(fmt.Sprintf("sub-trie ancestor not found: %x", parent))
 		}
 		ancestor.deps++
+
+		logger.Info("AddSubTrie",
+			"root", root.String(),
+			"parent", parent.String(),
+			"ancestor.deps", ancestor.deps)
+
 		req.parents = append(req.parents, ancestor)
 	}
 	s.schedule(req)
@@ -153,10 +161,12 @@ func (s *TrieSync) AddRawEntry(hash common.Hash, depth int, parent common.Hash) 
 		return
 	}
 	if _, ok := s.membatch.batch[hash]; ok {
+		logger.Info("skip write node in migration by membatch", "AddRawEntry", hash.String())
 		return
 	}
 	if s.bloom.Contains(hash[:]) {
 		if ok, _ := s.database.HasStateTrieNode(hash.Bytes()); ok {
+			logger.Info("skip write node in migration by HasStateTrieNode", "AddRawEntry", hash.String())
 			return
 		}
 		// False positive, bump fault meter
@@ -176,6 +186,11 @@ func (s *TrieSync) AddRawEntry(hash common.Hash, depth int, parent common.Hash) 
 		}
 		ancestor.deps++
 		req.parents = append(req.parents, ancestor)
+
+		logger.Info("AddRawEntry",
+			"hash", hash.String(),
+			"parent", parent.String(),
+			"ancestor.deps", ancestor.deps)
 	}
 	s.schedule(req)
 }
@@ -229,7 +244,12 @@ func (s *TrieSync) Process(results []SyncResult) (bool, int, error) {
 			continue
 		}
 		request.deps += len(requests)
+		logger.Info("Process add deps",
+			"request.hash", request.hash.String(),
+			"request.deps", request.deps)
+
 		for _, child := range requests {
+			logger.Info("Process schedule", "child.hash", child.hash.String())
 			s.schedule(child)
 		}
 	}
@@ -241,6 +261,7 @@ func (s *TrieSync) Process(results []SyncResult) (bool, int, error) {
 func (s *TrieSync) Commit(dbw database.Putter) (int, error) {
 	// Dump the membatch into a database dbw
 	for i, key := range s.membatch.order {
+		logger.Info("write node in migration", "key", key.String())
 		if err := dbw.Put(key[:], s.membatch.batch[key]); err != nil {
 			return i, err
 		}
@@ -265,6 +286,10 @@ func (s *TrieSync) schedule(req *request) {
 	// If we're already requesting this node, add a new reference and stop
 	if old, ok := s.requests[req.hash]; ok {
 		old.parents = append(old.parents, req.parents...)
+
+		logger.Info("schedule but already requested",
+			"req.hash", req.hash.String(),
+			"len(old.parents)", len(old.parents))
 		return
 	}
 
@@ -320,11 +345,13 @@ func (s *TrieSync) children(req *request, object node) ([]*request, error) {
 			// Try to resolve the node from the local database
 			hash := common.BytesToHash(node)
 			if _, ok := s.membatch.batch[hash]; ok {
+				logger.Info("skip child by membatch", "hash", hash.String())
 				continue
 			}
 			if s.bloom.Contains(node) {
 				// Bloom filter says this might be a duplicate, double check
 				if ok, _ := s.database.HasStateTrieNode(node); ok {
+					logger.Info("skip child by HasStateTrieNode", "hash", hash.String())
 					continue
 				}
 				// False positive, bump fault meter
@@ -339,6 +366,9 @@ func (s *TrieSync) children(req *request, object node) ([]*request, error) {
 			})
 		}
 	}
+
+	logger.Info("children", "len(children)", len(children), "len(requests)", len(requests))
+
 	return requests, nil
 }
 
@@ -353,11 +383,20 @@ func (s *TrieSync) commit(req *request) (err error) {
 	s.membatch.batch[req.hash] = req.data
 	s.membatch.order = append(s.membatch.order, req.hash)
 
+	logger.Info("commit",
+		"req.hash", req.hash.String())
+
 	delete(s.requests, req.hash)
 
 	// Check all parents for completion
 	for _, parent := range req.parents {
 		parent.deps--
+
+		logger.Info("check parent after commit",
+			"req.hash", req.hash.String(),
+			"parent.hash", parent.hash.String(),
+			"parent.deps", parent.deps)
+
 		if parent.deps == 0 {
 			if err := s.commit(parent); err != nil {
 				return err
@@ -401,7 +440,7 @@ func (s *TrieSync) CalcProgressPercentage() float64 {
 			}
 		}
 
-		logger.Info("Trie sync progress by depth #"+strconv.Itoa(i), "committed", c, "retrieved", r, "progress", progressByDepth)
+		//logger.Info("Trie sync progress by depth #"+strconv.Itoa(i), "committed", c, "retrieved", r, "progress", progressByDepth)
 	}
 
 	logger.Info("Trie sync progress ", "progress", strconv.FormatFloat(progress, 'f', -1, 64)+"%")

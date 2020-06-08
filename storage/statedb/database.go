@@ -695,6 +695,7 @@ func (db *Database) Cap(limit common.StorageSize) error {
 	for size > limit && oldest != (common.Hash{}) {
 		// Fetch the oldest referenced node and push into the batch
 		node := db.nodes[oldest]
+		logger.Info("write node in Cap", "key", oldest.String())
 		enc := node.rlp()
 		if err := database.PutAndWriteBatchesOverThreshold(batch, oldest[:], enc); err != nil {
 			db.lock.RUnlock()
@@ -813,6 +814,7 @@ func (db *Database) writeBatchNodes(node common.Hash) error {
 			continue
 		}
 
+		logger.Info("write node", "key", common.BytesToHash(result.key).String())
 		if err := batch.Put(result.key, result.val); err != nil {
 			return err
 		}
@@ -828,6 +830,9 @@ func (db *Database) writeBatchNodes(node common.Hash) error {
 	if err := batch.Put(node[:], enc); err != nil {
 		return err
 	}
+
+	logger.Info("write root node", "key", node.String())
+
 	if err := batch.Write(); err != nil {
 		logger.Error("Failed to write trie to disk", "err", err)
 		return err
