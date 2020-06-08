@@ -2106,7 +2106,7 @@ func (bc *BlockChain) ApplyTransaction(config *params.ChainConfig, author *commo
 		return nil, 0, err
 	}
 	// Update the state with pending changes
-	statedb.Finalise(true, false)
+	statedb.Finalise(true)
 	*usedGas += gas
 
 	receipt := types.NewReceipt(kerr.Status, tx.Hash(), gas)
