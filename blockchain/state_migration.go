@@ -86,10 +86,9 @@ func (bc *BlockChain) concurrentRead(db *statedb.Database, quitCh chan struct{},
 
 func (bc *BlockChain) migrateState(rootHash common.Hash) (returnErr error) {
 	bc.wg.Add(1)
-	defer bc.wg.Done()
-
 	defer func() {
 		bc.db.FinishStateMigration(returnErr == nil)
+		bc.wg.Done()
 	}()
 
 	start := time.Now()
