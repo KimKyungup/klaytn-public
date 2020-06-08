@@ -196,15 +196,40 @@ func CheckStateConsistency(oldDB database.DBManager, newDB database.DBManager, r
 	cnt := 0
 	nodes := make(map[common.Hash]bool)
 
-	hasher := sha3.NewKeccak256()
-	h := common.HexToHash("0x18cc709976b7181fffd367a13eceb847c0ce3a16c69c643720c4aba2785fb80a")
-	data, _ := oldState.db.TrieDB().Node(h)
-	var result common.Hash
-	hasher.Reset()
-	hasher.Write(data)
-	hasher.Sum(result[:0])
+	hashes := []common.Hash{
+		common.HexToHash("0x7cacf76079758bbce42f7a97f689c416733c105c597617c7347cbdccc7a02238"),
+		common.HexToHash("0x18cc709976b7181fffd367a13eceb847c0ce3a16c69c643720c4aba2785fb80a"),
+		common.HexToHash("0x6997aedeb0848b548304324877896dbe8aa172bb898c772cfffc1626c33fd026"),
+		common.HexToHash("0xec4e702eaa03124e400129dd719b12c383096ba37ae99eda4cdc5e908d56b9f1d"),
+	}
 
-	logger.Info("check node", "h", h.String(), "hash.result", result.String())
+	hasher := sha3.NewKeccak256()
+	for _, h := range hashes {
+		var result common.Hash
+
+
+		oldData, err := oldState.db.TrieDB().Node(h)
+		if err != nil {
+			logger.Info("check old node" , "h", h.String(), "err",err)
+		} else {
+			hasher.Reset()
+			hasher.Write(oldData)
+			hasher.Sum(result[:0])
+			logger.Info("check old node", "h", h.String(), "hash.result", result.String())
+		}
+
+		newData, err := oldState.db.TrieDB().Node(h)
+		if err != nil {
+			logger.Info("check new node" , "h", h.String(), "err",err)
+		} else {
+			hasher.Reset()
+			hasher.Write(newData)
+			hasher.Sum(result[:0])
+			logger.Info("check new node", "h", h.String(), "hash.result", result.String())
+		}
+	}
+
+
 	return fmt.Errorf("test")
 
 	for oldIt.Next() {
