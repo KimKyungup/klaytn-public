@@ -205,7 +205,8 @@ func CheckStateConsistency(oldDB database.DBManager, newDB database.DBManager, r
 	for oldIt.Next() {
 		cnt++
 
-		logger.Trace("CheckStateConsistency next",
+		logger.Info("CheckStateConsistency next",
+			"idx", cnt,
 			"type", oldIt.Type,
 			"hash", oldIt.Hash.String(),
 			"parent", oldIt.Parent.String(),
