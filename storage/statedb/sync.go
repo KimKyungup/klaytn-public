@@ -331,6 +331,10 @@ func (s *TrieSync) children(req *request, object node) ([]*request, error) {
 	}
 	// Iterate over the children, and request all unknown ones
 	requests := make([]*request, 0, len(children))
+	if len(children) == 0 {
+		logger.Error("len(children) == 0")
+	}
+
 	for _, child := range children {
 		// Notify any external watcher of a new key/value node
 		if req.callback != nil {
