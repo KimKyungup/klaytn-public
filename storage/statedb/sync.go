@@ -90,6 +90,7 @@ type TrieSync struct {
 	retrievedByDepth map[int]int              // Retrieved trie node number counted by depth
 	committedByDepth map[int]int              // Committed trie nodes number counted by depth
 	bloom            *SyncBloom               // Bloom filter for fast node existence checks
+	cache            map[common.Hash]struct{} // Cache to check if the trie node is written or not
 }
 
 // NewTrieSync creates a new trie data download scheduler.
@@ -102,6 +103,7 @@ func NewTrieSync(root common.Hash, database StateTrieReadDB, callback LeafCallba
 		retrievedByDepth: make(map[int]int),
 		committedByDepth: make(map[int]int),
 		bloom:            bloom,
+		cache:            make(map[common.Hash]struct{}, 100000000),
 	}
 	ts.AddSubTrie(root, 0, common.Hash{}, callback)
 	return ts
@@ -118,9 +120,13 @@ func (s *TrieSync) AddSubTrie(root common.Hash, depth int, parent common.Hash, c
 		return
 	}
 	if s.bloom.Contains(root[:]) {
-		key := root.Bytes()
-		blob, _ := s.database.ReadStateTrieNode(key)
-		if local, err := decodeNode(key, blob); local != nil && err == nil {
+		// Bloom filter says this might be a duplicate, double check
+		if s.cache != nil {
+			if _, ok := s.cache[root]; ok {
+				// already written in migration, skip the node
+				return
+			}
+		} else if ok, _ := s.database.HasStateTrieNode(root[:]); ok {
 			logger.Info("skip write node in migration by ReadStateTrieNode", "AddSubTrie", root.String())
 			return
 		}
@@ -165,7 +171,13 @@ func (s *TrieSync) AddRawEntry(hash common.Hash, depth int, parent common.Hash) 
 		return
 	}
 	if s.bloom.Contains(hash[:]) {
-		if ok, _ := s.database.HasStateTrieNode(hash.Bytes()); ok {
+		// Bloom filter says this might be a duplicate, double check
+		if s.cache != nil {
+			if _, ok := s.cache[hash]; ok {
+				// already written in migration, skip the node
+				return
+			}
+		} else if ok, _ := s.database.HasStateTrieNode(hash.Bytes()); ok {
 			logger.Info("skip write node in migration by HasStateTrieNode", "AddRawEntry", hash.String())
 			return
 		}
@@ -266,6 +278,10 @@ func (s *TrieSync) Commit(dbw database.Putter) (int, error) {
 			return i, err
 		}
 		s.bloom.Add(key[:])
+
+		if s.cache != nil {
+			s.cache[key] = struct{}{}
+		}
 	}
 	written := len(s.membatch.order)
 
@@ -348,9 +364,15 @@ func (s *TrieSync) children(req *request, object node) ([]*request, error) {
 				logger.Info("skip child by membatch", "hash", hash.String())
 				continue
 			}
+
 			if s.bloom.Contains(node) {
 				// Bloom filter says this might be a duplicate, double check
-				if ok, _ := s.database.HasStateTrieNode(node); ok {
+				if s.cache != nil {
+					if _, ok := s.cache[hash]; ok {
+						// already written in migration, skip the node
+						continue
+					}
+				} else if ok, _ := s.database.HasStateTrieNode(node); ok {
 					logger.Info("skip child by HasStateTrieNode", "hash", hash.String())
 					continue
 				}
