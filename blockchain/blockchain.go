@@ -160,6 +160,7 @@ type BlockChain struct {
 	balanceCache common.Cache
 
 	// State migration
+	immediately	          bool
 	prepareStateMigration bool
 	stopStateMigration    chan struct{}
 	committedCnt          int

@@ -185,6 +185,11 @@ func (pm *ProtocolManager) synchronise(peer Peer) {
 	if peer == nil {
 		return
 	}
+
+	if atomic.LoadUint32(&pm.stateMigration) == 1 {
+		return
+	}
+
 	// Make sure the peer's TD is higher than our own
 	currentBlock := pm.blockchain.CurrentBlock()
 	td := pm.blockchain.GetTd(currentBlock.Hash(), currentBlock.NumberU64())

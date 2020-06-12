@@ -83,6 +83,8 @@ type ProtocolManager struct {
 	fastSync  uint32 // Flag whether fast sync is enabled (gets disabled if we already have blocks)
 	acceptTxs uint32 // Flag whether we're considered synchronised (enables transaction processing)
 
+	stateMigration  uint32 // Flag whether stateMigration is enabled. (gets disabled if it is done)
+
 	txpool      work.TxPool
 	blockchain  work.BlockChain
 	chainconfig *params.ChainConfig
@@ -157,6 +159,11 @@ func NewProtocolManager(config *params.ChainConfig, mode downloader.SyncMode, ne
 	if mode == downloader.FastSync {
 		manager.fastSync = uint32(1)
 	}
+
+	// TODO-Klaytn check flag and set
+	manager.stateMigration = uint32(1)
+	blockchain.PrepareStateMigration()
+
 	// istanbul BFT
 	protocol := engine.Protocol()
 	// Initiate a sub-protocol for every implemented version we can handle
@@ -255,6 +262,12 @@ func NewProtocolManager(config *params.ChainConfig, mode downloader.SyncMode, ne
 			logger.Warn("Discarded bad propagated block", "number", blocks[0].Number(), "hash", blocks[0].Hash())
 			return 0, nil
 		}
+
+		if atomic.LoadUint32(&manager.stateMigration) == 1 {
+			logger.Warn("Discarded bad propagated block by stateMigration", "number", blocks[0].Number(), "hash", blocks[0].Hash())
+			return 0, nil
+		}
+
 		atomic.StoreUint32(&manager.acceptTxs, 1) // Mark initial sync done on any fetcher import
 		return manager.blockchain.InsertChain(blocks)
 	}

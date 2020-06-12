@@ -247,13 +247,29 @@ func (bc *BlockChain) restartStateMigration() {
 		logger.Warn("State migration is restarted", "blockNumber", number, "root", root.String())
 
 		go bc.migrateState(root)
+
+		return
+	}
+
+	if bc.immediately {
+		bc.immediately = false
+		current := bc.CurrentBlock()
+
+		if err := bc.StartStateMigration(current.NumberU64(), current.Root()); err != nil {
+			logger.Error("failed to start state migration", "err", err)
+		}
 	}
 }
 
 // PrepareStateMigration sets prepareStateMigration to be called in checkStartStateMigration.
-func (bc *BlockChain) PrepareStateMigration() error {
+func (bc *BlockChain) PrepareStateMigration(immediately bool) error {
 	if bc.db.InMigration() || bc.prepareStateMigration {
 		return errors.New("migration already started")
+	}
+
+	if immediately {
+		bc.immediately = true
+		return nil
 	}
 
 	bc.prepareStateMigration = true
