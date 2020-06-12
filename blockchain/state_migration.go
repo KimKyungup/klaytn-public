@@ -23,9 +23,6 @@ import (
 	"github.com/klaytn/klaytn/common"
 	"github.com/klaytn/klaytn/storage/database"
 	"github.com/klaytn/klaytn/storage/statedb"
-	"runtime"
-	"strconv"
-	"strings"
 	"time"
 )
 
@@ -88,7 +85,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 	bc.wg.Add(1)
 	defer bc.wg.Done()
 
-	start := time.Now()
+	//start := time.Now()
 
 	srcCachedDB := bc.StateCache().TrieDB()
 	targetDB := statedb.NewDatabase(&stateTrieMigrationDB{bc.db})
@@ -97,93 +94,93 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) error {
 	// Present bloom filter for migration.
 	// Since iterator doesn't support partitionedDB, we cannot use targetDB.
 	// If state migration is finished without restarting node, this fake empty DB is ok.
-	stateBloom := statedb.NewSyncBloom(uint64(5000), database.NewMemDB())
-	defer stateBloom.Close()
-
-	trieSync := state.NewStateSync(rootHash, targetDB.DiskDB(), stateBloom)
-	var queue []common.Hash
-	committedCnt := 0
-
-	quitCh := make(chan struct{})
-	defer close(quitCh)
-
-	// Prepare concurrent read goroutines
-	threads := runtime.NumCPU()
-	hashCh := make(chan common.Hash, threads)
-	resultCh := make(chan statedb.SyncResult, threads)
-
-	for th := 0; th < threads; th++ {
-		go bc.concurrentRead(srcCachedDB, quitCh, hashCh, resultCh)
-	}
-
-	// Migration main loop
-	for trieSync.Pending() > 0 {
-		bc.committedCnt, bc.pendingCnt = committedCnt, trieSync.Pending()
-		queue = append(queue[:0], trieSync.Missing(database.IdealBatchSize)...)
-		results := make([]statedb.SyncResult, len(queue))
-
-		// Read the trie nodes
-		startIter := time.Now()
-		go func() {
-			for _, hash := range queue {
-				hashCh <- hash
-			}
-		}()
-
-		for i := 0; i < len(queue); i++ {
-			result := <-resultCh
-			if result.Err != nil {
-				logger.Error("State migration is failed by resultCh", "result.hash", result.Hash.String(), "result.Err", result.Err)
-				return fmt.Errorf("failed to retrieve node data for %x: %v", result.Hash, result.Err)
-			}
-			results[i] = result
-		}
-		read, readElapsed := len(queue), time.Since(startIter)
-
-		// Process trie nodes
-		if _, index, err := trieSync.Process(results); err != nil {
-			logger.Error("State migration is failed by process error", "err", err)
-			return fmt.Errorf("failed to process result #%d: %v", index, err)
-		}
-
-		// Commit trie nodes
-		written, writeElapsed, err := bc.stateMigrationCommit(trieSync, targetDB.DiskDB())
-		if err != nil {
-			logger.Error("State migration is failed by commit error", "err", err)
-			return fmt.Errorf("failed to commit data #%d: %v", written, err)
-		}
-
-		// Report progress
-		committedCnt += written
-		bc.committedCnt, bc.pendingCnt, bc.progress = committedCnt, trieSync.Pending(), trieSync.CalcProgressPercentage()
-		progressStr := strconv.FormatFloat(bc.progress, 'f', 4, 64)
-		progressStr = strings.TrimRight(progressStr, "0")
-		progressStr = strings.TrimRight(progressStr, ".") + "%"
-
-		logger.Warn("State migration progress",
-			"progress", progressStr, "committedCnt", committedCnt, "pendingCnt", bc.pendingCnt,
-			"read", read, "readElapsed", readElapsed, "written", written, "writeElapsed", writeElapsed,
-			"elapsed", time.Since(startIter))
-
-		select {
-		case <-bc.stopStateMigration:
-			// TODO-Klaytn Revert DB.
-			// - copied new DB data to old DB.
-			// - remove new DB
-			logger.Error("State migration is failed by stop")
-			return errors.New("stop state migration")
-		case <-bc.quit:
-			return nil
-		default:
-		}
-	}
-	bc.committedCnt, bc.pendingCnt, bc.progress = committedCnt, trieSync.Pending(), trieSync.CalcProgressPercentage()
-	stateBloom.Close()
-	trieSync = nil
-
-	elapsed := time.Since(start)
-	speed := float64(committedCnt) / elapsed.Seconds()
-	logger.Info("State migration is completed", "committedCnt", committedCnt, "elapsed", elapsed, "committed per second", speed)
+	//stateBloom := statedb.NewSyncBloom(uint64(5000), database.NewMemDB())
+	//defer stateBloom.Close()
+	//
+	//trieSync := state.NewStateSync(rootHash, targetDB.DiskDB(), stateBloom)
+	//var queue []common.Hash
+	//committedCnt := 0
+	//
+	//quitCh := make(chan struct{})
+	//defer close(quitCh)
+	//
+	//// Prepare concurrent read goroutines
+	//threads := runtime.NumCPU()
+	//hashCh := make(chan common.Hash, threads)
+	//resultCh := make(chan statedb.SyncResult, threads)
+	//
+	//for th := 0; th < threads; th++ {
+	//	go bc.concurrentRead(srcCachedDB, quitCh, hashCh, resultCh)
+	//}
+	//
+	//// Migration main loop
+	//for trieSync.Pending() > 0 {
+	//	bc.committedCnt, bc.pendingCnt = committedCnt, trieSync.Pending()
+	//	queue = append(queue[:0], trieSync.Missing(database.IdealBatchSize)...)
+	//	results := make([]statedb.SyncResult, len(queue))
+	//
+	//	// Read the trie nodes
+	//	startIter := time.Now()
+	//	go func() {
+	//		for _, hash := range queue {
+	//			hashCh <- hash
+	//		}
+	//	}()
+	//
+	//	for i := 0; i < len(queue); i++ {
+	//		result := <-resultCh
+	//		if result.Err != nil {
+	//			logger.Error("State migration is failed by resultCh", "result.hash", result.Hash.String(), "result.Err", result.Err)
+	//			return fmt.Errorf("failed to retrieve node data for %x: %v", result.Hash, result.Err)
+	//		}
+	//		results[i] = result
+	//	}
+	//	read, readElapsed := len(queue), time.Since(startIter)
+	//
+	//	// Process trie nodes
+	//	if _, index, err := trieSync.Process(results); err != nil {
+	//		logger.Error("State migration is failed by process error", "err", err)
+	//		return fmt.Errorf("failed to process result #%d: %v", index, err)
+	//	}
+	//
+	//	// Commit trie nodes
+	//	written, writeElapsed, err := bc.stateMigrationCommit(trieSync, targetDB.DiskDB())
+	//	if err != nil {
+	//		logger.Error("State migration is failed by commit error", "err", err)
+	//		return fmt.Errorf("failed to commit data #%d: %v", written, err)
+	//	}
+	//
+	//	// Report progress
+	//	committedCnt += written
+	//	bc.committedCnt, bc.pendingCnt, bc.progress = committedCnt, trieSync.Pending(), trieSync.CalcProgressPercentage()
+	//	progressStr := strconv.FormatFloat(bc.progress, 'f', 4, 64)
+	//	progressStr = strings.TrimRight(progressStr, "0")
+	//	progressStr = strings.TrimRight(progressStr, ".") + "%"
+	//
+	//	logger.Warn("State migration progress",
+	//		"progress", progressStr, "committedCnt", committedCnt, "pendingCnt", bc.pendingCnt,
+	//		"read", read, "readElapsed", readElapsed, "written", written, "writeElapsed", writeElapsed,
+	//		"elapsed", time.Since(startIter))
+	//
+	//	select {
+	//	case <-bc.stopStateMigration:
+	//		// TODO-Klaytn Revert DB.
+	//		// - copied new DB data to old DB.
+	//		// - remove new DB
+	//		logger.Error("State migration is failed by stop")
+	//		return errors.New("stop state migration")
+	//	case <-bc.quit:
+	//		return nil
+	//	default:
+	//	}
+	//}
+	//bc.committedCnt, bc.pendingCnt, bc.progress = committedCnt, trieSync.Pending(), trieSync.CalcProgressPercentage()
+	//stateBloom.Close()
+	//trieSync = nil
+	//
+	//elapsed := time.Since(start)
+	//speed := float64(committedCnt) / elapsed.Seconds()
+	//logger.Info("State migration is completed", "committedCnt", committedCnt, "elapsed", elapsed, "committed per second", speed)
 
 	// Preimage Copy
 	// TODO-Klaytn consider to copy preimage
