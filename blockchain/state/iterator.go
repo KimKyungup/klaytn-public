@@ -219,7 +219,6 @@ func CheckStateConsistency(oldDB database.DBManager, newDB database.DBManager, r
 
 	for oldIt.Next() {
 		cnt++
-		time.Sleep(3 * time.Second)
 		report()
 
 		if !newIt.Next() {
