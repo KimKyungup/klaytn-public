@@ -93,6 +93,7 @@ func (bc *BlockChain) concurrentRead(db *statedb.Database, quitCh chan struct{},
 func (bc *BlockChain) migrateState(rootHash common.Hash) (returnErr error) {
 	bc.wg.Add(1)
 	defer func() {
+		bc.stateMigrationErr = returnErr
 		bc.db.FinishStateMigration(returnErr == nil)
 		bc.wg.Done()
 	}()
@@ -318,6 +319,6 @@ func (bc *BlockChain) StopStateMigration() error {
 
 // StatusStateMigration returns if it is in migration, the block number of in migration,
 // number of committed blocks and number of pending blocks
-func (bc *BlockChain) StatusStateMigration() (bool, uint64, int, int, float64) {
-	return bc.db.InMigration(), bc.db.MigrationBlockNumber(), bc.committedCnt, bc.pendingCnt, bc.progress
+func (bc *BlockChain) StatusStateMigration() (bool, uint64, int, int, float64, error) {
+	return bc.db.InMigration(), bc.db.MigrationBlockNumber(), bc.committedCnt, bc.pendingCnt, bc.progress, bc.stateMigrationErr
 }
