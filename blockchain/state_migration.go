@@ -196,7 +196,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) (returnErr error) {
 
 	elapsed := time.Since(start)
 	speed := float64(stats.totalCommitted) / elapsed.Seconds()
-	logger.Info("State migration : copy is done",
+	logger.Info("State migration : Copy is done",
 		"totalRead", stats.totalRead, "totalCommitted", stats.totalCommitted,
 		"totalElapsed", elapsed, "committed per second", speed)
 
