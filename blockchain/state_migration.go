@@ -194,6 +194,10 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) (returnErr error) {
 
 	stats.stateMigrationReport(true, trieSync.Pending(), trieSync.CalcProgressPercentage())
 
+	// Clear memory of bloom filter and trieSync
+	stateBloom.Close()
+	trieSync = nil
+
 	elapsed := time.Since(start)
 	speed := float64(stats.totalCommitted) / elapsed.Seconds()
 	logger.Info("State migration : Copy is done",
