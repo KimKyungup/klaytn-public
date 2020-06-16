@@ -245,7 +245,7 @@ func (st *migrationStats) stateMigrationReport(force bool, pending int, progress
 
 		logger.Info("State migration progress",
 			"progress", progressStr,
-			"totalread", st.totalRead, "totalCommitted", st.totalCommitted, "pending", st.pending,
+			"totalRead", st.totalRead, "totalCommitted", st.totalCommitted, "pending", st.pending,
 			"read", st.read, "readElapsed", st.readElapsed, "processElapsed", st.processElapsed,
 			"written", st.committed, "writeElapsed", st.writeElapsed,
 			"elapsed", common.PrettyDuration(elapsed),
