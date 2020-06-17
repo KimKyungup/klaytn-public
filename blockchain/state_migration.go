@@ -19,6 +19,8 @@ package blockchain
 import (
 	"errors"
 	"fmt"
+	"github.com/alecthomas/units"
+	lru "github.com/hashicorp/golang-lru"
 	"github.com/klaytn/klaytn/blockchain/state"
 	"github.com/klaytn/klaytn/common"
 	"github.com/klaytn/klaytn/common/mclock"
@@ -104,14 +106,8 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) (returnErr error) {
 	srcCachedDB := bc.StateCache().TrieDB()
 	targetDB := statedb.NewDatabase(&stateTrieMigrationDB{bc.db})
 
-	// TODO-Klaytn Change NewMemDB to real targetDB for restarting state migration
-	// Present bloom filter for migration.
-	// Since iterator doesn't support partitionedDB, we cannot use targetDB.
-	// If state migration is finished without restarting node, this fake empty DB is ok.
-	stateBloom := statedb.NewSyncBloom(uint64(1000), database.NewMemDB()) // 1GiB
-	defer stateBloom.Close()
-
-	trieSync := state.NewStateSync(rootHash, targetDB.DiskDB(), stateBloom)
+	lruCache, _ := lru.New(int(2 * units.Giga / common.HashLength)) // 2GB for 62,500,000 common.Hash key values
+	trieSync := state.NewStateSync(rootHash, targetDB.DiskDB(), nil, lruCache)
 	var queue []common.Hash
 	committedCnt := 0
 
@@ -194,8 +190,7 @@ func (bc *BlockChain) migrateState(rootHash common.Hash) (returnErr error) {
 
 	stats.stateMigrationReport(true, trieSync.Pending(), trieSync.CalcProgressPercentage())
 
-	// Clear memory of bloom filter and trieSync
-	stateBloom.Close()
+	// Clear memory of trieSync
 	trieSync = nil
 
 	elapsed := time.Since(start)
