@@ -367,6 +367,7 @@ func (self *StateDB) GetState(addr common.Address, bhash common.Hash) common.Has
 // IsContractAvailable returns true if the account corresponding to the given address implements ProgramAccount.
 func (self *StateDB) IsContractAvailable(addr common.Address) bool {
 	stateObject := self.getStateObject(addr)
+	logger.Error("[WINNIE] IsContractAvailable addr", "contract Address", addr)
 	if stateObject != nil {
 		return stateObject.IsContractAvailable()
 	}

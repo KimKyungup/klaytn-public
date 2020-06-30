@@ -158,6 +158,8 @@ func GetProgramAccount(a Account) ProgramAccount {
 		return pa
 	}
 
+	logger.Error("[WINNIE] Failed to get Program Account", "program account", a.String())
+
 	return nil
 }
 

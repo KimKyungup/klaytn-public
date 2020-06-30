@@ -215,8 +215,10 @@ func (self *stateObject) IsContractAccount() bool {
 func (self *stateObject) IsContractAvailable() bool {
 	acc := account.GetProgramAccount(self.account)
 	if acc != nil && !bytes.Equal(acc.GetCodeHash(), emptyCodeHash) && self.suicided == false {
+		logger.Error("[WINNIE] contract is available", "account", acc.String())
 		return true
 	}
+	logger.Error("[WINNIE] contract is not available", "account", acc.String())
 	return false
 }
 
