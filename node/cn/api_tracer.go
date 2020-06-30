@@ -297,6 +297,7 @@ func (api *PrivateDebugAPI) traceChain(ctx context.Context, start, end *types.Bl
 			// Generate the next state snapshot fast without tracing
 			_, _, _, err := api.cn.blockchain.Processor().Process(block, statedb, vm.Config{})
 			if err != nil {
+				logger.Error("[WINNIE] error while tracing chain")
 				failed = err
 				break
 			}

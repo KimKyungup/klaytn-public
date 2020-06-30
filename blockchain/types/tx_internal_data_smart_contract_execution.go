@@ -310,6 +310,7 @@ func (t *TxInternalDataSmartContractExecution) Validate(stateDB StateDB, current
 func (t *TxInternalDataSmartContractExecution) ValidateMutableValue(stateDB StateDB, currentBlockNumber uint64) error {
 	// Fail if the target address is not a program account.
 	if !stateDB.IsContractAvailable(t.Recipient) {
+		logger.Error("[WINNIE] failed to validate mutal value while ValidateMutableValue")
 		return kerrors.ErrNotProgramAccount
 	}
 	return nil

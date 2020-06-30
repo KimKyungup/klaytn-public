@@ -345,6 +345,7 @@ func (t *TxInternalDataFeeDelegatedSmartContractExecution) Validate(stateDB Stat
 func (t *TxInternalDataFeeDelegatedSmartContractExecution) ValidateMutableValue(stateDB StateDB, currentBlockNumber uint64) error {
 	// Fail if the target address is not a program account.
 	if !stateDB.IsContractAvailable(t.Recipient) {
+		logger.Error("[WINNIE] error while validating while fee delegation")
 		return kerrors.ErrNotProgramAccount
 	}
 	return nil

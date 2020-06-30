@@ -1607,6 +1607,7 @@ func (bc *BlockChain) insertChain(chain types.Blocks) (int, []interface{}, []*ty
 		// Process block using the parent state as reference point.
 		receipts, logs, usedGas, err := bc.processor.Process(block, stateDB, bc.vmConfig)
 		if err != nil {
+			logger.Error("[WINNIE] error while processing2")
 			bc.reportBlock(block, receipts, err)
 			return i, events, coalescedLogs, err
 		}
@@ -2108,6 +2109,7 @@ func (bc *BlockChain) ApplyTransaction(config *params.ChainConfig, author *commo
 
 	// validation for each transaction before execution
 	if err := tx.Validate(statedb, blockNumber); err != nil {
+		logger.Error("[WINNIE] error while validating")
 		return nil, 0, err
 	}
 
