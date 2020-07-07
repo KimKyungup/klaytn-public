@@ -2107,6 +2107,8 @@ func (bc *BlockChain) ApplyTransaction(config *params.ChainConfig, author *commo
 
 	blockNumber := header.Number.Uint64()
 
+	logger.Error("[WINNIE] ApplyTransaction called", "blockNumber", blockNumber, "config", config, "author", author, "header", header, "tx", tx, "usedGas", usedGas, "cfg", cfg)
+
 	// validation for each transaction before execution
 	if err := tx.Validate(statedb, blockNumber); err != nil {
 		logger.Error("[WINNIE] error while validating")
@@ -2117,13 +2119,17 @@ func (bc *BlockChain) ApplyTransaction(config *params.ChainConfig, author *commo
 	if err != nil {
 		return nil, 0, err
 	}
+	logger.Error("[WINNIE] AsMessageWithAccountKeyPicker", "msg", msg)
 	// Create a new context to be used in the EVM environment
 	context := NewEVMContext(msg, header, bc, author)
+	logger.Error("[WINNIE] NewEVMContext", "context", context)
 	// Create a new environment which holds all relevant information
 	// about the transaction and calling mechanisms.
 	vmenv := vm.NewEVM(context, statedb, config, cfg)
+	logger.Error("[WINNIE] NewEVMContext", "evm", vmenv)
 	// Apply the transaction to the current state (included in the env)
-	_, gas, kerr := ApplyMessage(vmenv, msg)
+	b, gas, kerr := ApplyMessage(vmenv, msg)
+	logger.Error("[WINNIE] ApplyMessage", "byte", b, "gas", gas, "kerr", kerr)
 	err = kerr.ErrTxInvalid
 	if err != nil {
 		return nil, 0, err
@@ -2133,6 +2139,7 @@ func (bc *BlockChain) ApplyTransaction(config *params.ChainConfig, author *commo
 	*usedGas += gas
 
 	receipt := types.NewReceipt(kerr.Status, tx.Hash(), gas)
+	logger.Error("[WINNIE] NewReceipt", "receipt", receipt)
 	// if the transaction created a contract, store the creation address in the receipt.
 	msg.FillContractAddress(vmenv.Context.Origin, receipt)
 	// Set the receipt logs and create a bloom for filtering
