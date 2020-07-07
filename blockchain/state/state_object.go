@@ -163,7 +163,7 @@ func (c *stateObject) getStorageTrie(db Database) Trie {
 			}
 		} else {
 			// not a contract account, just returns the empty trie.
-			logger.Error("[WINNIE] failed to getStorageTrie")
+			logger.Error("[WINNIE] failed to getStorageTrie", "c.account", c.account.String())
 			c.storageTrie, _ = db.OpenStorageTrie(common.Hash{})
 		}
 	}
