@@ -318,6 +318,7 @@ func (l *txList) Filter(senderBalance *big.Int, pool *TxPool) (types.Transaction
 		}
 		// Since there are mutable values such as accountKey in the state, a tx can be invalidated with the state change.
 		if tx.ValidateMutableValue(pool.currentState, pool.signer, pool.currentBlockNumber) != nil {
+			logger.Error("[WINNIE] failed to validate mutal value while filter")
 			return true
 		}
 		// In case of fee-delegated transactions, the comparison value should consider tx fee and fee ratio.

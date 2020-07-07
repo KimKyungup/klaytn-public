@@ -9,7 +9,7 @@ GORUN = env GOPATH=$(GOPATH) GO111MODULE=on go run
 BIN = $(shell pwd)/build/bin
 BUILD_PARAM?=install
 
-OBJECTS=kcn kpn ken kscn kspn ksen kbn kgen homi
+OBJECTS=ken
 RPM_OBJECTS=$(foreach wrd,$(OBJECTS),rpm-$(wrd))
 RPM_BAOBAB_OBJECTS=$(foreach wrd,$(OBJECTS),rpm-baobab-$(wrd))
 TAR_LINUX_386_OBJECTS=$(foreach wrd,$(OBJECTS),tar-linux-386-$(wrd))

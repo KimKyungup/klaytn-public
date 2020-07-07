@@ -106,6 +106,7 @@ func DeployContract(opts *TransactOpts, abi abi.ABI, bytecode []byte, backend Co
 
 	input, err := c.abi.Pack("", params...)
 	if err != nil {
+		logger.Error("[WINNIE] error while deployContract")
 		return common.Address{}, nil, nil, err
 	}
 	tx, err := c.transact(opts, nil, append(bytecode, input...))

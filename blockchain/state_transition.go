@@ -228,12 +228,14 @@ func (st *StateTransition) preCheck() error {
 // An error indicates a consensus issue.
 func (st *StateTransition) TransitionDb() (ret []byte, usedGas uint64, kerr kerror) {
 	if kerr.ErrTxInvalid = st.preCheck(); kerr.ErrTxInvalid != nil {
+		logger.Error("[WINNIE] TransitionDb : nonce mismatch", "kerr", kerr.ErrTxInvalid)
 		return
 	}
 	msg := st.msg
 
 	// Pay intrinsic gas.
 	if kerr.ErrTxInvalid = st.useGas(msg.ValidatedIntrinsicGas()); kerr.ErrTxInvalid != nil {
+		logger.Error("[WINNIE] TransitionDb : out of gas", "kerr", kerr.ErrTxInvalid)
 		kerr.Status = getReceiptStatusFromErrTxFailed(nil)
 		return nil, 0, kerr
 	}
@@ -246,9 +248,10 @@ func (st *StateTransition) TransitionDb() (ret []byte, usedGas uint64, kerr kerr
 	)
 
 	ret, st.gas, errTxFailed = msg.Execute(st.evm, st.state, st.evm.BlockNumber.Uint64(), st.gas, st.value)
+	logger.Error("[WINNIE] TransitionDb : msg.Execute", "ret", ret, "gas", st.gas, "errTxFailed", errTxFailed)
 
 	if errTxFailed != nil {
-		logger.Debug("VM returned with error", "err", errTxFailed, "txHash", st.msg.Hash().String())
+		logger.Error("VM returned with error", "err", errTxFailed, "txHash", st.msg.Hash().String())
 		// The only possible consensus-error would be if there wasn't
 		// sufficient balance to make the transfer happen. The first
 		// balance transfer may never fail.

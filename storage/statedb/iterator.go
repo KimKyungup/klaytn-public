@@ -293,6 +293,7 @@ func (st *nodeIteratorState) resolve(tr *Trie, path []byte) error {
 	if hash, ok := st.node.(hashNode); ok {
 		resolved, err := tr.resolveHash(hash, path)
 		if err != nil {
+			logger.Error("[WINNIE] failed to resolve hash while resolve in node iterator", "err", err)
 			return err
 		}
 		st.node = resolved

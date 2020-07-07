@@ -87,6 +87,7 @@ func (b *BlockGen) AddTxWithChain(bc *BlockChain, tx *types.Transaction) {
 	b.statedb.Prepare(tx.Hash(), common.Hash{}, len(b.txs))
 	receipt, _, err := bc.ApplyTransaction(b.config, &params.AuthorAddressForTesting, b.statedb, b.header, tx, &b.header.GasUsed, &vm.Config{})
 	if err != nil {
+		logger.Error("[WINNIE] error while add tx with chain")
 		panic(err)
 	}
 	b.txs = append(b.txs, tx)

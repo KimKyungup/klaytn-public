@@ -72,6 +72,7 @@ func (p *StateProcessor) Process(block *types.Block, statedb *state.StateDB, cfg
 		statedb.Prepare(tx.Hash(), block.Hash(), i)
 		receipt, _, err := p.bc.ApplyTransaction(p.config, &author, statedb, header, tx, usedGas, &cfg)
 		if err != nil {
+			logger.Error("[WINNIE] error while processing")
 			return nil, nil, 0, err
 		}
 		receipts = append(receipts, receipt)

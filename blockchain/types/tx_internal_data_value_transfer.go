@@ -291,6 +291,7 @@ func (t *TxInternalDataValueTransfer) ValidateMutableValue(stateDB StateDB, curr
 	if stateDB.IsProgramAccount(t.Recipient) {
 		return kerrors.ErrNotForProgramAccount
 	}
+	logger.Error("[WINNIE] IsProgramAccount failed while ValidateMutableValue", "Recipient", t.Recipient)
 	return nil
 }
 

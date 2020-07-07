@@ -136,6 +136,7 @@ func (t *Trie) tryGet(origNode node, key []byte, pos int) (value []byte, newnode
 	case hashNode:
 		child, err := t.resolveHash(n, key[:pos])
 		if err != nil {
+			logger.Error("[WINNIE] failed to resolve hash while tryGet", "err", err, "child", child)
 			return nil, n, true, err
 		}
 		value, newnode, _, err := t.tryGet(child, key, pos)
@@ -245,6 +246,7 @@ func (t *Trie) insert(n node, prefix, key []byte, value node) (bool, node, error
 		// the path to the value in the trie.
 		rn, err := t.resolveHash(n, prefix)
 		if err != nil {
+			logger.Error("[WINNIE] failed to resolve hash while insert", "err", err)
 			return false, nil, err
 		}
 		dirty, nn, err := t.insert(rn, prefix, key, value)
@@ -350,6 +352,7 @@ func (t *Trie) delete(n node, prefix, key []byte) (bool, node, error) {
 				// check.
 				cnode, err := t.resolve(n.Children[pos], prefix)
 				if err != nil {
+					logger.Error("[WINNIE] failed to resolve hash while delete full node", "err", err)
 					return false, nil, err
 				}
 				if cnode, ok := cnode.(*shortNode); ok {
@@ -376,6 +379,7 @@ func (t *Trie) delete(n node, prefix, key []byte) (bool, node, error) {
 		// the path to the value in the trie.
 		rn, err := t.resolveHash(n, prefix)
 		if err != nil {
+			logger.Error("[WINNIE] failed to resolve hash while delete hash node", "err", err)
 			return false, nil, err
 		}
 		dirty, nn, err := t.delete(rn, prefix, key)

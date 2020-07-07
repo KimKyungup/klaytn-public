@@ -163,6 +163,7 @@ func (c *stateObject) getStorageTrie(db Database) Trie {
 			}
 		} else {
 			// not a contract account, just returns the empty trie.
+			logger.Error("[WINNIE] failed to getStorageTrie")
 			c.storageTrie, _ = db.OpenStorageTrie(common.Hash{})
 		}
 	}
@@ -208,15 +209,19 @@ func (self *stateObject) IsContractAccount() bool {
 	if acc != nil && !bytes.Equal(acc.GetCodeHash(), emptyCodeHash) {
 		return true
 	}
+	logger.Error("[WINNIE] Failed to IsContractAccount")
 	return false
 }
 
 // IsContractAvailable returns true if the account has a smart contract code hash and didn't self-destruct
 func (self *stateObject) IsContractAvailable() bool {
 	acc := account.GetProgramAccount(self.account)
+	logger.Error("[WINNIE] result of isContractAvailable", "acc", acc, "account", acc.String())
 	if acc != nil && !bytes.Equal(acc.GetCodeHash(), emptyCodeHash) && self.suicided == false {
+		logger.Error("[WINNIE] contract is available", "account", acc.String())
 		return true
 	}
+	logger.Error("[WINNIE] contract is not available", "account", acc.String())
 	return false
 }
 

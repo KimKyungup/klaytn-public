@@ -26,6 +26,7 @@ require (
 	github.com/jackpal/go-nat-pmp v1.0.1
 	github.com/julienschmidt/httprouter v1.2.0
 	github.com/klauspost/compress v1.4.1 // indirect
+	github.com/klaytn/xgo v0.0.0-20200414010019-267e2dd31746 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.2
 	github.com/mattn/go-runewidth v0.0.2 // indirect

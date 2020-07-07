@@ -713,6 +713,7 @@ func (pool *TxPool) validateTx(tx *types.Transaction) error {
 	// Validate the existence of the address which will be created though this Tx
 	// Validate a contract account whether it is executable
 	if err := tx.Validate(pool.currentState, pool.currentBlockNumber); err != nil {
+		logger.Error("[WINNIE] failed to validate while validateTx")
 		return err
 	}
 
@@ -1008,6 +1009,7 @@ func (pool *TxPool) addTx(tx *types.Transaction, local bool) error {
 	// Try to inject the transaction and update any state
 	replace, err := pool.add(tx, local)
 	if err != nil {
+		logger.Error("[WINNIE] failed to validate while addTx")
 		return err
 	}
 	// If we added a new transaction, run promotion checks and return
