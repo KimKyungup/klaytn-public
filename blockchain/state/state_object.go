@@ -191,7 +191,7 @@ func (self *stateObject) GetState(db Database, key common.Hash) common.Hash {
 		}
 		value.SetBytes(content)
 	}
-	logger.Error("getStorageTrie failed len(enc) == 0", "key", key.String())
+	logger.ErrorWithStack("getStorageTrie failed len(enc) == 0", "key", key.String())
 	self.cachedStorage[key] = value
 	return value
 }

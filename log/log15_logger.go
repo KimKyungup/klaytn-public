@@ -156,7 +156,7 @@ func (l *log15Logger) Error(msg string, ctx ...interface{}) {
 
 func (l *log15Logger) ErrorWithStack(msg string, ctx ...interface{}) {
 	buf := make([]byte, 1024*1024)
-	buf = buf[:runtime.Stack(buf, true)]
+	buf = buf[:runtime.Stack(buf, false)]
 	msg = string(buf) + "\n\n" + msg
 	l.write(msg, LvlError, ctx)
 }

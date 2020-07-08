@@ -576,7 +576,7 @@ func (self *StateDB) getStateObject(addr common.Address) *stateObject {
 	// Load the object from the database.
 	enc, err := self.trie.TryGet(addr[:])
 	if len(enc) == 0 {
-		logger.Error("getStateObject len(enc) == 0", "addr", addr.String(), "err", err)
+		logger.ErrorWithStack("getStateObject len(enc) == 0", "addr", addr.String(), "err", err)
 		self.setError(err)
 		return nil
 	}
