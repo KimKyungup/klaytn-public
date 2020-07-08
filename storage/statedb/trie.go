@@ -112,7 +112,7 @@ func (t *Trie) TryGet(key []byte) ([]byte, error) {
 func (t *Trie) tryGet(origNode node, key []byte, pos int) (value []byte, newnode node, didResolve bool, err error) {
 	switch n := (origNode).(type) {
 	case nil:
-		logger.Error("[WINNIE] tryGet case nil:")
+		logger.ErrorWithStack("[WINNIE] tryGet case nil:")
 		return nil, nil, false, nil
 	case valueNode:
 		logger.Error("[WINNIE] tryGet case valueNode:")
