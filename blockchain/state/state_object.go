@@ -163,7 +163,7 @@ func (c *stateObject) getStorageTrie(db Database) Trie {
 			}
 		} else {
 			// not a contract account, just returns the empty trie.
-			logger.Error("[WINNIE] failed to getStorageTrie", "c.account", c.account.String())
+			//logger.ErrorWithStack("[WINNIE] failed to getStorageTrie", "c.account", c.account.String())
 			c.storageTrie, _ = db.OpenStorageTrie(common.Hash{})
 		}
 	}
@@ -179,16 +179,19 @@ func (self *stateObject) GetState(db Database, key common.Hash) common.Hash {
 	// Load from DB in case it is missing.
 	enc, err := self.getStorageTrie(db).TryGet(key[:])
 	if err != nil {
+		logger.Error("getStorageTrie failed", "key", key.String())
 		self.setError(err)
 		return common.Hash{}
 	}
 	if len(enc) > 0 {
 		_, content, _, err := rlp.Split(enc)
 		if err != nil {
+			logger.Error("getStorageTrie failed len(enc) > 0", "key", key.String())
 			self.setError(err)
 		}
 		value.SetBytes(content)
 	}
+	logger.Error("getStorageTrie failed len(enc) == 0", "key", key.String())
 	self.cachedStorage[key] = value
 	return value
 }

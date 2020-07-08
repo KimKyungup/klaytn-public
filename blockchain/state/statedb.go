@@ -552,6 +552,7 @@ func (self *StateDB) getStateObject(addr common.Address) *stateObject {
 	// First, check stateObjects if there is "live" object.
 	if obj := self.stateObjects[addr]; obj != nil {
 		if obj.deleted {
+			logger.Error("getStateObject obj.delted", "addr", addr.String())
 			return nil
 		}
 		return obj
@@ -575,6 +576,7 @@ func (self *StateDB) getStateObject(addr common.Address) *stateObject {
 	// Load the object from the database.
 	enc, err := self.trie.TryGet(addr[:])
 	if len(enc) == 0 {
+		logger.Error("getStateObject len(enc) == 0", "addr", addr.String(), "err", err)
 		self.setError(err)
 		return nil
 	}
@@ -839,6 +841,7 @@ func (stateDB *StateDB) Finalise(deleteEmptyObjects bool, setStorageRoot bool) {
 		if so.suicided || (deleteEmptyObjects && so.empty()) {
 			stateDB.deleteStateObject(so)
 		} else {
+			logger.Info("Finalisze dirties", "addr", addr.String())
 			so.updateStorageTrie(stateDB.db)
 			so.setStorageRoot(setStorageRoot, stateDB.stateObjectsDirtyStorage)
 			stateDB.updateStateObject(so)

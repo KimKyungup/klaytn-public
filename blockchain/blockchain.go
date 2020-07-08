@@ -2108,7 +2108,7 @@ func (bc *BlockChain) ApplyTransaction(config *params.ChainConfig, author *commo
 
 	blockNumber := header.Number.Uint64()
 
-	logger.Error("[WINNIE] ApplyTransaction called", "blockNumber", blockNumber, "config", config, "author", author, "header", header, "tx", tx, "usedGas", usedGas, "cfg", cfg)
+	logger.Error("[WINNIE] ApplyTransaction called", "blockNumber", blockNumber)
 
 	// validation for each transaction before execution
 	if err := tx.Validate(statedb, blockNumber); err != nil {
