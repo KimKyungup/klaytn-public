@@ -112,8 +112,10 @@ func (t *Trie) TryGet(key []byte) ([]byte, error) {
 func (t *Trie) tryGet(origNode node, key []byte, pos int) (value []byte, newnode node, didResolve bool, err error) {
 	switch n := (origNode).(type) {
 	case nil:
+		logger.Error("[WINNIE] tryGet case nil:")
 		return nil, nil, false, nil
 	case valueNode:
+		logger.Error("[WINNIE] tryGet case valueNode:")
 		return n, n, false, nil
 	case *shortNode:
 		if len(key)-pos < len(n.Key) || !bytes.Equal(n.Key, key[pos:pos+len(n.Key)]) {
@@ -125,6 +127,7 @@ func (t *Trie) tryGet(origNode node, key []byte, pos int) (value []byte, newnode
 			n = n.copy()
 			n.Val = newnode
 		}
+		logger.Error("[WINNIE] tryGet case *shortNode:")
 		return value, n, didResolve, err
 	case *fullNode:
 		value, newnode, didResolve, err = t.tryGet(n.Children[key[pos]], key, pos+1)
@@ -132,6 +135,7 @@ func (t *Trie) tryGet(origNode node, key []byte, pos int) (value []byte, newnode
 			n = n.copy()
 			n.Children[key[pos]] = newnode
 		}
+		logger.Error("[WINNIE] tryGet case *fullNode:")
 		return value, n, didResolve, err
 	case hashNode:
 		child, err := t.resolveHash(n, key[:pos])
