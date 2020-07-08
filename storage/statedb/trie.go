@@ -127,7 +127,7 @@ func (t *Trie) tryGet(origNode node, key []byte, pos int) (value []byte, newnode
 			n = n.copy()
 			n.Val = newnode
 		}
-		logger.Error("[WINNIE] tryGet case *shortNode:")
+		logger.Error("[WINNIE] tryGet case *shortNode:", "n.Val", n.Val, "value",value)
 		return value, n, didResolve, err
 	case *fullNode:
 		value, newnode, didResolve, err = t.tryGet(n.Children[key[pos]], key, pos+1)
@@ -135,7 +135,7 @@ func (t *Trie) tryGet(origNode node, key []byte, pos int) (value []byte, newnode
 			n = n.copy()
 			n.Children[key[pos]] = newnode
 		}
-		logger.Error("[WINNIE] tryGet case *fullNode:")
+		logger.Error("[WINNIE] tryGet case *fullNode:","n.Children[key[pos]]", n.Children[key[pos]], "value",value)
 		return value, n, didResolve, err
 	case hashNode:
 		child, err := t.resolveHash(n, key[:pos])
@@ -144,6 +144,7 @@ func (t *Trie) tryGet(origNode node, key []byte, pos int) (value []byte, newnode
 			return nil, n, true, err
 		}
 		value, newnode, _, err := t.tryGet(child, key, pos)
+		logger.Error("[WINNIE] tryGet case hashNode:","child", child, "value",value)
 		return value, newnode, true, err
 	default:
 		panic(fmt.Sprintf("%T: invalid node: %v", origNode, origNode))
