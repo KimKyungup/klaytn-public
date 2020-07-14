@@ -408,7 +408,9 @@ func (t *Trie) resolveHash(n hashNode, prefix []byte) (node, error) {
 	if node := t.db.node(hash); node != nil {
 		return node, nil
 	}
-	return nil, &MissingNodeError{NodeHash: hash, Path: prefix}
+	err := &MissingNodeError{NodeHash: hash, Path: prefix}
+	logger.Error("resolveHash err", "err", err.Error())
+	return nil, err
 }
 
 // Hash returns the root hash of the trie. It does not write to the

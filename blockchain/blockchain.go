@@ -1158,6 +1158,7 @@ func (bc *BlockChain) gcCachedNodeLoop() {
 						bc.triegc.Push(root, number)
 						break
 					}
+					logger.Info("GC cached node", "number", number, "root", root)
 					trieDB.Dereference(root.(common.Hash))
 					cnt++
 				}

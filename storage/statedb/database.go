@@ -739,6 +739,7 @@ func (db *Database) dereference(child common.Hash, parent common.Hash) {
 			db.dereference(hash, child)
 		}
 		delete(db.nodes, child)
+		logger.Info("dereference", "hash", child.String())
 		db.nodesSize -= common.StorageSize(common.HashLength + int(node.size))
 	}
 }
@@ -775,6 +776,7 @@ func (db *Database) Cap(limit common.StorageSize) error {
 		// Fetch the oldest referenced node and push into the batch
 		node := db.nodes[oldest]
 		enc := node.rlp()
+		logger.Info("write by cap", "hash", oldest.String())
 		if err := database.PutAndWriteBatchesOverThreshold(batch, oldest[:], enc); err != nil {
 			db.lock.RUnlock()
 			return err
@@ -891,6 +893,8 @@ func (db *Database) writeBatchNodes(node common.Hash) error {
 			numGoRoutines--
 			continue
 		}
+
+		logger.Info("write by writeBatchNodes", "hash", common.BytesToHash(result.key))
 
 		if err := batch.Put(result.key, result.val); err != nil {
 			return err
