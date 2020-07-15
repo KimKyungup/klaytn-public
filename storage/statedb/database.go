@@ -462,6 +462,7 @@ func (db *Database) insert(hash common.Hash, lenEncoded uint16, node node) {
 		}
 	}
 	db.nodes[hash] = entry
+	logger.Info("insert node", "hash", hash.String())
 
 	// Update the flush-list endpoints
 	if db.oldest == (common.Hash{}) {
