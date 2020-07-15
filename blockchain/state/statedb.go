@@ -883,6 +883,8 @@ func (s *StateDB) clearJournalAndRefund() {
 
 // Commit writes the state to the underlying in-memory trie database.
 func (s *StateDB) Commit(deleteEmptyObjects bool) (root common.Hash, err error) {
+	s.LockGCCachedNode()
+	defer s.UnlockGCCachedNode()
 	defer s.clearJournalAndRefund()
 
 	for addr := range s.journal.dirties {
