@@ -739,6 +739,7 @@ func (db *Database) dereference(child common.Hash, parent common.Hash) {
 			db.dereference(hash, child)
 		}
 		delete(db.nodes, child)
+		logger.Info("delete node", "child", child.String())
 		db.nodesSize -= common.StorageSize(common.HashLength + int(node.size))
 	}
 }
