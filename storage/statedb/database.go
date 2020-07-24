@@ -447,6 +447,9 @@ func (db *Database) InsertBlob(hash common.Hash, blob []byte) {
 // size tracking.
 func (db *Database) insert(hash common.Hash, lenEncoded uint16, node node) {
 	// If the node's already cached, skip
+	if hash == common.HexToHash("0xca02f74d795c3aa7589c18ee296b01a3264cbf0fa12af38012fb11b11392c62a") {
+		logger.Info("insert","hash", "0xca02f74d795c3aa7589c18ee296b01a3264cbf0fa12af38012fb11b11392c62a")
+	}
 	if _, ok := db.nodes[hash]; ok {
 		return
 	}
@@ -462,7 +465,7 @@ func (db *Database) insert(hash common.Hash, lenEncoded uint16, node node) {
 		}
 	}
 	db.nodes[hash] = entry
-	logger.Info("insert node", "node",hash.String())
+	logger.Debug("insert node", "node",hash.String())
 
 	// Update the flush-list endpoints
 	if db.oldest == (common.Hash{}) {

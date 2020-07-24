@@ -543,7 +543,7 @@ func TestIncompleteStateSync(t *testing.T) {
 
 // TODO-Klaytn: To enable logging in the test code, we can use the following function.
 // This function will be moved to somewhere utility functions are located.
-func enableLog() {
+func enableLog(level int) {
 	usecolor := term.IsTty(os.Stderr.Fd()) && os.Getenv("TERM") != "dumb"
 	output := io.Writer(os.Stderr)
 	if usecolor {
@@ -551,7 +551,7 @@ func enableLog() {
 	}
 	glogger := log.NewGlogHandler(log.StreamHandler(output, log.TerminalFormat(usecolor)))
 	log.PrintOrigins(true)
-	log.ChangeGlobalLogLevel(glogger, log.Lvl(5))
+	log.ChangeGlobalLogLevel(glogger, log.Lvl(level))
 	glogger.Vmodule("")
 	glogger.BacktraceAt("")
 	log.Root().SetHandler(glogger)
@@ -560,29 +560,29 @@ func enableLog() {
 // makeTestState create a sample test state to test node-wise reconstruction.
 func TestCachedTrieNode(t *testing.T) {
 	if testing.Verbose() {
-		enableLog()
+		enableLog(5)
 	}
 
 	// Create an empty state
 	db := NewDatabase(database.NewMemoryDBManager())
 
 	// 0	1	2	3	4	5	6 	7
-	// 100	1	0	1	0	0	-1	0
-	// 100	101	101	102	102 102 101	101
-	testAddBalance := []int64{100,1,0,1,0,0,-1, 0}
+	// 100	1	0	1	0	0	0	-1
+	// 100	101	101	102	102 102 102	101
+	testAddBalance := []int64{100,1,0,1,0,0,0, -1}
 
 	var roots []common.Hash
 	balance1 := int64(0)
-	balance2 := int64(0)
+	//balance2 := int64(0)
 
 	addr1 := common.BytesToAddress([]byte{1})
-	addr2 := common.BytesToAddress([]byte{2})
+	//addr2 := common.BytesToAddress([]byte{2})
 
 	root := common.Hash{}
 	var stateDB *StateDB
 	var err error
 
-	for i, bal := range testAddBalance {
+	for step, bal := range testAddBalance {
 		stateDB, err = New(root, db)
 		if err != nil {
 			t.Fatal(err)
@@ -595,20 +595,31 @@ func TestCachedTrieNode(t *testing.T) {
 			stateDB.updateStateObject(obj)
 		}
 
-		{
-			obj := stateDB.GetOrNewStateObject(addr2)
-			obj.AddBalance(big.NewInt(1))
-			balance2 += int64(1)
-			stateDB.updateStateObject(obj)
-		}
+		if step == 0 || step == 5 {
+			for i := byte(0); i < 16; i++ {
+				//for j := byte(0); j < 16; j++ {
+				//	for k := byte(0); k < 16; k++ {
+				//		//for l := byte(0); l < 16; l++ {
+							addr := common.BytesToAddress([]byte{i})
+							if addr == addr1 {
+								continue
+							}
 
+							obj := stateDB.GetOrNewStateObject(addr)
+							obj.AddBalance(big.NewInt(int64(10)))
+							stateDB.updateStateObject(obj)
+						//}
+				//	}
+				//}
+			}
+		}
 		root, err = stateDB.Commit(true)
 		assert.NoError(t, err)
-		t.Log("stateDB.commit","root",root.String(), "step",i)
+		t.Log("stateDB.commit","root",root.String(), "step", step)
 
 		roots = append(roots, root)
 
-		if i == 6 {
+		if step == 7 {
 			stateDB.db.TrieDB().Dereference(roots[0])
 			stateDB.db.TrieDB().Dereference(roots[1])
 			stateDB.db.TrieDB().Dereference(roots[2])
@@ -620,15 +631,17 @@ func TestCachedTrieNode(t *testing.T) {
 		// commit stateTrie to DB
 		//stateDB.db.TrieDB().Commit(root, false, 0)
 
-		//if i >= 4 {
-		//	stateDB.db.TrieDB().Dereference(roots[i-4])
+		//if step >= 4 {
+		//	stateDB.db.TrieDB().Dereference(roots[step-4])
 		//}
+
 
 		stateDB, err = New(root, db)
 		if err != nil {
 			t.Fatal(err)
 		}
 
+		t.Log("getAccount","addr", addr1.String())
 		acc1 := stateDB.GetAccount(addr1)
 		if acc1 == nil {
 			t.Fatal("acc1 is nil. missing trie node")
@@ -639,10 +652,10 @@ func TestCachedTrieNode(t *testing.T) {
 		//	t.Fatal("acc2 is nil. missing trie node")
 		//}
 
-		assert.Equal(t, uint64(balance1), acc1.GetBalance().Uint64(), "step", "step", i)
-		//assert.Equal(t, uint64(balance2), acc2.GetBalance().Uint64(), "step", "step", i)
+		assert.Equal(t, uint64(balance1), acc1.GetBalance().Uint64(), "step", "step", step)
+		//assert.Equal(t, uint64(balance2), acc2.GetBalance().Uint64(), "step", "step", step)
 
-		t.Log(acc1.String())
+		t.Log(acc1.String(), "step",step)
 		//t.Log(acc2.String())
 	}
 }
