@@ -462,6 +462,7 @@ func (db *Database) insert(hash common.Hash, lenEncoded uint16, node node) {
 		}
 	}
 	db.nodes[hash] = entry
+	logger.Info("insert node", "node",hash.String())
 
 	// Update the flush-list endpoints
 	if db.oldest == (common.Hash{}) {
@@ -682,6 +683,8 @@ func (db *Database) reference(child common.Hash, parent common.Hash) {
 	}
 	node.parents++
 	db.nodes[parent].children[child]++
+
+	logger.Info("reference node", "parent",parent.String(), "child", child.String(), "node.parents", node.parents, "db.nodes[parent].children[child]", db.nodes[parent].children[child])
 }
 
 // Dereference removes an existing reference from a root node.
@@ -716,6 +719,7 @@ func (db *Database) dereference(child common.Hash, parent common.Hash) {
 		node.children[child]--
 		if node.children[child] == 0 {
 			delete(node.children, child)
+			logger.Info("dereference node", "parent",parent.String(), "child", child.String(), "node.children[child]", node.children[child])
 		}
 	}
 	// If the node does not exist, it's a previously committed node.
@@ -730,6 +734,7 @@ func (db *Database) dereference(child common.Hash, parent common.Hash) {
 		// then reverted into short), causing a cached node to have no parents. That is
 		// no problem in itself, but don't make maxint parents out of it.
 		node.parents--
+		logger.Info("dereference node", "parent",parent.String(), "node.parents", node.parents)
 	}
 	if node.parents == 0 {
 		// Remove the node from the flush-list
