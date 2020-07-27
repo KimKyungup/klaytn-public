@@ -566,8 +566,8 @@ func TestCachedTrieNode(t *testing.T) {
 	// Create an empty state
 	db := NewDatabase(database.NewMemoryDBManager())
 
-	// 0	1	2	3	4	5	6 	7
-	// 1	0	0	2	2	2	2	1
+	// Step: 	0	1	2	3	4	5	6 	7
+	// Value:	100	100	100	200	200	200	200	100
 	testStorage := []byte{100,100,100,200,200,200,200, 100}
 
 	var roots []common.Hash
