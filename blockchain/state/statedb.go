@@ -90,6 +90,8 @@ type StateDB struct {
 	journal        *journal
 	validRevisions []revision
 	nextRevisionId int
+
+	TestFunc func()
 }
 
 // NewCachedStateObjects returns a new Common.Cache object for cachedStateObjects.
@@ -553,6 +555,7 @@ func (self *StateDB) getStateObject(addr common.Address) *stateObject {
 		if obj.deleted {
 			return nil
 		}
+		logger.Info("getStateObject hit stateObjects","addr",addr)
 		return obj
 	}
 
@@ -921,6 +924,8 @@ func (s *StateDB) Commit(deleteEmptyObjects bool) (root common.Hash, err error) 
 	for _, so := range stateObjectsToUpdate {
 		s.updateStateObject(so)
 	}
+
+	s.TestFunc()
 
 	// Write trie changes.
 	root, err = s.trie.Commit(func(leaf []byte, parent common.Hash, parentDepth int) error {

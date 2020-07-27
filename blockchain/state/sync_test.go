@@ -567,74 +567,63 @@ func TestCachedTrieNode(t *testing.T) {
 	db := NewDatabase(database.NewMemoryDBManager())
 
 	// 0	1	2	3	4	5	6 	7
-	// 100	1	0	1	0	0	0	-1
-	// 100	101	101	102	102 102 102	101
-	testAddBalance := []int64{100,1,0,1,0,0,0, -1}
+	// 1	0	0	2	2	2	2	1
+	testStorage := []byte{100,100,100,200,200,200,200, 100}
 
 	var roots []common.Hash
-	balance1 := int64(0)
-	//balance2 := int64(0)
 
 	addr1 := common.BytesToAddress([]byte{1})
+	key := common.Hash{200}
 	//addr2 := common.BytesToAddress([]byte{2})
 
 	root := common.Hash{}
 	var stateDB *StateDB
 	var err error
 
-	for step, bal := range testAddBalance {
+	for step, val := range testStorage {
 		stateDB, err = New(root, db)
 		if err != nil {
 			t.Fatal(err)
 		}
 
 		{
-			obj := stateDB.GetOrNewStateObject(addr1)
-			obj.AddBalance(big.NewInt(bal))
-			balance1 += bal
+			obj := stateDB.GetOrNewSmartContract(addr1)
+			if step == 0 {
+				obj.SetCode(crypto.Keccak256Hash([]byte{1, 1, 1, 1, 1}), []byte{2, 2, 2, 2, 2})
+			}
+
+			if step < 3 {
+				for i := byte(0); i < 50; i++ {
+					key := common.Hash{i}
+					value := common.Hash{i + byte(step)}
+					obj.SetState(db, key, value)
+				}
+			}
+
+			value := common.Hash{val}
+			obj.SetState(db, key, value)
+
 			stateDB.updateStateObject(obj)
 		}
 
-		if step == 0 || step == 5 {
-			for i := byte(0); i < 16; i++ {
-				//for j := byte(0); j < 16; j++ {
-				//	for k := byte(0); k < 16; k++ {
-				//		//for l := byte(0); l < 16; l++ {
-							addr := common.BytesToAddress([]byte{i})
-							if addr == addr1 {
-								continue
-							}
-
-							obj := stateDB.GetOrNewStateObject(addr)
-							obj.AddBalance(big.NewInt(int64(10)))
-							stateDB.updateStateObject(obj)
-						//}
-				//	}
-				//}
+		testFunc := func() {}
+		if step == 7 {
+			testFunc = func() {
+				logger.Info("test func is called")
+				stateDB.db.TrieDB().Dereference(roots[0])
+				stateDB.db.TrieDB().Dereference(roots[1])
+				stateDB.db.TrieDB().Dereference(roots[2])
+				stateDB.db.TrieDB().Dereference(roots[3])
 			}
 		}
+		stateDB.TestFunc = testFunc
+
 		root, err = stateDB.Commit(true)
 		assert.NoError(t, err)
 		t.Log("stateDB.commit","root",root.String(), "step", step)
 
 		roots = append(roots, root)
-
-		if step == 7 {
-			stateDB.db.TrieDB().Dereference(roots[0])
-			stateDB.db.TrieDB().Dereference(roots[1])
-			stateDB.db.TrieDB().Dereference(roots[2])
-			stateDB.db.TrieDB().Dereference(roots[3])
-		}
-
 		stateDB.db.TrieDB().Reference(root, common.Hash{}) // metadata reference to keep trie alive
-
-		// commit stateTrie to DB
-		//stateDB.db.TrieDB().Commit(root, false, 0)
-
-		//if step >= 4 {
-		//	stateDB.db.TrieDB().Dereference(roots[step-4])
-		//}
-
 
 		stateDB, err = New(root, db)
 		if err != nil {
@@ -642,20 +631,15 @@ func TestCachedTrieNode(t *testing.T) {
 		}
 
 		t.Log("getAccount","addr", addr1.String())
-		acc1 := stateDB.GetAccount(addr1)
-		if acc1 == nil {
-			t.Fatal("acc1 is nil. missing trie node")
+		so := stateDB.getStateObject(addr1)
+		value := so.GetState(db,key)
+		assert.NoError(t, so.dbErr)
+		if common.EmptyHash(value) {
+			t.Fatal("value is nil. missing trie node")
 		}
 
-		//acc2 := stateDB.GetAccount(addr2)
-		//if acc1 == nil {
-		//	t.Fatal("acc2 is nil. missing trie node")
-		//}
+		assert.Equal(t, common.Hash{val}, value, "step", "step", step)
 
-		assert.Equal(t, uint64(balance1), acc1.GetBalance().Uint64(), "step", "step", step)
-		//assert.Equal(t, uint64(balance2), acc2.GetBalance().Uint64(), "step", "step", step)
-
-		t.Log(acc1.String(), "step",step)
-		//t.Log(acc2.String())
+		t.Log("step",step)
 	}
 }

@@ -462,6 +462,7 @@ func (db *Database) insert(hash common.Hash, lenEncoded uint16, node node) {
 	for _, child := range entry.childs() {
 		if c := db.nodes[child]; c != nil {
 			c.parents++
+			logger.Debug("insert node : added parents", "child",child.String(), "c.parents", c.parents)
 		}
 	}
 	db.nodes[hash] = entry
@@ -737,7 +738,7 @@ func (db *Database) dereference(child common.Hash, parent common.Hash) {
 		// then reverted into short), causing a cached node to have no parents. That is
 		// no problem in itself, but don't make maxint parents out of it.
 		node.parents--
-		logger.Info("dereference node", "parent",parent.String(), "node.parents", node.parents)
+		logger.Info("dereference node", "parent",parent.String(), "child", child.String(), "child.parents", node.parents)
 	}
 	if node.parents == 0 {
 		// Remove the node from the flush-list

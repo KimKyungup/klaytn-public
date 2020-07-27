@@ -406,7 +406,7 @@ func (t *Trie) resolve(n node, prefix []byte) (node, error) {
 func (t *Trie) resolveHash(n hashNode, prefix []byte) (node, error) {
 	hash := common.BytesToHash(n)
 	if node := t.db.node(hash); node != nil {
-		logger.Info("resolveHash","node", hash.String())
+		logger.Info("resolveHash","node", hash.String(), "parents", t.db.nodes[hash].parents)
 		return node, nil
 	}
 	return nil, &MissingNodeError{NodeHash: hash, Path: prefix}
