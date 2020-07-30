@@ -92,6 +92,29 @@ func DialHTTP(endpoint string) (*Client, error) {
 	return DialHTTPWithClient(endpoint, new(http.Client))
 }
 
+// DialHTTPWithHeader creates a new RPC client that connects to an RPC server over HTTP.
+func DialHTTPWithHeader(endpoint string, header map[string]string, id, pass string) (*Client, error) {
+	client := new(http.Client)
+
+	req, err := http.NewRequest(http.MethodPost, endpoint, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", contentType)
+	req.Header.Set("Accept", contentType)
+
+	for k, v := range header {
+		req.Header.Add(k, v)
+	}
+
+	req.SetBasicAuth(id, pass)
+
+	initctx := context.Background()
+	return NewClient(initctx, func(context.Context) (net.Conn, error) {
+		return &httpConn{client: client, req: req, closed: make(chan struct{})}, nil
+	})
+}
+
 func (c *Client) sendHTTP(ctx context.Context, op *requestOp, msg interface{}) error {
 	hc := c.writeConn.(*httpConn)
 	respBody, err := hc.doRequest(ctx, msg)

@@ -20,7 +20,18 @@
 
 package client
 
-import "github.com/klaytn/klaytn"
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"github.com/klaytn/klaytn"
+	"github.com/klaytn/klaytn/common"
+	"github.com/stretchr/testify/assert"
+	"math/big"
+	"net/http"
+	"os"
+	"testing"
+)
 
 // Verify that Client implements the Klaytn interfaces.
 var (
@@ -38,3 +49,63 @@ var (
 	_ = klaytn.GasEstimator(&Client{})
 	// _ = klaytn.PendingStateEventer(&Client{})
 )
+
+func Test_ExampleKASClient(t *testing.T) {
+	header := map[string]string{
+		"x-krn": "krn:1001:node",
+	}
+	id := "78ab9116689659321aaf472aa154eac7dd7a99c6"
+	pass := "403e0397d51a823cd59b7edcb212788c8599dd7e"
+
+	c, err := DialWithHeader("https://node-api.beta.klaytn.io/v1/klaytn", header, id, pass)
+	assert.NoError(t, err)
+
+	ctx := context.Background()
+	blkNum, err := c.BlockNumber(ctx)
+	assert.NoError(t, err)
+
+	t.Log(blkNum.String())
+}
+
+func Test_ExampleKASClient2(t *testing.T) {
+	header := map[string]string{
+		"x-krn": "krn:1001:node",
+	}
+	user := "78ab9116689659321aaf472aa154eac7dd7a99c6"
+	pwd := "403e0397d51a823cd59b7edcb212788c8599dd7e"
+
+	type Payload struct {
+		Operator common.Address `json:"operator"`
+		Payload  interface{} `json:"payload"`
+	}
+
+	type AnchorData struct {
+		BlockHash     common.Hash `json:"BlockHash"`
+	}
+
+	payload := AnchorData{BlockHash:  common.HexToHash("123456")}
+
+	data := Payload{
+		Operator: common.StringToAddress("0x1552F52D459B713E0C4558e66C8c773a75615FA8"),
+		Payload: payload,
+	}
+	payloadBytes, err := json.Marshal(data)
+	if err != nil {
+		// handle err
+	}
+	body := bytes.NewReader(payloadBytes)
+
+	req, err := http.NewRequest("POST", "https://wallet-api.beta.klaytn.io/v1 /anchor, body)
+	if err != nil {
+		// handle err
+	}
+	req.SetBasicAuth("{your_accessKeyId}", "{your_secretAccessKey}")
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-Krn", "krn:1001:wallet:GC1:account:rp1")
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		// handle err
+	}
+	defer resp.Body.Close()
+}

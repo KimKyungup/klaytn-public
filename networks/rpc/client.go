@@ -185,6 +185,32 @@ func DialContext(ctx context.Context, rawurl string) (*Client, error) {
 	}
 }
 
+// DialContextWithHeader creates a new RPC client with given header and auth., just like Dial.
+//
+// The context is used to cancel or time out the initial connection establishment. It does
+// not affect subsequent interactions with the client.
+func DialContextWithHeader(ctx context.Context, rawurl string, header map[string]string, id, pass string) (*Client, error) {
+	u, err := url.Parse(rawurl)
+	if err != nil {
+		return nil, err
+	}
+	switch u.Scheme {
+	case "http", "https":
+		return DialHTTPWithHeader(rawurl, header, id, pass)
+	case "ws", "wss":
+		fallthrough
+		//return DialWebsocket(ctx, rawurl, "")
+	case "stdio":
+		fallthrough
+		//return DialStdIO(ctx)
+	case "":
+		//return DialIPC(ctx, rawurl)
+		return nil, fmt.Errorf("not support transport to dial with header and auth for URL scheme %q", u.Scheme)
+	default:
+		return nil, fmt.Errorf("no known transport for URL scheme %q", u.Scheme)
+	}
+}
+
 type StdIOConn struct{}
 
 func (io StdIOConn) Read(b []byte) (n int, err error) {

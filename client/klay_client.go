@@ -48,8 +48,21 @@ func Dial(rawurl string) (*Client, error) {
 	return DialContext(context.Background(), rawurl)
 }
 
+// DialWithHeader connects a client to the given URL with given header and auth.
+func DialWithHeader(rawurl string, header map[string]string, id, pass string) (*Client, error) {
+	return DialContextWithHeader(context.Background(), rawurl, header, id, pass)
+}
+
 func DialContext(ctx context.Context, rawurl string) (*Client, error) {
 	c, err := rpc.DialContext(ctx, rawurl)
+	if err != nil {
+		return nil, err
+	}
+	return NewClient(c), nil
+}
+
+func DialContextWithHeader(ctx context.Context, rawurl string, header map[string]string, id, pass string) (*Client, error) {
+	c, err := rpc.DialContextWithHeader(ctx, rawurl, header, id, pass)
 	if err != nil {
 		return nil, err
 	}
@@ -609,5 +622,12 @@ func (ec *Client) AddPeer(ctx context.Context, url string) (bool, error) {
 func (ec *Client) RemovePeer(ctx context.Context, url string) (bool, error) {
 	var result bool
 	err := ec.c.CallContext(ctx, &result, "admin_removePeer", url)
+	return result, err
+}
+
+// KASAnchor can remove a static peer on Klaytn node.
+func (ec *Client) KASAnchorAPI(ctx context.Context, url string) (bool, error) {
+	var result bool
+	err := ec.c.CallContext(ctx, &result, "admin_removePeer", url+"/v1 /anchor")
 	return result, err
 }
