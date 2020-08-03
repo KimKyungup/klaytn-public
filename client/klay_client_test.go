@@ -25,11 +25,12 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/klaytn/klaytn"
+	"github.com/klaytn/klaytn/blockchain/types"
 	"github.com/klaytn/klaytn/common"
 	"github.com/stretchr/testify/assert"
+	"io/ioutil"
 	"math/big"
 	"net/http"
-	"os"
 	"testing"
 )
 
@@ -68,44 +69,75 @@ func Test_ExampleKASClient(t *testing.T) {
 }
 
 func Test_ExampleKASClient2(t *testing.T) {
-	header := map[string]string{
-		"x-krn": "krn:1001:node",
-	}
+	operator := common.StringToAddress("0x1552F52D459B713E0C4558e66C8c773a75615FA8")
+
 	user := "78ab9116689659321aaf472aa154eac7dd7a99c6"
 	pwd := "403e0397d51a823cd59b7edcb212788c8599dd7e"
 
-	type Payload struct {
+	// HTTP Request Body
+	type Body struct {
 		Operator common.Address `json:"operator"`
 		Payload  interface{} `json:"payload"`
 	}
 
-	type AnchorData struct {
-		BlockHash     common.Hash `json:"BlockHash"`
+	// API Payload
+	type Payload struct {
+		Id string `json:"id"`
+		types.AnchoringDataInternalType0
 	}
 
-	payload := AnchorData{BlockHash:  common.HexToHash("123456")}
+	// Anchor Data
+	AnchorData := &types.AnchoringDataInternalType0{
+		BlockHash:     common.HexToHash("0"),
+		TxHash:        common.HexToHash("1"),
+		ParentHash:    common.HexToHash("2"),
+		ReceiptHash:   common.HexToHash("3"),
+		StateRootHash: common.HexToHash("4"),
+		BlockNumber:   big.NewInt(5),
+		BlockCount:    big.NewInt(6),
+		TxCount:       big.NewInt(7),
+	}
 
-	data := Payload{
-		Operator: common.StringToAddress("0x1552F52D459B713E0C4558e66C8c773a75615FA8"),
+	payload := &Payload{
+		Id: AnchorData.BlockNumber.String(),
+		AnchoringDataInternalType0: *AnchorData,
+	}
+
+	bodyData := Body{
+		Operator: operator,
 		Payload: payload,
 	}
-	payloadBytes, err := json.Marshal(data)
+	payloadBytes, err := json.Marshal(bodyData)
 	if err != nil {
 		// handle err
 	}
+	t.Log(string(payloadBytes))
 	body := bytes.NewReader(payloadBytes)
 
-	req, err := http.NewRequest("POST", "https://wallet-api.beta.klaytn.io/v1 /anchor, body)
+	req, err := http.NewRequest("POST", "http://anchor.wallet-api.dev.klaytn.com/v1/anchor", body)
 	if err != nil {
-		// handle err
+		t.Fatal(err)
 	}
-	req.SetBasicAuth("{your_accessKeyId}", "{your_secretAccessKey}")
+	req.SetBasicAuth(user, pwd)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-Krn", "krn:1001:wallet:GC1:account:rp1")
+	req.Header.Set("X-Krn", "krn:1001:anchor:test:operator-pool:op1")
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		// handle err
+		t.Fatal(err)
 	}
-	defer resp.Body.Close()
+
+	resBody, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log(string(resBody))
+	var v interface{}
+	err = json.Unmarshal(resBody, &v)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 }
