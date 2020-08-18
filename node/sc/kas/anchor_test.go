@@ -45,26 +45,26 @@ func testAnchorData() *types.AnchoringDataInternalType0 {
 		ParentHash:    common.HexToHash("2"),
 		ReceiptHash:   common.HexToHash("3"),
 		StateRootHash: common.HexToHash("4"),
-		BlockNumber:   big.NewInt(5),
+		BlockNumber:   big.NewInt(10),
 		BlockCount:    big.NewInt(6),
 		TxCount:       big.NewInt(7),
 	}
 }
 
-func _TestExampleSendRequest(t *testing.T) {
-	url := "http://anchor-anchor-api.dev.klaytn.com/v1/anchor"
-	xkrn := "krn:1001:anchor:test:operator-pool:rp1"
-	user := ""
-	pwd := ""
+func TestExampleSendRequest(t *testing.T) {
+	url := "http://anchor-api.dev.klaytn.com/v1/anchor"
+	xChainId := "1001"
+	user := "Basic"
+	pwd := "S0FTSzVQREtBUEtYUUw0MEE3NzlSSkRPOnJHVlBVd3lXMjNVYkMzUEFORUxoQkJoaDgwYjFCQ2dBVWxwQW5KSlc"
 
-	operator := common.HexToAddress("0xFC6A9Fe8a71F7bB576070a7fe408AFdE8E3d4819")
+	operator := common.HexToAddress("0x61C68bac01D60A2f558eA333F0F305A5b0ee57ee")
 
 	// Anchor Data
 	anchorData := testAnchorData()
 
 	kasConfig := &KASConfig{
 		Url:          url,
-		Xkrn:         xkrn,
+		XChainId:     xChainId,
 		User:         user,
 		Pwd:          pwd,
 		Operator:     operator,
