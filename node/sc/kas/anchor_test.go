@@ -54,7 +54,7 @@ func testAnchorData() *types.AnchoringDataInternalType0 {
 func TestExampleSendRequest(t *testing.T) {
 	url := "http://anchor-api.dev.klaytn.com/v1/anchor"
 	xChainId := "1001"
-	user := "Basic"
+	user := ""
 	pwd := ""
 
 	operator := common.HexToAddress("0x61C68bac01D60A2f558eA333F0F305A5b0ee57ee")
