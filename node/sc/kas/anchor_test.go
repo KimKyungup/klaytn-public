@@ -55,7 +55,7 @@ func TestExampleSendRequest(t *testing.T) {
 	url := "http://anchor-api.dev.klaytn.com/v1/anchor"
 	xChainId := "1001"
 	user := "Basic"
-	pwd := "S0FTSzVQREtBUEtYUUw0MEE3NzlSSkRPOnJHVlBVd3lXMjNVYkMzUEFORUxoQkJoaDgwYjFCQ2dBVWxwQW5KSlc"
+	pwd := ""
 
 	operator := common.HexToAddress("0x61C68bac01D60A2f558eA333F0F305A5b0ee57ee")
 
