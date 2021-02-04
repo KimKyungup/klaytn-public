@@ -305,7 +305,7 @@ func genCypressCommonGenesis(nodeAddrs, testAddrs []common.Address) *blockchain.
 			},
 			Istanbul: &params.IstanbulConfig{
 				ProposerPolicy: 2,
-				SubGroupSize:   22,
+				SubGroupSize:   4,
 			},
 			UnitPrice: 25000000000,
 		},

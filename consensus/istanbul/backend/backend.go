@@ -391,7 +391,12 @@ func (sb *backend) ParentValidators(proposal istanbul.Proposal) istanbul.Validat
 }
 
 func (sb *backend) getValidators(number uint64, hash common.Hash) istanbul.ValidatorSet {
-	snap, err := sb.snapshot(sb.chain, number, hash, nil)
+	header := sb.chain.GetHeader(hash, number)
+	if header == nil {
+		logger.Crit("getValdatiors can not get header")
+	}
+
+	snap, err := sb.snapshot(sb.chain, header, nil)
 	if err != nil {
 		logger.Error("Snapshot not found.", "err", err)
 		return validator.NewValidatorSet(nil, istanbul.ProposerPolicy(sb.governance.ProposerPolicy()), sb.governance.CommitteeSize(), sb.chain)

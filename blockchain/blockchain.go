@@ -1594,7 +1594,9 @@ func (bc *BlockChain) insertChain(chain types.Blocks) (int, []interface{}, []*ty
 		// Wait for the block's verification to complete
 		bstart := time.Now()
 
+		//abort, results := bc.engine.VerifyHeaders(bc, []*types.Header{block.Header()}, []bool{true})
 		err := <-results
+		//close(abort)
 		if err == nil {
 			err = bc.validator.ValidateBody(block)
 		}

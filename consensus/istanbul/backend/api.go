@@ -56,7 +56,7 @@ func (api *API) GetSnapshot(number *rpc.BlockNumber) (*Snapshot, error) {
 	if header == nil {
 		return nil, errUnknownBlock
 	}
-	return api.istanbul.snapshot(api.chain, header.Number.Uint64(), header.Hash(), nil)
+	return api.istanbul.snapshot(api.chain, header, nil)
 }
 
 // GetSnapshotAtHash retrieves the state snapshot at a given block.
@@ -65,7 +65,7 @@ func (api *API) GetSnapshotAtHash(hash common.Hash) (*Snapshot, error) {
 	if header == nil {
 		return nil, errUnknownBlock
 	}
-	return api.istanbul.snapshot(api.chain, header.Number.Uint64(), header.Hash(), nil)
+	return api.istanbul.snapshot(api.chain, header, nil)
 }
 
 // GetValidators retrieves the list of authorized validators at the specified block.
@@ -81,7 +81,7 @@ func (api *API) GetValidators(number *rpc.BlockNumber) ([]common.Address, error)
 	if header == nil {
 		return nil, errUnknownBlock
 	}
-	snap, err := api.istanbul.snapshot(api.chain, header.Number.Uint64(), header.Hash(), nil)
+	snap, err := api.istanbul.snapshot(api.chain, header, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (api *API) GetValidatorsAtHash(hash common.Hash) ([]common.Address, error) 
 	if header == nil {
 		return nil, errUnknownBlock
 	}
-	snap, err := api.istanbul.snapshot(api.chain, header.Number.Uint64(), header.Hash(), nil)
+	snap, err := api.istanbul.snapshot(api.chain, header, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func (api *APIExtension) GetCouncil(number *rpc.BlockNumber) ([]common.Address, 
 		logger.Trace("Failed to find the requested block", "number", number)
 		return nil, errNoBlockExist // return nil if block is not found.
 	}
-	snap, err := api.istanbul.snapshot(api.chain, header.Number.Uint64(), header.Hash(), nil)
+	snap, err := api.istanbul.snapshot(api.chain, header, nil)
 	if err != nil {
 		logger.Error("Failed to get snapshot.", "hash", header.Hash(), "err", err)
 		return nil, errInternalError
@@ -248,7 +248,8 @@ func (api *APIExtension) ValidateConsensusInfo(block *types.Block) (ValidationRe
 	result.Round = round
 
 	parentHash := block.ParentHash()
-	snap, err := api.istanbul.snapshot(api.chain, blockNumber-1, parentHash, nil)
+	parentBlockHeader := api.chain.GetHeader(parentHash, blockNumber-1)
+	snap, err := api.istanbul.snapshot(api.chain, parentBlockHeader, nil)
 	if err != nil {
 		return ValidationResult{}, err
 	}
@@ -274,7 +275,7 @@ func (api *APIExtension) ValidateConsensusInfo(block *types.Block) (ValidationRe
 	for i, v := range committee {
 		committeeAddrs[i] = v.Address()
 	}
-	sort.Sort(committeeAddrs)
+	//sort.Sort(committeeAddrs)
 	result.Committee = committeeAddrs
 
 	//verify the Committee list of the block using istanbul
@@ -307,8 +308,8 @@ func (api *APIExtension) ValidateConsensusInfo(block *types.Block) (ValidationRe
 	result.CommitteeSealedFromBlock = committeSealAddr
 	result.CommitteeFromBlock = extra.Validators
 
-	sort.Sort(result.CommitteeSealedFromBlock)
-	sort.Sort(result.CommitteeFromBlock)
+	//sort.Sort(result.CommitteeSealedFromBlock)
+	//sort.Sort(result.CommitteeFromBlock)
 
 	result.IsValidCommittee = deep.Equal(result.Committee, result.CommitteeFromBlock)
 
@@ -346,7 +347,8 @@ func (api *APIExtension) getConsensusInfo(block *types.Block) (ConsensusInfo, er
 
 	// get the snapshot of the previous block.
 	parentHash := block.ParentHash()
-	snap, err := api.istanbul.snapshot(api.chain, blockNumber-1, parentHash, nil)
+	parentHeader := api.chain.GetHeader(parentHash, blockNumber-1)
+	snap, err := api.istanbul.snapshot(api.chain, parentHeader, nil)
 	if err != nil {
 		return ConsensusInfo{}, err
 	}

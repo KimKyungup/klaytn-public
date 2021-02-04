@@ -52,10 +52,13 @@ func newFastCache(config *TrieNodeCacheConfig) TrieNodeCache {
 		return nil
 	}
 
+	logger.Info("Initializing local trie node cache (fastCache)",
+		"MaxMB", config.LocalCacheSizeMB, "FilePath", config.FastCacheFileDir)
+
 	fc := &FastCache{fast: fastcache.LoadFromFileOrNew(config.FastCacheFileDir, config.LocalCacheSizeMB*1024*1024)} // Convert MB to Byte
 	stats := fc.UpdateStats().(fastcache.Stats)
 
-	logger.Info("Initialize local trie node cache (fastCache)",
+	logger.Info("Finished to initialize local trie node cache (fastCache)",
 		"MaxMB", config.LocalCacheSizeMB, "FilePath", config.FastCacheFileDir,
 		"LoadedBytes", stats.BytesSize, "LoadedEntries", stats.EntriesCount)
 	return fc

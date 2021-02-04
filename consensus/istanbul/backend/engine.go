@@ -202,8 +202,24 @@ func (sb *backend) verifySigner(chain consensus.ChainReader, header *types.Heade
 		return errUnknownBlock
 	}
 
+	if number == 3601 {
+		logger.Error("3601 block")
+	}
+
 	// Retrieve the snapshot needed to verify this header and cache it
-	snap, err := sb.snapshot(chain, number-1, header.ParentHash, parents)
+	parentHeader := &types.Header{}
+	if len(parents) > 0 {
+		parentHeader = parents[len(parents) - 1]
+		parents = parents[:len(parents) - 1]
+	} else {
+		parentHeader = sb.chain.GetHeader(header.ParentHash, number -1)
+		if parentHeader == nil {
+			logger.Error("verifySigner can not find parentHeader", "parentHash", header.ParentHash.String(), "parentNumber", number - 1)
+			return errUnknownBlock
+		}
+	}
+	snap, err := sb.snapshot(chain, parentHeader, parents)
+	//snap, err := sb.snapshot(chain, number-1, header.ParentHash, parents)
 	if err != nil {
 		return err
 	}
@@ -218,6 +234,13 @@ func (sb *backend) verifySigner(chain consensus.ChainReader, header *types.Heade
 	if _, v := snap.ValSet.GetByAddress(signer); v == nil {
 		return errUnauthorized
 	}
+
+	lastProposer := sb.GetProposer(number - 1)
+	snap.ValSet.CalcProposer(lastProposer, uint64(header.Round()))
+	if snap.ValSet.GetProposer().Address() != signer {
+		logger.Error("invliad proposer block", "block", number)
+		return errors.New("invalid proposer")
+	}
 	return nil
 }
 
@@ -228,9 +251,13 @@ func (sb *backend) verifyCommittedSeals(chain consensus.ChainReader, header *typ
 	if number == 0 {
 		return nil
 	}
+	parentHeader := sb.chain.GetHeader(header.ParentHash, number - 1)
+	if parentHeader == nil {
+		return consensus.ErrUnknownAncestor
+	}
 
 	// Retrieve the snapshot needed to verify this header and cache it
-	snap, err := sb.snapshot(chain, number-1, header.ParentHash, parents)
+	snap, err := sb.snapshot(chain, parentHeader, parents)
 	if err != nil {
 		return err
 	}
@@ -296,15 +323,15 @@ func (sb *backend) Prepare(chain consensus.ChainReader, header *types.Header) er
 
 	// copy the parent extra data as the header extra data
 	number := header.Number.Uint64()
-	parent := chain.GetHeader(header.ParentHash, number-1)
-	if parent == nil {
+	parentHeader := chain.GetHeader(header.ParentHash,  number - 1)
+	if parentHeader == nil {
 		return consensus.ErrUnknownAncestor
 	}
 	// use the same blockscore for all blocks
 	header.BlockScore = defaultBlockScore
 
 	// Assemble the voting snapshot
-	snap, err := sb.snapshot(chain, number-1, header.ParentHash, nil)
+	snap, err := sb.snapshot(chain, parentHeader, nil)
 	if err != nil {
 		return err
 	}
@@ -369,8 +396,8 @@ func (sb *backend) Prepare(chain consensus.ChainReader, header *types.Header) er
 	header.Extra = extra
 
 	// set header's timestamp
-	header.Time = new(big.Int).Add(parent.Time, new(big.Int).SetUint64(sb.config.BlockPeriod))
-	header.TimeFoS = parent.TimeFoS
+	header.Time = new(big.Int).Add(parentHeader.Time, new(big.Int).SetUint64(sb.config.BlockPeriod))
+	header.TimeFoS = parentHeader.TimeFoS
 	if header.Time.Int64() < time.Now().Unix() {
 		t := time.Now()
 		header.Time = big.NewInt(t.Unix())
@@ -439,9 +466,13 @@ func (sb *backend) Seal(chain consensus.ChainReader, block *types.Block, stop <-
 	// update the block header timestamp and signature and propose the block to core engine
 	header := block.Header()
 	number := header.Number.Uint64()
+	parentHeader := sb.chain.GetHeader(header.ParentHash, number - 1)
+	if parentHeader == nil {
+		return nil, consensus.ErrUnknownAncestor
+	}
 
 	// Bail out if we're unauthorized to sign a block
-	snap, err := sb.snapshot(chain, number-1, header.ParentHash, nil)
+	snap, err := sb.snapshot(chain, parentHeader, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -626,12 +657,15 @@ func getPrevHeaderAndUpdateParents(chain consensus.ChainReader, number uint64, h
 }
 
 // snapshot retrieves the authorization snapshot at a given point in time.
-func (sb *backend) snapshot(chain consensus.ChainReader, number uint64, hash common.Hash, parents []*types.Header) (*Snapshot, error) {
+func (sb *backend) snapshot(chain consensus.ChainReader, header *types.Header, parents []*types.Header) (*Snapshot, error) {
 	// Search for a snapshot in memory or on disk for checkpoints
 	var (
 		headers []*types.Header
 		snap    *Snapshot
 	)
+
+	number := header.Number.Uint64()
+	hash := header.Hash()
 
 	for snap == nil {
 		// If an in-memory snapshot was found, use that
@@ -671,21 +705,30 @@ func (sb *backend) snapshot(chain consensus.ChainReader, number uint64, hash com
 	if err != nil {
 		return nil, err
 	}
+	number = number + uint64(len(headers))
+
 	if sb.governance.ProposerPolicy() == uint64(istanbul.WeightedRandom) {
 		// Snapshot of block N (Snapshot_N) should contain proposers for N+1 and following blocks.
 		// And proposers for Block N+1 can be calculated from the nearest previous proposersUpdateInterval block.
 		// Let's refresh proposers in Snapshot_N using previous proposersUpdateInterval block for N+1, if not updated yet.
-		pHeader := chain.GetHeaderByNumber(params.CalcProposerBlockNumber(snap.Number + 1))
+		prevProposerBlockNum := params.CalcProposerBlockNumber(snap.Number + 1)
+		pHeader := chain.GetHeaderByNumber(prevProposerBlockNum)
 		if pHeader != nil {
 			if err := snap.ValSet.Refresh(pHeader.Hash(), pHeader.Number.Uint64()); err != nil {
 				// There are three error cases and they just don't refresh proposers
 				// (1) no validator at all
 				// (2) invalid formatted hash
 				// (3) no staking info available
-				logger.Trace("Skip refreshing proposers while creating snapshot", "snap.Number", snap.Number, "pHeader.Number", pHeader.Number.Uint64(), "err", err)
+				logger.Info("Skip refreshing proposers while creating snapshot", "snap.Number", snap.Number, "pHeader.Number", pHeader.Number.Uint64(), "err", err)
 			}
 		} else {
-			logger.Trace("Can't refreshing proposers while creating snapshot due to lack of required header", "snap.Number", snap.Number)
+			if len(parents) == int(number-prevProposerBlockNum) {
+				pHeader = header
+			} else if len(parents) > int(number-prevProposerBlockNum) {
+				pHeader = parents[len(parents)-int(number-prevProposerBlockNum)]
+			} else {
+				logger.Crit("Can't refreshing proposers while creating snapshot due to lack of required header", "snap.Number", snap.Number)
+			}
 		}
 	}
 

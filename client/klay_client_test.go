@@ -20,7 +20,14 @@
 
 package client
 
-import "github.com/klaytn/klaytn"
+import (
+	"context"
+	"github.com/klaytn/klaytn"
+	"math/big"
+	"math/rand"
+	"testing"
+	"time"
+)
 
 // Verify that Client implements the Klaytn interfaces.
 var (
@@ -38,3 +45,111 @@ var (
 	_ = klaytn.GasEstimator(&Client{})
 	// _ = klaytn.PendingStateEventer(&Client{})
 )
+
+func Benchmark_GetBlockNumber(b *testing.B) {
+	cli, err := Dial("http://localhost:8551")
+	if err != nil {
+		b.Fatal("Dial error")
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	blkNum, err := cli.BlockNumber(ctx)
+	if err != nil {
+		b.Fatal("BlockNumber error")
+	}
+
+	rand.Seed(time.Now().UnixNano())
+
+	successCnt := 0
+	failCnt := 0
+	b.ResetTimer()
+	for k := 0; k < b.N; k++ {
+		successCnt++
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+
+		_, err := cli.BlockByNumber(ctx, new(big.Int).SetUint64(rand.Uint64()%blkNum.Uint64()))
+		if err != nil {
+			failCnt++
+			b.Log("fail", "failCnt", failCnt, "err", err)
+		}
+		cancel()
+	}
+
+	b.Log("report", "successCnt", successCnt, "failCnt", failCnt)
+}
+
+//
+//func Test_GetBlockNumber(b *testing.T) {
+//	cli, err := Dial("http://localhost:8551")
+//	if err != nil {
+//		b.Fatal("Dial error")
+//	}
+//
+//	//ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+//	//defer cancel()
+//	//blkNum, err := cli.BlockNumber(ctx)
+//	//if err != nil {
+//	//	b.Fatal("BlockNumber error")
+//	//}
+//
+//	rand.Seed(time.Now().UnixNano())
+//
+//	successCnt := 0
+//	failCnt := 0
+//
+//	var chan
+//	for i := 0; i < 10; i++ {
+//		go
+//	}
+//
+//
+//	start := time.Now()
+//	for k := uint64(0); k < 100; k++ {
+//		successCnt++
+//		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+//
+//		_, err := cli.BlockByNumber(ctx, new(big.Int).SetUint64(k)) //rand.Uint64()%blkNum.Uint64()
+//		if err != nil {
+//			failCnt++
+//			b.Log("fail", "failCnt", failCnt, "err", err)
+//		}
+//		cancel()
+//	}
+//
+//	b.Log("report", "successCnt", successCnt, "failCnt", failCnt, "elapsed", time.Since(start))
+//}
+
+func Test_GetBlockNumber(b *testing.T) {
+	cli, err := Dial("http://localhost:8551")
+	if err != nil {
+		b.Fatal("Dial error")
+	}
+
+	//ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	//defer cancel()
+	//lastBlkNum, err := cli.BlockNumber(ctx)
+	//if err != nil {
+	//	b.Fatal("BlockNumber error")
+	//}
+
+	for i := uint64(10000); i < 20000; i++ {
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		result, err := cli.ValidateBlockHeader(ctx, new(big.Int).SetUint64(i))
+		if err != nil {
+			b.Log("Found error", "blockNum", i, "err", err)
+			i--
+			cancel()
+			continue
+		}
+
+		if !result.IsValidCommittee || !result.IsValidProposer || !result.IsValidSeal {
+			b.Log("Found error", "blockNum", i,
+				"IsValidCommittee", result.IsValidCommittee,
+				"IsValidProposer", result.IsValidProposer,
+				"IsValidSeal", result.IsValidSeal)
+		}
+		cancel()
+		//b.Log("OK", "blockNum",i)
+	}
+}

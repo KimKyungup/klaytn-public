@@ -462,7 +462,7 @@ func (valSet *weightedCouncil) CalcProposer(lastProposer common.Address, round u
 		}
 	}
 
-	logger.Info("Update a proposer", "old", valSet.GetProposer(), "new", newProposer, "last proposer", lastProposer.String(), "round", round, "blockNum of council", valSet.blockNum, "blockNum of proposers", valSet.proposersBlockNum)
+	logger.Info("Update a proposer", "old", valSet.GetProposer(), "fnew", newProposer, "last proposer", lastProposer.String(), "round", round, "blockNum of council", valSet.blockNum, "blockNum of proposers", valSet.proposersBlockNum)
 	valSet.proposer.Store(newProposer)
 }
 
@@ -603,8 +603,8 @@ func (valSet *weightedCouncil) Refresh(hash common.Hash, blockNum uint64) error 
 
 	valSet.refreshProposers(seed, blockNum)
 
-	logger.Debug("Refresh done.", "blockNum", blockNum, "hash", hash, "valSet.blockNum", valSet.blockNum, "stakingInfo.BlockNum", valSet.stakingInfo.BlockNum)
-	logger.Debug("New proposers calculated", "new proposers", valSet.proposers)
+	logger.Info("Refresh done.", "blockNum", blockNum, "hash", hash, "valSet.blockNum", valSet.blockNum, "stakingInfo.BlockNum", valSet.stakingInfo.BlockNum)
+	logger.Info("New proposers calculated", "new proposers", valSet.proposers)
 
 	return nil
 }
