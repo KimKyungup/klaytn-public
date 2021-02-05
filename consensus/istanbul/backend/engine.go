@@ -623,6 +623,9 @@ func (sb *backend) snapshot(chain consensus.ChainReader, number uint64, hash com
 		} else {
 			headers = append(headers, header)
 			number, hash = number-1, header.ParentHash
+			if len(parents) > 0 {
+				parents = parents[:len(parents)-1]
+			}
 		}
 	}
 	// Previous snapshot found, apply any pending headers on top of it
