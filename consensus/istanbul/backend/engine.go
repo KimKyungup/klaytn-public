@@ -216,6 +216,14 @@ func (sb *backend) verifySigner(chain consensus.ChainReader, header *types.Heade
 	if _, v := snap.ValSet.GetByAddress(signer); v == nil {
 		return errUnauthorized
 	}
+
+	lastProposer := sb.GetProposer(number - 1)
+	snap.ValSet.CalcProposer(lastProposer, uint64(header.Round()))
+	calcProposer := snap.ValSet.GetProposer().Address()
+	if calcProposer != signer {
+		logger.Error("invliad proposer block", "block", number, "calcProposer", calcProposer.String(), "signer", signer.String())
+		return errors.New("invalid proposer")
+	}
 	return nil
 }
 
@@ -324,6 +332,9 @@ func (sb *backend) Prepare(chain consensus.ChainReader, header *types.Header) er
 	header.Vote = sb.governance.GetEncodedVote(sb.address, number)
 
 	// add validators in snapshot to extraData's validators section
+	//view := sb.currentView.Load().(*istanbul.View)
+	//lastProposer := sb.GetProposer(header.Number.Uint64() - 1)
+	//snap.ValSet.CalcProposer(lastProposer, view.Round.Uint64())
 	extra, err := prepareExtra(header, snap.committee(header.ParentHash, sb.currentView.Load().(*istanbul.View)))
 	if err != nil {
 		return err
@@ -644,10 +655,10 @@ func (sb *backend) snapshot(chain consensus.ChainReader, number uint64, hash com
 				// (1) no validator at all
 				// (2) invalid formatted hash
 				// (3) no staking info available
-				logger.Trace("Skip refreshing proposers while creating snapshot", "snap.Number", snap.Number, "pHeader.Number", pHeader.Number.Uint64(), "err", err)
+				logger.Error("Skip refreshing proposers while creating snapshot", "snap.Number", snap.Number, "pHeader.Number", pHeader.Number.Uint64(), "err", err)
 			}
 		} else {
-			logger.Trace("Can't refreshing proposers while creating snapshot due to lack of required header", "snap.Number", snap.Number)
+			logger.Error("Can't refreshing proposers while creating snapshot due to lack of required header", "snap.Number", snap.Number)
 		}
 	}
 

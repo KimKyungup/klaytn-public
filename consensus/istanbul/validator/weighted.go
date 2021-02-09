@@ -555,7 +555,7 @@ func (valSet *weightedCouncil) Policy() istanbul.ProposerPolicy { return valSet.
 
 // Refresh recalculates up-to-date proposers only when blockNum is the proposer update interval.
 // It returns an error if it can't make up-to-date proposers
-//   (1) due toe wrong parameters
+//   (1) due to wrong parameters
 //   (2) due to lack of staking information
 // It returns no error when weightedCouncil:
 //   (1) already has up-do-date proposers
@@ -601,8 +601,8 @@ func (valSet *weightedCouncil) Refresh(hash common.Hash, blockNum uint64) error 
 
 	valSet.refreshProposers(seed, blockNum)
 
-	logger.Debug("Refresh done.", "blockNum", blockNum, "hash", hash, "valSet.blockNum", valSet.blockNum, "stakingInfo.BlockNum", valSet.stakingInfo.BlockNum)
-	logger.Debug("New proposers calculated", "new proposers", valSet.proposers)
+	logger.Info("Refresh done.", "blockNum", blockNum, "hash", hash, "valSet.blockNum", valSet.blockNum, "stakingInfo.BlockNum", valSet.stakingInfo.BlockNum)
+	logger.Info("New proposers calculated", "new proposers", valSet.proposers)
 
 	return nil
 }

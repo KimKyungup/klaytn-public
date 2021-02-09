@@ -314,7 +314,7 @@ func NewBlockChain(db database.DBManager, cacheConfig *CacheConfig, chainConfig 
 func (bc *BlockChain) prefetchTxWorker(index int) {
 	defer bc.wg.Done()
 
-	logger.Info("prefetchTxWorker is started", "num", index)
+	logger.Debug("prefetchTxWorker is started", "num", index)
 	for followup := range bc.prefetchTxCh {
 		stateDB, err := state.New(bc.CurrentBlock().Root(), bc.stateCache)
 		if err != nil {

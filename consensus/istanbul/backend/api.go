@@ -23,12 +23,14 @@ package backend
 import (
 	"errors"
 	"fmt"
+	"github.com/influxdata/influxdb/pkg/deep"
 	klaytnApi "github.com/klaytn/klaytn/api"
 	"github.com/klaytn/klaytn/blockchain"
 	"github.com/klaytn/klaytn/blockchain/types"
 	"github.com/klaytn/klaytn/common"
 	"github.com/klaytn/klaytn/consensus"
 	"github.com/klaytn/klaytn/consensus/istanbul"
+	istanbulCore "github.com/klaytn/klaytn/consensus/istanbul/core"
 	"github.com/klaytn/klaytn/networks/rpc"
 	"math/big"
 	"reflect"
@@ -214,6 +216,105 @@ func (api *APIExtension) GetCommitteeSize(number *rpc.BlockNumber) (int, error) 
 	}
 }
 
+type ValidationResult struct {
+	BlockNumber              uint64              `json:"blockNumber"`
+	Round                    byte                `json:"round"`
+	Proposer                 common.Address      `json:"proposer"`
+	ProposerFromBlock        common.Address      `json:"proposerFromBlock"`
+	IsValidProposer          bool                `json:"isValidProposer"`
+	Committee                common.AddressSlice `json:"committee"`
+	CommitteeSealedFromBlock common.AddressSlice `json:"committeeSealedFromBlock"`
+	CommitteeFromBlock       common.AddressSlice `json:"committeeFromBlock"`
+	IsValidCommittee         bool                `json:"isValidCommittee"`
+	IsValidSeal              bool                `json:"isValidSeal"`
+}
+
+func (api *APIExtension) ValidateConsensusInfo(block *types.Block) (ValidationResult, error) {
+	result := ValidationResult{}
+
+	blockNumber := block.NumberU64()
+	if blockNumber == 0 {
+		return ValidationResult{}, nil
+	}
+
+	result.BlockNumber = blockNumber
+
+	round := block.Header().Round()
+	view := &istanbul.View{
+		Sequence: new(big.Int).Set(block.Number()),
+		Round:    new(big.Int).SetInt64(int64(round)),
+	}
+	result.Round = round
+
+	parentHash := block.ParentHash()
+	//parentBlockHeader := api.chain.GetHeader(parentHash, blockNumber-1)
+	snap, err := api.istanbul.snapshot(api.chain, blockNumber-1, parentHash, nil)
+	//snap, err := api.istanbul.snapshot(api.chain, parentBlockHeader, nil)
+	if err != nil {
+		return ValidationResult{}, err
+	}
+
+	// get the ProposerFromBlock of this block.
+	result.ProposerFromBlock, err = ecrecover(block.Header())
+	if err != nil {
+		return ValidationResult{}, err
+	}
+
+	// calc Proposer
+	lastProposer := api.istanbul.GetProposer(blockNumber - 1)
+	snap.ValSet.CalcProposer(lastProposer, uint64(round))
+	result.Proposer = snap.ValSet.GetProposer().Address()
+
+	// check Proposer
+	result.IsValidProposer = result.ProposerFromBlock == result.Proposer
+
+	// get the Committee list of this block.
+	committee := snap.ValSet.SubListWithProposer(parentHash, result.Proposer, view)
+	committeeAddrs := make(common.AddressSlice, len(committee))
+	for i, v := range committee {
+		committeeAddrs[i] = v.Address()
+	}
+	//sort.Sort(committeeAddrs)
+	result.Committee = committeeAddrs
+
+	//verify the Committee list of the block using istanbul
+	proposalSeal := istanbulCore.PrepareCommittedSeal(block.Hash())
+	extra, err := types.ExtractIstanbulExtra(block.Header())
+	committeSealAddr := make(common.AddressSlice, len(extra.CommittedSeal))
+	sealErr := false
+
+	for i, seal := range extra.CommittedSeal {
+		addr, err := istanbul.GetSignatureAddress(proposalSeal, seal)
+		committeSealAddr[i] = addr
+		if err != nil {
+			return ValidationResult{}, err
+		}
+
+		var found bool = false
+		for _, v := range committeeAddrs {
+			if addr == v {
+				found = true
+				break
+			}
+		}
+		if found == false {
+			sealErr = true
+		}
+	}
+
+	result.IsValidSeal = sealErr == false
+
+	result.CommitteeSealedFromBlock = committeSealAddr
+	result.CommitteeFromBlock = extra.Validators
+
+	//sort.Sort(result.CommitteeSealedFromBlock)
+	//sort.Sort(result.CommitteeFromBlock)
+
+	result.IsValidCommittee = deep.Equal(result.Committee, result.CommitteeFromBlock)
+
+	return result, nil
+}
+
 type ConsensusInfo struct {
 	proposer       common.Address
 	originProposer common.Address // the proposal of 0 round at the same block number
@@ -328,6 +429,42 @@ func (api *APIExtension) makeRPCBlockOutput(b *types.Block,
 	r["transactions"] = rpcTransactions
 
 	return r
+}
+
+func (api *APIExtension) ValidateBlock(number *rpc.BlockNumber) (interface{}, error) {
+	b, ok := api.chain.(*blockchain.BlockChain)
+	if !ok {
+		logger.Error("chain is not a type of blockchain.BlockChain", "type", reflect.TypeOf(api.chain))
+		return nil, errInternalError
+	}
+	var block *types.Block
+	var blockNumber uint64
+
+	if number == nil {
+		logger.Trace("block number is not assigned")
+		return nil, errNoBlockNumber
+	}
+
+	if *number == rpc.PendingBlockNumber {
+		logger.Trace("Cannot get consensus information of the PendingBlock.")
+		return nil, errPendingNotAllowed
+	}
+
+	if *number == rpc.LatestBlockNumber {
+		block = b.CurrentBlock()
+		blockNumber = block.NumberU64()
+	} else {
+		// rpc.EarliestBlockNumber == 0, no need to treat it as a special case.
+		blockNumber = uint64(number.Int64())
+		block = b.GetBlockByNumber(blockNumber)
+	}
+
+	if block == nil {
+		logger.Trace("Finding a block by number failed.", "blockNum", blockNumber)
+		return nil, fmt.Errorf("the block does not exist (block number: %d)", blockNumber)
+	}
+
+	return api.ValidateConsensusInfo(block)
 }
 
 // TODO-Klaytn: This API functions should be managed with API functions with namespace "klay"

@@ -25,6 +25,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/klaytn/klaytn/consensus/istanbul/backend"
 	"math/big"
 
 	"github.com/klaytn/klaytn"
@@ -617,4 +618,15 @@ func (ec *Client) RemovePeer(ctx context.Context, url string) (bool, error) {
 	var result bool
 	err := ec.c.CallContext(ctx, &result, "admin_removePeer", url)
 	return result, err
+}
+
+func (ec *Client) ValidateBlockHeader(ctx context.Context, number *big.Int) (*backend.ValidationResult, error) {
+	result := backend.ValidationResult{}
+
+	err := ec.c.CallContext(ctx, &result, "klay_validateBlock", toBlockNumArg(number))
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, nil
 }
