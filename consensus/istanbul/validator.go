@@ -69,6 +69,8 @@ func (slice Validators) AddressStringList() []string {
 type ValidatorSet interface {
 	// Calculate the proposer
 	CalcProposer(lastProposer common.Address, round uint64)
+	// Return the quorum size
+	QuorumSize() int
 	// Return the validator size
 	Size() uint64
 	// Return the sub validator group size
