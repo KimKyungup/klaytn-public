@@ -271,6 +271,19 @@ func weightedRandomProposer(valSet istanbul.ValidatorSet, lastProposer common.Ad
 	return proposer
 }
 
+func (valSet *weightedCouncil) QuorumSize() int {
+	valSet.validatorMu.RLock()
+	defer valSet.validatorMu.RUnlock()
+
+	n := uint64(len(valSet.validators))
+	if n > valSet.subSize {
+		n = valSet.subSize
+	}
+
+	// Formula used ceil(2N/3)
+	return int(math.Ceil(float64(2*n) / 3))
+}
+
 func (valSet *weightedCouncil) Size() uint64 {
 	valSet.validatorMu.RLock()
 	defer valSet.validatorMu.RUnlock()

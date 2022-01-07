@@ -118,6 +118,19 @@ func newDefaultSubSet(addrs []common.Address, policy istanbul.ProposerPolicy, su
 	return valSet
 }
 
+func (valSet *defaultSet) QuorumSize() int {
+	valSet.validatorMu.RLock()
+	defer valSet.validatorMu.RUnlock()
+
+	n := uint64(len(valSet.validators))
+	if n > valSet.subSize {
+		n = valSet.subSize
+	}
+
+	// Formula used ceil(2N/3)
+	return int(math.Ceil(float64(2*n) / 3))
+}
+
 func (valSet *defaultSet) Size() uint64 {
 	valSet.validatorMu.RLock()
 	defer valSet.validatorMu.RUnlock()
