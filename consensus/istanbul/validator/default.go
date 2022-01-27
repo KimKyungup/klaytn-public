@@ -127,9 +127,9 @@ func (valSet *defaultSet) QuorumSize() int {
 		n = valSet.subSize
 	}
 
-	//return int(n)-valSet.F() 					// Formula used floor(2N/3)+1 or N-f
+	//return int(n)-valSet.F() 				// Formula used floor(2N/3)+1 or N-f
 	return int(math.Ceil(float64(2*n) / 3)) // Formula used ceil(2N/3)
-	//return int(2*valSet.F()+1) 				// Formula used 2F+1
+	//return int(2*valSet.F()+1) 			// Formula used 2F+1
 }
 
 func (valSet *defaultSet) Size() uint64 {
