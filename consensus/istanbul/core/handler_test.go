@@ -71,6 +71,12 @@ func newMockBackend(t *testing.T, validatorAddrs []common.Address) (*mock_istanb
 	// Verify checks whether the proposal of the preprepare message is a valid block. Consider it valid.
 	mockBackend.EXPECT().Verify(gomock.Any()).Return(time.Duration(0), nil).AnyTimes()
 
+	// Set the return value of HasBadProposal
+	mockBackend.EXPECT().HasBadProposal(gomock.Any()).Return(false).AnyTimes()
+
+	// Set Commit() return nil
+	mockBackend.EXPECT().Commit(gomock.Any(), gomock.Any()).Return(nil).AnyTimes()
+
 	return mockBackend, mockCtrl
 }
 
@@ -388,6 +394,118 @@ func TestCore_handleEvents_scenario_invalidSender(t *testing.T) {
 
 		time.Sleep(time.Second)
 		assert.Equal(t, 1, len(istCore.roundChangeSet.roundChanges[0].messages)) // round is set to 0 in this test
+	}
+}
+
+// TestCore_handleEvents_scenario_quorum_size tests `handleEvents` function of `istanbul.core` with a scenario.
+// It tests the logic to count prepare/commit message and change the phase(Preprepared->Prepared, Prepared->Committed).
+func TestCore_handleEvents_scenario_quorum_size(t *testing.T) {
+	validatorAddrs, validatorKeyMap := genValidators(18)
+	//Validator: 18
+	//Committee size : 6 (Validator/3) // This is set by newMockBackend()
+
+	mockBackend, mockCtrl := newMockBackend(t, validatorAddrs)
+	defer mockCtrl.Finish()
+
+	istConfig := istanbul.DefaultConfig
+	istConfig.ProposerPolicy = istanbul.RoundRobin
+
+	// When the istanbul core started, a message handling loop in `handleEvents()` waits istanbul messages
+	istCore := New(mockBackend, istConfig).(*core)
+	if err := istCore.Start(); err != nil {
+		t.Fatal(err)
+	}
+	defer istCore.Stop()
+
+	// Check the Quorum size accoring to formula, If N is 6.
+	//quorumSize := 5 	// Formula used floor(2N/3)+1 or N-f
+	quorumSize := 4 // Formula used ceil(2N/3)
+	//quorumSize := 3 	// Formula used 2f+1
+	assert.Equal(t, quorumSize, istCore.QuorumSize())
+
+	// Get variables initialized on `newMockBackend()`
+	eventMux := mockBackend.EventMux()
+	lastProposal, _ := mockBackend.LastProposal()
+	lastBlock := lastProposal.(*types.Block)
+	validators := mockBackend.Validators(lastBlock)
+
+	// Preprepare message originated from valid sender and set a new proposal in the istanbul core
+	{
+		msgSender := validators.GetProposer()
+		msgSenderKey := validatorKeyMap[msgSender.Address()]
+		t.Logf("proposer : %v", msgSender.Address().String())
+		newProposal, err := genBlock(lastBlock, msgSenderKey)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		istanbulMsg, err := genIstanbulMsg(msgPreprepare, lastBlock.Hash(), newProposal, msgSender.Address(), msgSenderKey)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if err := eventMux.Post(istanbulMsg); err != nil {
+			t.Fatal(err)
+		}
+
+		time.Sleep(time.Millisecond)
+		assert.Equal(t, istCore.current.Preprepare.Proposal.Header().String(), newProposal.Header().String())
+	}
+
+	// Prepare message originated from valid sender
+	committee := validators.SubList(lastBlock.Hash(), istCore.currentView())
+	for i, msgSender := range committee {
+		t.Logf("validator #%v : %v", i, msgSender.String())
+
+		msgSenderKey := validatorKeyMap[msgSender.Address()]
+
+		istanbulMsg, err := genIstanbulMsg(msgPrepare, lastBlock.Hash(), istCore.current.Preprepare.Proposal.(*types.Block), msgSender.Address(), msgSenderKey)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if err := eventMux.Post(istanbulMsg); err != nil {
+			t.Fatal(err)
+		}
+
+		time.Sleep(time.Millisecond)
+		assert.Equal(t, i+1, len(istCore.current.Prepares.messages))
+
+		t.Logf("Prepares msg voted(%v) quorum(%v)", len(istCore.current.Prepares.messages), istCore.QuorumSize())
+		t.Logf("Consensus state: %v", istCore.state.String())
+
+		if i+1 < quorumSize {
+			assert.Equal(t, StatePreprepared, istCore.state)
+		} else {
+			assert.Equal(t, StatePrepared, istCore.state)
+		}
+	}
+
+	// Commit message originated from valid sender
+	for i, msgSender := range committee {
+		t.Logf("validator #%v : %v", i, msgSender.String())
+		msgSenderKey := validatorKeyMap[msgSender.Address()]
+
+		istanbulMsg, err := genIstanbulMsg(msgCommit, lastBlock.Hash(), istCore.current.Preprepare.Proposal.(*types.Block), msgSender.Address(), msgSenderKey)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if err := eventMux.Post(istanbulMsg); err != nil {
+			t.Fatal(err)
+		}
+
+		time.Sleep(time.Millisecond)
+		assert.Equal(t, i+1, len(istCore.current.Commits.messages))
+
+		t.Logf("Commits msg voted(%v) quorum(%v)", len(istCore.current.Commits.messages), istCore.QuorumSize())
+		t.Logf("Consensus state: %v", istCore.state.String())
+
+		if i+1 < quorumSize {
+			assert.Equal(t, StatePrepared, istCore.state)
+		} else {
+			assert.Equal(t, StateCommitted, istCore.state)
+		}
 	}
 }
 
