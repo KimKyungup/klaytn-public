@@ -107,7 +107,7 @@ func (c *core) handleCommit(msg *message, src istanbul.Validator) error {
 			c.setState(StatePrepared)
 			c.sendCommit()
 		} else if c.current.GetPrepareOrCommitSize() >= c.QuorumSize() {
-			logger.Info("received more than 2f agreements and change state to prepared", "msgType", msgCommit)
+			logger.Info("received more than the quorum agreements and change state to prepared", "msgType", msgCommit)
 			c.current.LockHash()
 			c.setState(StatePrepared)
 			c.sendCommit()
